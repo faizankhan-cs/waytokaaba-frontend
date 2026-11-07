@@ -1,0 +1,119 @@
+@import "tailwindcss";
+
+/*
+ * Waytokaaba design tokens.
+ * Deep green (trust, Islamic heritage), warm white/sand surfaces, restrained gold accents.
+ */
+@theme {
+  --color-brand-50: #f1f7f4;
+  --color-brand-100: #dfeee7;
+  --color-brand-200: #bfddcf;
+  --color-brand-300: #8fc2ab;
+  --color-brand-400: #58a083;
+  --color-brand-500: #2f8264;
+  --color-brand-600: #1f6a50;
+  --color-brand-700: #175641;
+  --color-brand-800: #114535;
+  --color-brand-900: #0b3328;
+  --color-brand-950: #062019;
+
+  --color-gold-50: #fbf7ea;
+  --color-gold-100: #f5ebc9;
+  --color-gold-200: #ead592;
+  --color-gold-400: #d4ad45;
+  --color-gold-500: #c09a2e;
+  --color-gold-600: #9f7c20;
+  --color-gold-700: #7c5f1a;
+
+  --color-sand-50: #fbfaf6;
+  --color-sand-100: #f5f2ea;
+  --color-sand-200: #e9e3d4;
+
+  --color-ink-900: #16201c;
+  --color-ink-700: #3a4743;
+  --color-ink-500: #65716d;
+  --color-ink-300: #a7b0ad;
+
+  --font-sans: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-heading), ui-serif, Georgia, serif;
+
+  --shadow-card: 0 1px 2px rgb(11 51 40 / 0.06), 0 4px 16px -4px rgb(11 51 40 / 0.08);
+  --shadow-card-hover: 0 2px 4px rgb(11 51 40 / 0.06), 0 12px 28px -8px rgb(11 51 40 / 0.18);
+  --shadow-search: 0 18px 48px -12px rgb(6 32 25 / 0.45);
+}
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-sand-50);
+  color: var(--color-ink-900);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+@utility container-page {
+  @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+}
+
+@utility btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600 disabled:cursor-not-allowed disabled:opacity-60;
+}
+@utility btn-primary {
+  @apply btn bg-brand-700 text-white hover:bg-brand-800;
+}
+@utility btn-gold {
+  @apply btn bg-gold-500 text-brand-950 hover:bg-gold-400;
+}
+@utility btn-outline {
+  @apply btn border border-brand-700 text-brand-700 hover:bg-brand-50;
+}
+@utility btn-ghost {
+  @apply btn text-ink-700 hover:bg-sand-100;
+}
+@utility btn-danger {
+  @apply btn bg-red-600 text-white hover:bg-red-700;
+}
+
+@utility card {
+  @apply rounded-2xl border border-sand-200 bg-white shadow-[var(--shadow-card)];
+}
+
+@utility input {
+  @apply block w-full rounded-lg border border-sand-200 bg-white px-3 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 focus:outline-none aria-invalid:border-red-400;
+}
+@utility label {
+  @apply mb-1.5 block text-sm font-medium text-ink-700;
+}
+@utility field-error {
+  @apply mt-1 text-xs text-red-600;
+}
+
+@utility heading-section {
+  @apply font-display text-3xl text-brand-900 sm:text-4xl;
+}
+@utility eyebrow {
+  @apply text-xs font-semibold tracking-[0.18em] text-gold-600 uppercase;
+}
+
+@layer components {
+  /* Long-form text (legal pages, descriptions) */
+  .prose-page h2 {
+    @apply mt-8 mb-3 font-display text-2xl text-brand-900;
+  }
+  .prose-page p,
+  .prose-page li {
+    @apply leading-relaxed text-ink-700;
+  }
+  .prose-page p {
+    @apply mb-4;
+  }
+  .prose-page ul {
+    @apply mb-4 list-disc space-y-1 pl-6;
+  }
+}
