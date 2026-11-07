@@ -3,10 +3,15 @@
 import { useState, type FormEvent } from "react";
 import { CheckCircle2, Loader2, Send } from "lucide-react";
 import { WhatsAppIcon } from "@/components/ui/BrandIcons";
-import { CONTACT, getApiBaseUrl } from "@/lib/config";
+import { CONTACT, PREVIEW_MODE, getApiBaseUrl } from "@/lib/config";
 import type { InquiryType, ProblemDetails } from "@/lib/types";
 
-type Status = { kind: "idle" } | { kind: "submitting" } | { kind: "success" } | { kind: "error"; message: string };
+type Status =
+  | { kind: "idle" }
+  | { kind: "submitting" }
+  | { kind: "success" }
+  | { kind: "whatsapp"; url: string }
+  | { kind: "error"; message: string };
 
 interface Props {
   inquiryType: InquiryType;
@@ -72,6 +77,34 @@ export function InquiryForm({
       return;
     }
 
+    // Preview mode has no backend: send the inquiry to the business on WhatsApp instead.
+    if (PREVIEW_MODE) {
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.email)) {
+        setErrors({ email: "Please enter a valid email address." });
+        setStatus({ kind: "error", message: "Please check the highlighted fields." });
+        focusFirstError(form, { email: "invalid" });
+        return;
+      }
+      const lines = [
+        "Assalam o Alaikum, I would like to make an inquiry.",
+        subject ? `About: ${subject}` : `Inquiry type: ${inquiryType}`,
+        `Name: ${payload.customerName}`,
+        `Email: ${payload.email}`,
+        `Phone: ${payload.phone}`,
+        payload.checkIn ? `Check-in: ${payload.checkIn}` : null,
+        payload.checkOut ? `Check-out: ${payload.checkOut}` : null,
+        payload.guests ? `Guests: ${payload.guests}` : null,
+        "",
+        message,
+      ].filter((l) => l !== null);
+      const url = `https://wa.me/${CONTACT.phoneE164.replace(/\D/g, "")}?text=${encodeURIComponent(lines.join("\n"))}`;
+      window.open(url, "_blank", "noopener,noreferrer");
+      setErrors({});
+      setStatus({ kind: "whatsapp", url });
+      form.reset();
+      return;
+    }
+
     setErrors({});
     setStatus({ kind: "submitting" });
     try {
@@ -101,6 +134,30 @@ export function InquiryForm({
     } catch {
       setStatus({ kind: "error", message: "We couldn't reach our server. Please check your connection and try again." });
     }
+  }
+
+  if (status.kind === "whatsapp") {
+    return (
+      <div className="card p-6 text-center" role="status" aria-live="polite">
+        <WhatsAppIcon className="mx-auto h-12 w-12 text-[#25D366]" />
+        <h3 className="mt-3 font-display text-2xl text-brand-900">Almost done — send it on WhatsApp</h3>
+        <p className="mt-2 text-sm text-ink-500">
+          We opened WhatsApp with your inquiry{subject ? ` about ${subject}` : ""} already written. Press <strong>Send</strong> in
+          WhatsApp to reach our team. This is an inquiry, not a confirmed booking.
+        </p>
+        <div className="mt-5 flex flex-wrap justify-center gap-3">
+          <a href={status.url} target="_blank" rel="noopener noreferrer" className="btn bg-[#25D366] text-white hover:bg-[#1ebe5a]">
+            <WhatsAppIcon className="h-4 w-4" /> WhatsApp didn&apos;t open? Click here
+          </a>
+          <button type="button" className="btn-outline" onClick={() => setStatus({ kind: "idle" })}>
+            Send another inquiry
+          </button>
+        </div>
+        <p className="mt-4 text-xs text-ink-500">
+          Or call {CONTACT.phoneDisplay} · {CONTACT.email}
+        </p>
+      </div>
+    );
   }
 
   if (status.kind === "success") {
@@ -198,7 +255,11 @@ export function InquiryForm({
           {submitting ? <Loader2 className="h-5 w-5 animate-spin" aria-hidden /> : <Send className="h-4 w-4" aria-hidden />}
           {submitting ? "Sending…" : "Send Inquiry"}
         </button>
-        <p className="text-center text-xs text-ink-500">No payment required. Our team will confirm availability and pricing with you.</p>
+        <p className="text-center text-xs text-ink-500">
+          {PREVIEW_MODE
+            ? "Your inquiry will open in WhatsApp, ready to send to our team. No payment required."
+            : "No payment required. Our team will confirm availability and pricing with you."}
+        </p>
       </div>
     </form>
   );

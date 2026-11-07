@@ -6,6 +6,12 @@
  *
  * Both must point to the deployed API in production — never localhost.
  */
+/**
+ * Preview mode (NEXT_PUBLIC_PREVIEW_MODE=true): the site serves bundled sample data instead of calling the API,
+ * inquiries open WhatsApp, and the admin area is unavailable. Used for client reviews before the backend is deployed.
+ */
+export const PREVIEW_MODE = process.env.NEXT_PUBLIC_PREVIEW_MODE === "true";
+
 export function getApiBaseUrl(): string {
   const isServer = typeof window === "undefined";
   const url = (isServer ? process.env.API_BASE_URL : undefined) ?? process.env.NEXT_PUBLIC_API_BASE_URL;

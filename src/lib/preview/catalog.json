@@ -1,0 +1,1786 @@
+{
+  "generatedFrom": "Waytokaaba API demo seed data",
+  "hotels": [
+    {
+      "id": 8,
+      "slug": "bab-al-salam-residence",
+      "name": "Bab Al Salam Residence",
+      "city": "Madinah",
+      "address": "Bab Al Salam Street, Madinah",
+      "starRating": 5,
+      "distanceFromHolyMosqueMeters": null,
+      "isDistanceVerified": false,
+      "shortDescription": "Upscale residence near Bab al-Salam with family suites and a rooftop dining area.",
+      "description": "Bab Al Salam Residence offers upscale rooms and family suites close to the Prophet's Mosque. Guests enjoy a rooftop dining area, a prayer room and multilingual staff experienced in hosting pilgrim groups.",
+      "imageUrl": "https://images.unsplash.com/photo-1758448500688-3ababa93fd67?auto=format&fit=crop&w=1600&q=80",
+      "pricePerNight": 58000,
+      "currency": "PKR",
+      "amenities": [
+        "Free Wi-Fi",
+        "24-hour front desk",
+        "Air conditioning",
+        "Elevator",
+        "Daily housekeeping",
+        "Family suites",
+        "Rooftop dining",
+        "Prayer room",
+        "Laundry service"
+      ],
+      "isFeatured": true,
+      "isActive": true,
+      "isDemoContent": true,
+      "images": [
+        {
+          "id": 32,
+          "url": "https://images.unsplash.com/photo-1758448500688-3ababa93fd67?auto=format&fit=crop&w=1600&q=80",
+          "caption": "Bab Al Salam Residence",
+          "sortOrder": 0
+        },
+        {
+          "id": 33,
+          "url": "https://images.unsplash.com/photo-1646424857576-2a66db82a65c?auto=format&fit=crop&w=1600&q=80",
+          "caption": null,
+          "sortOrder": 1
+        },
+        {
+          "id": 34,
+          "url": "https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=1600&q=80",
+          "caption": null,
+          "sortOrder": 2
+        },
+        {
+          "id": 35,
+          "url": "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=1600&q=80",
+          "caption": null,
+          "sortOrder": 3
+        }
+      ],
+      "rooms": [
+        {
+          "id": 25,
+          "hotelId": 8,
+          "name": "Double Room",
+          "description": "Comfortable room for two guests with en-suite bathroom.",
+          "capacity": 2,
+          "bedConfiguration": "1 king or 2 single beds",
+          "pricePerNight": 58000,
+          "imageUrl": "https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=1200&q=80"
+        },
+        {
+          "id": 26,
+          "hotelId": 8,
+          "name": "Triple Room",
+          "description": "Ideal for small families or friends travelling together.",
+          "capacity": 3,
+          "bedConfiguration": "3 single beds",
+          "pricePerNight": 72500,
+          "imageUrl": "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=1200&q=80"
+        },
+        {
+          "id": 27,
+          "hotelId": 8,
+          "name": "Quad Room",
+          "description": "Popular with groups and families; four single beds.",
+          "capacity": 4,
+          "bedConfiguration": "4 single beds",
+          "pricePerNight": 84000,
+          "imageUrl": "https://images.unsplash.com/photo-1631049552057-403cdb8f0658?auto=format&fit=crop&w=1200&q=80"
+        },
+        {
+          "id": 28,
+          "hotelId": 8,
+          "name": "Family Suite",
+          "description": "Separate sitting area and extra space for larger families.",
+          "capacity": 6,
+          "bedConfiguration": "1 king bed, 4 single beds, sitting area",
+          "pricePerNight": 139000,
+          "imageUrl": "https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?auto=format&fit=crop&w=1200&q=80"
+        }
+      ],
+      "createdAt": "2026-11-07T10:44:11.730969+00:00",
+      "updatedAt": "2026-11-07T10:44:11.730969+00:00"
+    },
+    {
+      "id": 7,
+      "slug": "al-rawdah-crown-hotel",
+      "name": "Al Rawdah Crown Hotel",
+      "city": "Madinah",
+      "address": "King Faisal Road, Central Area, Madinah",
+      "starRating": 5,
+      "distanceFromHolyMosqueMeters": null,
+      "isDistanceVerified": false,
+      "shortDescription": "Five-star comfort steps from Masjid an-Nabawi, with elegant rooms and fine dining.",
+      "description": "Al Rawdah Crown Hotel places guests within easy walking distance of Masjid an-Nabawi's northern gates. Rooms feature calm, elegant interiors, and the hotel offers an all-day restaurant, a quiet lounge, and a concierge who can arrange ziyarat to Quba, Uhud and other historic sites.",
+      "imageUrl": "https://images.unsplash.com/photo-1625244724120-1fd1d34d00f6?auto=format&fit=crop&w=1600&q=80",
+      "pricePerNight": 68000,
+      "currency": "PKR",
+      "amenities": [
+        "Free Wi-Fi",
+        "24-hour front desk",
+        "Air conditioning",
+        "Elevator",
+        "Daily housekeeping",
+        "Breakfast buffet",
+        "Room service",
+        "Concierge",
+        "Ziyarat desk",
+        "Laundry service"
+      ],
+      "isFeatured": true,
+      "isActive": true,
+      "isDemoContent": true,
+      "images": [
+        {
+          "id": 27,
+          "url": "https://images.unsplash.com/photo-1625244724120-1fd1d34d00f6?auto=format&fit=crop&w=1600&q=80",
+          "caption": "Al Rawdah Crown Hotel",
+          "sortOrder": 0
+        },
+        {
+          "id": 28,
+          "url": "https://images.unsplash.com/photo-1591604129939-f1efa4d9f7fa?auto=format&fit=crop&w=1600&q=80",
+          "caption": null,
+          "sortOrder": 1
+        },
+        {
+          "id": 29,
+          "url": "https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=1600&q=80",
+          "caption": null,
+          "sortOrder": 2
+        },
+        {
+          "id": 30,
+          "url": "https://images.unsplash.com/photo-1660557989695-14fac79c086d?auto=format&fit=crop&w=1600&q=80",
+          "caption": null,
+          "sortOrder": 3
+        },
+        {
+          "id": 31,
+          "url": "https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?auto=format&fit=crop&w=1600&q=80",
+          "caption": null,
+          "sortOrder": 4
+        }
+      ],
+      "rooms": [
+        {
+          "id": 21,
+          "hotelId": 7,
+          "name": "Double Room",
+          "description": "Comfortable room for two guests with en-suite bathroom.",
+          "capacity": 2,
+          "bedConfiguration": "1 king or 2 single beds",
+          "pricePerNight": 68000,
+          "imageUrl": "https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=1200&q=80"
+        },
+        {
+          "id": 22,
+          "hotelId": 7,
+          "name": "Triple Room",
+          "description": "Ideal for small families or friends travelling together.",
+          "capacity": 3,
+          "bedConfiguration": "3 single beds",
+          "pricePerNight": 85000,
+          "imageUrl": "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=1200&q=80"
+        },
+        {
+          "id": 23,
+          "hotelId": 7,
+          "name": "Quad Room",
+          "description": "Popular with groups and families; four single beds.",
+          "capacity": 4,
+          "bedConfiguration": "4 single beds",
+          "pricePerNight": 98500,
+          "imageUrl": "https://images.unsplash.com/photo-1631049552057-403cdb8f0658?auto=format&fit=crop&w=1200&q=80"
+        },
+        {
+          "id": 24,
+          "hotelId": 7,
+          "name": "Family Suite",
+          "description": "Separate sitting area and extra space for larger families.",
+          "capacity": 6,
+          "bedConfiguration": "1 king bed, 4 single beds, sitting area",
+          "pricePerNight": 163000,
+          "imageUrl": "https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?auto=format&fit=crop&w=1200&q=80"
+        }
+      ],
+      "createdAt": "2026-11-07T10:44:11.730969+00:00",
+      "updatedAt": "2026-11-07T10:44:11.730969+00:00"
+    },
+    {
+      "id": 2,
+      "slug": "safa-grand-residence",
+      "name": "Safa Grand Residence",
+      "city": "Makkah",
+      "address": "Al Safa Street, Makkah",
+      "starRating": 5,
+      "distanceFromHolyMosqueMeters": null,
+      "isDistanceVerified": false,
+      "shortDescription": "Spacious five-star suites ideal for families, close to the Haram's main gates.",
+      "description": "Safa Grand Residence offers generously sized rooms and family suites with kitchenettes, making longer stays comfortable for families and groups. A 24-hour restaurant serves Pakistani, Arabic and continental dishes, and a dedicated Umrah desk is on hand to help with schedules and transport.",
+      "imageUrl": "https://images.unsplash.com/photo-1782890790046-2aefb0b503cb?auto=format&fit=crop&w=1600&q=80",
+      "pricePerNight": 72000,
+      "currency": "PKR",
+      "amenities": [
+        "Free Wi-Fi",
+        "24-hour front desk",
+        "Air conditioning",
+        "Elevator",
+        "Daily housekeeping",
+        "Family suites",
+        "24-hour restaurant",
+        "Kitchenette (suites)",
+        "Umrah help desk",
+        "Laundry service"
+      ],
+      "isFeatured": true,
+      "isActive": true,
+      "isDemoContent": true,
+      "images": [
+        {
+          "id": 6,
+          "url": "https://images.unsplash.com/photo-1782890790046-2aefb0b503cb?auto=format&fit=crop&w=1600&q=80",
+          "caption": "Safa Grand Residence",
+          "sortOrder": 0
+        },
+        {
+          "id": 7,
+          "url": "https://images.unsplash.com/photo-1627728734379-a5f8c099763e?auto=format&fit=crop&w=1600&q=80",
+          "caption": null,
+          "sortOrder": 1
+        },
+        {
+          "id": 8,
+          "url": "https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?auto=format&fit=crop&w=1600&q=80",
+          "caption": null,
+          "sortOrder": 2
+        },
+        {
+          "id": 9,
+          "url": "https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=1600&q=80",
+          "caption": null,
+          "sortOrder": 3
+        },
+        {
+          "id": 10,
+          "url": "https://images.unsplash.com/photo-1776361984994-089a9df800f6?auto=format&fit=crop&w=1600&q=80",
+          "caption": null,
+          "sortOrder": 4
+        }
+      ],
+      "rooms": [
+        {
+          "id": 5,
+          "hotelId": 2,
+          "name": "Double Room",
+          "description": "Comfortable room for two guests with en-suite bathroom.",
+          "capacity": 2,
+          "bedConfiguration": "1 king or 2 single beds",
+          "pricePerNight": 72000,
+          "imageUrl": "https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=1200&q=80"
+        },
+        {
+          "id": 6,
+          "hotelId": 2,
+          "name": "Triple Room",
+          "description": "Ideal for small families or friends travelling together.",
+          "capacity": 3,
+          "bedConfiguration": "3 single beds",
+          "pricePerNight": 90000,
+          "imageUrl": "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=1200&q=80"
+        },
+        {
+          "id": 7,
+          "hotelId": 2,
+          "name": "Quad Room",
+          "description": "Popular with groups and families; four single beds.",
+          "capacity": 4,
+          "bedConfiguration": "4 single beds",
+          "pricePerNight": 104500,
+          "imageUrl": "https://images.unsplash.com/photo-1631049552057-403cdb8f0658?auto=format&fit=crop&w=1200&q=80"
+        },
+        {
+          "id": 8,
+          "hotelId": 2,
+          "name": "Family Suite",
+          "description": "Separate sitting area and extra space for larger families.",
+          "capacity": 6,
+          "bedConfiguration": "1 king bed, 4 single beds, sitting area",
+          "pricePerNight": 173000,
+          "imageUrl": "https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?auto=format&fit=crop&w=1200&q=80"
+        }
+      ],
+      "createdAt": "2026-11-07T10:44:11.730969+00:00",
+      "updatedAt": "2026-11-07T10:44:11.730969+00:00"
+    },
+    {
+      "id": 1,
+      "slug": "al-noor-haram-view-hotel",
+      "name": "Al Noor Haram View Hotel",
+      "city": "Makkah",
+      "address": "Ibrahim Al Khalil Road, Ajyad, Makkah",
+      "starRating": 5,
+      "distanceFromHolyMosqueMeters": null,
+      "isDistanceVerified": false,
+      "shortDescription": "Elegant five-star rooms a short walk from Masjid al-Haram, with select rooms overlooking the Haram.",
+      "description": "A refined five-star stay designed around the rhythm of worship. Spacious rooms feature premium bedding, prayer mats and Qibla direction, and blackout curtains for rest between prayers. Guests can enjoy an international breakfast buffet, a quiet lounge, and attentive multilingual staff who can help with transport and ziyarat arrangements.",
+      "imageUrl": "https://images.unsplash.com/photo-1660557989695-14fac79c086d?auto=format&fit=crop&w=1600&q=80",
+      "pricePerNight": 85000,
+      "currency": "PKR",
+      "amenities": [
+        "Free Wi-Fi",
+        "24-hour front desk",
+        "Air conditioning",
+        "Elevator",
+        "Daily housekeeping",
+        "Haram-view rooms (select)",
+        "Breakfast buffet",
+        "Prayer area",
+        "Room service",
+        "Concierge",
+        "Laundry service"
+      ],
+      "isFeatured": true,
+      "isActive": true,
+      "isDemoContent": true,
+      "images": [
+        {
+          "id": 1,
+          "url": "https://images.unsplash.com/photo-1660557989695-14fac79c086d?auto=format&fit=crop&w=1600&q=80",
+          "caption": "Al Noor Haram View Hotel",
+          "sortOrder": 0
+        },
+        {
+          "id": 2,
+          "url": "https://images.unsplash.com/photo-1720549973451-018d3623b55a?auto=format&fit=crop&w=1600&q=80",
+          "caption": null,
+          "sortOrder": 1
+        },
+        {
+          "id": 3,
+          "url": "https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=1600&q=80",
+          "caption": null,
+          "sortOrder": 2
+        },
+        {
+          "id": 4,
+          "url": "https://images.unsplash.com/photo-1625244724120-1fd1d34d00f6?auto=format&fit=crop&w=1600&q=80",
+          "caption": null,
+          "sortOrder": 3
+        },
+        {
+          "id": 5,
+          "url": "https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?auto=format&fit=crop&w=1600&q=80",
+          "caption": null,
+          "sortOrder": 4
+        }
+      ],
+      "rooms": [
+        {
+          "id": 1,
+          "hotelId": 1,
+          "name": "Double Room",
+          "description": "Comfortable room for two guests with en-suite bathroom.",
+          "capacity": 2,
+          "bedConfiguration": "1 king or 2 single beds",
+          "pricePerNight": 85000,
+          "imageUrl": "https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=1200&q=80"
+        },
+        {
+          "id": 2,
+          "hotelId": 1,
+          "name": "Triple Room",
+          "description": "Ideal for small families or friends travelling together.",
+          "capacity": 3,
+          "bedConfiguration": "3 single beds",
+          "pricePerNight": 106500,
+          "imageUrl": "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=1200&q=80"
+        },
+        {
+          "id": 3,
+          "hotelId": 1,
+          "name": "Quad Room",
+          "description": "Popular with groups and families; four single beds.",
+          "capacity": 4,
+          "bedConfiguration": "4 single beds",
+          "pricePerNight": 123500,
+          "imageUrl": "https://images.unsplash.com/photo-1631049552057-403cdb8f0658?auto=format&fit=crop&w=1200&q=80"
+        },
+        {
+          "id": 4,
+          "hotelId": 1,
+          "name": "Family Suite",
+          "description": "Separate sitting area and extra space for larger families.",
+          "capacity": 6,
+          "bedConfiguration": "1 king bed, 4 single beds, sitting area",
+          "pricePerNight": 204000,
+          "imageUrl": "https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?auto=format&fit=crop&w=1200&q=80"
+        }
+      ],
+      "createdAt": "2026-11-07T10:44:11.730969+00:00",
+      "updatedAt": "2026-11-07T10:44:11.730969+00:00"
+    },
+    {
+      "id": 9,
+      "slug": "quba-light-hotel",
+      "name": "Quba Light Hotel",
+      "city": "Madinah",
+      "address": "Abu Dhar Al Ghifari Street, Madinah",
+      "starRating": 4,
+      "distanceFromHolyMosqueMeters": null,
+      "isDistanceVerified": false,
+      "shortDescription": "Bright, modern four-star rooms within walking distance of the Haram.",
+      "description": "Quba Light Hotel offers bright, modern rooms and a friendly atmosphere. Triple and quad rooms make it popular with families and small groups, and a daily breakfast buffet is served in the lobby restaurant.",
+      "imageUrl": "https://images.unsplash.com/photo-1621293954908-907159247fc8?auto=format&fit=crop&w=1600&q=80",
+      "pricePerNight": 33000,
+      "currency": "PKR",
+      "amenities": [
+        "Free Wi-Fi",
+        "24-hour front desk",
+        "Air conditioning",
+        "Elevator",
+        "Daily housekeeping",
+        "Breakfast buffet",
+        "Family rooms",
+        "Luggage storage"
+      ],
+      "isFeatured": true,
+      "isActive": true,
+      "isDemoContent": true,
+      "images": [
+        {
+          "id": 36,
+          "url": "https://images.unsplash.com/photo-1621293954908-907159247fc8?auto=format&fit=crop&w=1600&q=80",
+          "caption": "Quba Light Hotel",
+          "sortOrder": 0
+        },
+        {
+          "id": 37,
+          "url": "https://images.unsplash.com/photo-1724191078796-8a997b989f43?auto=format&fit=crop&w=1600&q=80",
+          "caption": null,
+          "sortOrder": 1
+        },
+        {
+          "id": 38,
+          "url": "https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=1600&q=80",
+          "caption": null,
+          "sortOrder": 2
+        },
+        {
+          "id": 39,
+          "url": "https://images.unsplash.com/photo-1631049552057-403cdb8f0658?auto=format&fit=crop&w=1600&q=80",
+          "caption": null,
+          "sortOrder": 3
+        }
+      ],
+      "rooms": [
+        {
+          "id": 29,
+          "hotelId": 9,
+          "name": "Double Room",
+          "description": "Comfortable room for two guests with en-suite bathroom.",
+          "capacity": 2,
+          "bedConfiguration": "1 king or 2 single beds",
+          "pricePerNight": 33000,
+          "imageUrl": "https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=1200&q=80"
+        },
+        {
+          "id": 30,
+          "hotelId": 9,
+          "name": "Triple Room",
+          "description": "Ideal for small families or friends travelling together.",
+          "capacity": 3,
+          "bedConfiguration": "3 single beds",
+          "pricePerNight": 41500,
+          "imageUrl": "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=1200&q=80"
+        },
+        {
+          "id": 31,
+          "hotelId": 9,
+          "name": "Quad Room",
+          "description": "Popular with groups and families; four single beds.",
+          "capacity": 4,
+          "bedConfiguration": "4 single beds",
+          "pricePerNight": 48000,
+          "imageUrl": "https://images.unsplash.com/photo-1631049552057-403cdb8f0658?auto=format&fit=crop&w=1200&q=80"
+        }
+      ],
+      "createdAt": "2026-11-07T10:44:11.730969+00:00",
+      "updatedAt": "2026-11-07T10:44:11.730969+00:00"
+    },
+    {
+      "id": 3,
+      "slug": "zamzam-pearl-hotel",
+      "name": "Zamzam Pearl Hotel",
+      "city": "Makkah",
+      "address": "Ajyad Al Masafi, Makkah",
+      "starRating": 4,
+      "distanceFromHolyMosqueMeters": null,
+      "isDistanceVerified": false,
+      "shortDescription": "Comfortable four-star hotel with modern rooms and easy walking access to the Haram.",
+      "description": "Zamzam Pearl Hotel balances comfort and value with modern, well-kept rooms and a calm atmosphere. The hotel is a popular choice for small groups, offering triple and quad rooms, a daily breakfast buffet and help arranging taxis and ziyarat.",
+      "imageUrl": "https://images.unsplash.com/photo-1758193783649-13371d7fb8dd?auto=format&fit=crop&w=1600&q=80",
+      "pricePerNight": 42000,
+      "currency": "PKR",
+      "amenities": [
+        "Free Wi-Fi",
+        "24-hour front desk",
+        "Air conditioning",
+        "Elevator",
+        "Daily housekeeping",
+        "Breakfast buffet",
+        "Prayer area",
+        "Luggage storage",
+        "Laundry service"
+      ],
+      "isFeatured": true,
+      "isActive": true,
+      "isDemoContent": true,
+      "images": [
+        {
+          "id": 11,
+          "url": "https://images.unsplash.com/photo-1758193783649-13371d7fb8dd?auto=format&fit=crop&w=1600&q=80",
+          "caption": "Zamzam Pearl Hotel",
+          "sortOrder": 0
+        },
+        {
+          "id": 12,
+          "url": "https://images.unsplash.com/photo-1693590614566-1d3ea9ef32f7?auto=format&fit=crop&w=1600&q=80",
+          "caption": null,
+          "sortOrder": 1
+        },
+        {
+          "id": 13,
+          "url": "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=1600&q=80",
+          "caption": null,
+          "sortOrder": 2
+        },
+        {
+          "id": 14,
+          "url": "https://images.unsplash.com/photo-1629140727571-9b5c6f6267b4?auto=format&fit=crop&w=1600&q=80",
+          "caption": null,
+          "sortOrder": 3
+        }
+      ],
+      "rooms": [
+        {
+          "id": 9,
+          "hotelId": 3,
+          "name": "Double Room",
+          "description": "Comfortable room for two guests with en-suite bathroom.",
+          "capacity": 2,
+          "bedConfiguration": "1 king or 2 single beds",
+          "pricePerNight": 42000,
+          "imageUrl": "https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=1200&q=80"
+        },
+        {
+          "id": 10,
+          "hotelId": 3,
+          "name": "Triple Room",
+          "description": "Ideal for small families or friends travelling together.",
+          "capacity": 3,
+          "bedConfiguration": "3 single beds",
+          "pricePerNight": 52500,
+          "imageUrl": "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=1200&q=80"
+        },
+        {
+          "id": 11,
+          "hotelId": 3,
+          "name": "Quad Room",
+          "description": "Popular with groups and families; four single beds.",
+          "capacity": 4,
+          "bedConfiguration": "4 single beds",
+          "pricePerNight": 61000,
+          "imageUrl": "https://images.unsplash.com/photo-1631049552057-403cdb8f0658?auto=format&fit=crop&w=1200&q=80"
+        }
+      ],
+      "createdAt": "2026-11-07T10:44:11.730969+00:00",
+      "updatedAt": "2026-11-07T10:44:11.730969+00:00"
+    },
+    {
+      "id": 10,
+      "slug": "al-ansar-plaza-hotel",
+      "name": "Al Ansar Plaza Hotel",
+      "city": "Madinah",
+      "address": "Al Ansar Road, Madinah",
+      "starRating": 4,
+      "distanceFromHolyMosqueMeters": null,
+      "isDistanceVerified": false,
+      "shortDescription": "Well-located four-star hotel with comfortable rooms and helpful group services.",
+      "description": "Al Ansar Plaza Hotel is a dependable four-star choice with comfortable rooms, an efficient group check-in desk, and easy access to shops and restaurants around the Central Area.",
+      "imageUrl": "https://images.unsplash.com/photo-1776361984994-089a9df800f6?auto=format&fit=crop&w=1600&q=80",
+      "pricePerNight": 27500,
+      "currency": "PKR",
+      "amenities": [
+        "Free Wi-Fi",
+        "24-hour front desk",
+        "Air conditioning",
+        "Elevator",
+        "Daily housekeeping",
+        "Breakfast available",
+        "Group check-in desk",
+        "Laundry service"
+      ],
+      "isFeatured": false,
+      "isActive": true,
+      "isDemoContent": true,
+      "images": [
+        {
+          "id": 40,
+          "url": "https://images.unsplash.com/photo-1776361984994-089a9df800f6?auto=format&fit=crop&w=1600&q=80",
+          "caption": "Al Ansar Plaza Hotel",
+          "sortOrder": 0
+        },
+        {
+          "id": 41,
+          "url": "https://images.unsplash.com/photo-1605976528013-638e49b6599f?auto=format&fit=crop&w=1600&q=80",
+          "caption": null,
+          "sortOrder": 1
+        },
+        {
+          "id": 42,
+          "url": "https://images.unsplash.com/photo-1759328257280-28bdb3050be3?auto=format&fit=crop&w=1600&q=80",
+          "caption": null,
+          "sortOrder": 2
+        },
+        {
+          "id": 43,
+          "url": "https://images.unsplash.com/photo-1629140727571-9b5c6f6267b4?auto=format&fit=crop&w=1600&q=80",
+          "caption": null,
+          "sortOrder": 3
+        }
+      ],
+      "rooms": [
+        {
+          "id": 32,
+          "hotelId": 10,
+          "name": "Double Room",
+          "description": "Comfortable room for two guests with en-suite bathroom.",
+          "capacity": 2,
+          "bedConfiguration": "1 king or 2 single beds",
+          "pricePerNight": 27500,
+          "imageUrl": "https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=1200&q=80"
+        },
+        {
+          "id": 33,
+          "hotelId": 10,
+          "name": "Triple Room",
+          "description": "Ideal for small families or friends travelling together.",
+          "capacity": 3,
+          "bedConfiguration": "3 single beds",
+          "pricePerNight": 34500,
+          "imageUrl": "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=1200&q=80"
+        },
+        {
+          "id": 34,
+          "hotelId": 10,
+          "name": "Quad Room",
+          "description": "Popular with groups and families; four single beds.",
+          "capacity": 4,
+          "bedConfiguration": "4 single beds",
+          "pricePerNight": 40000,
+          "imageUrl": "https://images.unsplash.com/photo-1631049552057-403cdb8f0658?auto=format&fit=crop&w=1200&q=80"
+        }
+      ],
+      "createdAt": "2026-11-07T10:44:11.730969+00:00",
+      "updatedAt": "2026-11-07T10:44:11.730969+00:00"
+    },
+    {
+      "id": 4,
+      "slug": "ajyad-comfort-suites",
+      "name": "Ajyad Comfort Suites",
+      "city": "Makkah",
+      "address": "Ajyad Street, Makkah",
+      "starRating": 4,
+      "distanceFromHolyMosqueMeters": null,
+      "isDistanceVerified": false,
+      "shortDescription": "Practical suites with family-friendly layouts and a complimentary Haram shuttle at prayer times.",
+      "description": "Ajyad Comfort Suites is a practical base for pilgrims who want extra space. Rooms come in double, triple and quad configurations, and a complimentary shuttle runs to the Haram around the five daily prayers.",
+      "imageUrl": "https://images.unsplash.com/photo-1573052905904-34ad8c27f0cc?auto=format&fit=crop&w=1600&q=80",
+      "pricePerNight": 34000,
+      "currency": "PKR",
+      "amenities": [
+        "Free Wi-Fi",
+        "24-hour front desk",
+        "Air conditioning",
+        "Elevator",
+        "Daily housekeeping",
+        "Haram shuttle (prayer times)",
+        "Breakfast available",
+        "Family rooms",
+        "Luggage storage"
+      ],
+      "isFeatured": false,
+      "isActive": true,
+      "isDemoContent": true,
+      "images": [
+        {
+          "id": 15,
+          "url": "https://images.unsplash.com/photo-1573052905904-34ad8c27f0cc?auto=format&fit=crop&w=1600&q=80",
+          "caption": "Ajyad Comfort Suites",
+          "sortOrder": 0
+        },
+        {
+          "id": 16,
+          "url": "https://images.unsplash.com/photo-1713239060784-e6ed820a0715?auto=format&fit=crop&w=1600&q=80",
+          "caption": null,
+          "sortOrder": 1
+        },
+        {
+          "id": 17,
+          "url": "https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=1600&q=80",
+          "caption": null,
+          "sortOrder": 2
+        },
+        {
+          "id": 18,
+          "url": "https://images.unsplash.com/photo-1631049552057-403cdb8f0658?auto=format&fit=crop&w=1600&q=80",
+          "caption": null,
+          "sortOrder": 3
+        }
+      ],
+      "rooms": [
+        {
+          "id": 12,
+          "hotelId": 4,
+          "name": "Double Room",
+          "description": "Comfortable room for two guests with en-suite bathroom.",
+          "capacity": 2,
+          "bedConfiguration": "1 king or 2 single beds",
+          "pricePerNight": 34000,
+          "imageUrl": "https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=1200&q=80"
+        },
+        {
+          "id": 13,
+          "hotelId": 4,
+          "name": "Triple Room",
+          "description": "Ideal for small families or friends travelling together.",
+          "capacity": 3,
+          "bedConfiguration": "3 single beds",
+          "pricePerNight": 42500,
+          "imageUrl": "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=1200&q=80"
+        },
+        {
+          "id": 14,
+          "hotelId": 4,
+          "name": "Quad Room",
+          "description": "Popular with groups and families; four single beds.",
+          "capacity": 4,
+          "bedConfiguration": "4 single beds",
+          "pricePerNight": 49500,
+          "imageUrl": "https://images.unsplash.com/photo-1631049552057-403cdb8f0658?auto=format&fit=crop&w=1200&q=80"
+        }
+      ],
+      "createdAt": "2026-11-07T10:44:11.730969+00:00",
+      "updatedAt": "2026-11-07T10:44:11.730969+00:00"
+    },
+    {
+      "id": 12,
+      "slug": "al-aqiq-budget-stay",
+      "name": "Al Aqiq Budget Stay",
+      "city": "Madinah",
+      "address": "Al Aqiq District, Madinah",
+      "starRating": 3,
+      "distanceFromHolyMosqueMeters": null,
+      "isDistanceVerified": false,
+      "shortDescription": "Economical rooms in a quiet district with scheduled transport to Masjid an-Nabawi.",
+      "description": "Al Aqiq Budget Stay is an economical option in a quiet residential district, suited to economy packages, with scheduled transport to the Haram and spacious quad rooms.",
+      "imageUrl": "https://images.unsplash.com/photo-1630587148265-761cbd139043?auto=format&fit=crop&w=1600&q=80",
+      "pricePerNight": 10500,
+      "currency": "PKR",
+      "amenities": [
+        "Free Wi-Fi",
+        "24-hour front desk",
+        "Air conditioning",
+        "Elevator",
+        "Daily housekeeping",
+        "Scheduled Haram transport",
+        "Family rooms"
+      ],
+      "isFeatured": false,
+      "isActive": true,
+      "isDemoContent": true,
+      "images": [
+        {
+          "id": 48,
+          "url": "https://images.unsplash.com/photo-1630587148265-761cbd139043?auto=format&fit=crop&w=1600&q=80",
+          "caption": "Al Aqiq Budget Stay",
+          "sortOrder": 0
+        },
+        {
+          "id": 49,
+          "url": "https://images.unsplash.com/photo-1667454872134-c25973237138?auto=format&fit=crop&w=1600&q=80",
+          "caption": null,
+          "sortOrder": 1
+        },
+        {
+          "id": 50,
+          "url": "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=1600&q=80",
+          "caption": null,
+          "sortOrder": 2
+        },
+        {
+          "id": 51,
+          "url": "https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=1600&q=80",
+          "caption": null,
+          "sortOrder": 3
+        }
+      ],
+      "rooms": [
+        {
+          "id": 38,
+          "hotelId": 12,
+          "name": "Double Room",
+          "description": "Comfortable room for two guests with en-suite bathroom.",
+          "capacity": 2,
+          "bedConfiguration": "1 king or 2 single beds",
+          "pricePerNight": 10500,
+          "imageUrl": "https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=1200&q=80"
+        },
+        {
+          "id": 39,
+          "hotelId": 12,
+          "name": "Triple Room",
+          "description": "Ideal for small families or friends travelling together.",
+          "capacity": 3,
+          "bedConfiguration": "3 single beds",
+          "pricePerNight": 13000,
+          "imageUrl": "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=1200&q=80"
+        },
+        {
+          "id": 40,
+          "hotelId": 12,
+          "name": "Quad Room",
+          "description": "Popular with groups and families; four single beds.",
+          "capacity": 4,
+          "bedConfiguration": "4 single beds",
+          "pricePerNight": 15000,
+          "imageUrl": "https://images.unsplash.com/photo-1631049552057-403cdb8f0658?auto=format&fit=crop&w=1200&q=80"
+        }
+      ],
+      "createdAt": "2026-11-07T10:44:11.730969+00:00",
+      "updatedAt": "2026-11-07T10:44:11.730969+00:00"
+    },
+    {
+      "id": 6,
+      "slug": "aziziyah-family-hotel",
+      "name": "Aziziyah Family Hotel",
+      "city": "Makkah",
+      "address": "Al Aziziyah, Makkah",
+      "starRating": 3,
+      "distanceFromHolyMosqueMeters": null,
+      "isDistanceVerified": false,
+      "shortDescription": "Value hotel in Aziziyah with spacious family rooms and scheduled transport to the Haram.",
+      "description": "Located in the quieter Aziziyah district, this value hotel offers larger rooms at lower rates, with scheduled bus transport to the Haram. A good fit for economy packages and longer stays.",
+      "imageUrl": "https://images.unsplash.com/photo-1587702068694-a909ef4aa346?auto=format&fit=crop&w=1600&q=80",
+      "pricePerNight": 12500,
+      "currency": "PKR",
+      "amenities": [
+        "Free Wi-Fi",
+        "24-hour front desk",
+        "Air conditioning",
+        "Elevator",
+        "Daily housekeeping",
+        "Scheduled Haram transport",
+        "Family rooms",
+        "Grocery nearby"
+      ],
+      "isFeatured": false,
+      "isActive": true,
+      "isDemoContent": true,
+      "images": [
+        {
+          "id": 23,
+          "url": "https://images.unsplash.com/photo-1587702068694-a909ef4aa346?auto=format&fit=crop&w=1600&q=80",
+          "caption": "Aziziyah Family Hotel",
+          "sortOrder": 0
+        },
+        {
+          "id": 24,
+          "url": "https://images.unsplash.com/photo-1564769625905-50e93615e769?auto=format&fit=crop&w=1600&q=80",
+          "caption": null,
+          "sortOrder": 1
+        },
+        {
+          "id": 25,
+          "url": "https://images.unsplash.com/photo-1629140727571-9b5c6f6267b4?auto=format&fit=crop&w=1600&q=80",
+          "caption": null,
+          "sortOrder": 2
+        },
+        {
+          "id": 26,
+          "url": "https://images.unsplash.com/photo-1765547090903-348b711f0eee?auto=format&fit=crop&w=1600&q=80",
+          "caption": null,
+          "sortOrder": 3
+        }
+      ],
+      "rooms": [
+        {
+          "id": 18,
+          "hotelId": 6,
+          "name": "Double Room",
+          "description": "Comfortable room for two guests with en-suite bathroom.",
+          "capacity": 2,
+          "bedConfiguration": "1 king or 2 single beds",
+          "pricePerNight": 12500,
+          "imageUrl": "https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=1200&q=80"
+        },
+        {
+          "id": 19,
+          "hotelId": 6,
+          "name": "Triple Room",
+          "description": "Ideal for small families or friends travelling together.",
+          "capacity": 3,
+          "bedConfiguration": "3 single beds",
+          "pricePerNight": 15500,
+          "imageUrl": "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=1200&q=80"
+        },
+        {
+          "id": 20,
+          "hotelId": 6,
+          "name": "Quad Room",
+          "description": "Popular with groups and families; four single beds.",
+          "capacity": 4,
+          "bedConfiguration": "4 single beds",
+          "pricePerNight": 18000,
+          "imageUrl": "https://images.unsplash.com/photo-1631049552057-403cdb8f0658?auto=format&fit=crop&w=1200&q=80"
+        }
+      ],
+      "createdAt": "2026-11-07T10:44:11.730969+00:00",
+      "updatedAt": "2026-11-07T10:44:11.730969+00:00"
+    },
+    {
+      "id": 11,
+      "slug": "green-dome-inn",
+      "name": "Green Dome Inn",
+      "city": "Madinah",
+      "address": "Sultana Road, Madinah",
+      "starRating": 3,
+      "distanceFromHolyMosqueMeters": null,
+      "isDistanceVerified": false,
+      "shortDescription": "Simple, comfortable three-star rooms at a friendly price, a short ride from the Haram.",
+      "description": "Green Dome Inn provides simple, comfortable accommodation for pilgrims on a budget, with quad rooms for groups and regular transport to Masjid an-Nabawi.",
+      "imageUrl": "https://images.unsplash.com/photo-1573052905904-34ad8c27f0cc?auto=format&fit=crop&w=1600&q=80",
+      "pricePerNight": 16000,
+      "currency": "PKR",
+      "amenities": [
+        "Free Wi-Fi",
+        "24-hour front desk",
+        "Air conditioning",
+        "Elevator",
+        "Daily housekeeping",
+        "Haram transport",
+        "Breakfast available"
+      ],
+      "isFeatured": false,
+      "isActive": true,
+      "isDemoContent": true,
+      "images": [
+        {
+          "id": 44,
+          "url": "https://images.unsplash.com/photo-1573052905904-34ad8c27f0cc?auto=format&fit=crop&w=1600&q=80",
+          "caption": "Green Dome Inn",
+          "sortOrder": 0
+        },
+        {
+          "id": 45,
+          "url": "https://images.unsplash.com/photo-1677835214504-9648944c3e50?auto=format&fit=crop&w=1600&q=80",
+          "caption": null,
+          "sortOrder": 1
+        },
+        {
+          "id": 46,
+          "url": "https://images.unsplash.com/photo-1711059985570-4c32ed12a12c?auto=format&fit=crop&w=1600&q=80",
+          "caption": null,
+          "sortOrder": 2
+        },
+        {
+          "id": 47,
+          "url": "https://images.unsplash.com/photo-1765547090903-348b711f0eee?auto=format&fit=crop&w=1600&q=80",
+          "caption": null,
+          "sortOrder": 3
+        }
+      ],
+      "rooms": [
+        {
+          "id": 35,
+          "hotelId": 11,
+          "name": "Double Room",
+          "description": "Comfortable room for two guests with en-suite bathroom.",
+          "capacity": 2,
+          "bedConfiguration": "1 king or 2 single beds",
+          "pricePerNight": 16000,
+          "imageUrl": "https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=1200&q=80"
+        },
+        {
+          "id": 36,
+          "hotelId": 11,
+          "name": "Triple Room",
+          "description": "Ideal for small families or friends travelling together.",
+          "capacity": 3,
+          "bedConfiguration": "3 single beds",
+          "pricePerNight": 20000,
+          "imageUrl": "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=1200&q=80"
+        },
+        {
+          "id": 37,
+          "hotelId": 11,
+          "name": "Quad Room",
+          "description": "Popular with groups and families; four single beds.",
+          "capacity": 4,
+          "bedConfiguration": "4 single beds",
+          "pricePerNight": 23000,
+          "imageUrl": "https://images.unsplash.com/photo-1631049552057-403cdb8f0658?auto=format&fit=crop&w=1200&q=80"
+        }
+      ],
+      "createdAt": "2026-11-07T10:44:11.730969+00:00",
+      "updatedAt": "2026-11-07T10:44:11.730969+00:00"
+    },
+    {
+      "id": 5,
+      "slug": "misfalah-garden-inn",
+      "name": "Misfalah Garden Inn",
+      "city": "Makkah",
+      "address": "Misfalah District, Makkah",
+      "starRating": 3,
+      "distanceFromHolyMosqueMeters": null,
+      "isDistanceVerified": false,
+      "shortDescription": "Clean, budget-friendly three-star rooms with a regular shuttle to Masjid al-Haram.",
+      "description": "Misfalah Garden Inn offers simple, clean rooms at an accessible price. It suits budget-conscious pilgrims and large groups, with quad rooms available and a regular shuttle service to the Haram.",
+      "imageUrl": "https://images.unsplash.com/photo-1630587148265-761cbd139043?auto=format&fit=crop&w=1600&q=80",
+      "pricePerNight": 19500,
+      "currency": "PKR",
+      "amenities": [
+        "Free Wi-Fi",
+        "24-hour front desk",
+        "Air conditioning",
+        "Elevator",
+        "Daily housekeeping",
+        "Haram shuttle",
+        "Breakfast available",
+        "Group check-in desk"
+      ],
+      "isFeatured": false,
+      "isActive": true,
+      "isDemoContent": true,
+      "images": [
+        {
+          "id": 19,
+          "url": "https://images.unsplash.com/photo-1630587148265-761cbd139043?auto=format&fit=crop&w=1600&q=80",
+          "caption": "Misfalah Garden Inn",
+          "sortOrder": 0
+        },
+        {
+          "id": 20,
+          "url": "https://images.unsplash.com/photo-1592326871020-04f58c1a52f3?auto=format&fit=crop&w=1600&q=80",
+          "caption": null,
+          "sortOrder": 1
+        },
+        {
+          "id": 21,
+          "url": "https://images.unsplash.com/photo-1711059985570-4c32ed12a12c?auto=format&fit=crop&w=1600&q=80",
+          "caption": null,
+          "sortOrder": 2
+        },
+        {
+          "id": 22,
+          "url": "https://images.unsplash.com/photo-1759328257280-28bdb3050be3?auto=format&fit=crop&w=1600&q=80",
+          "caption": null,
+          "sortOrder": 3
+        }
+      ],
+      "rooms": [
+        {
+          "id": 15,
+          "hotelId": 5,
+          "name": "Double Room",
+          "description": "Comfortable room for two guests with en-suite bathroom.",
+          "capacity": 2,
+          "bedConfiguration": "1 king or 2 single beds",
+          "pricePerNight": 19500,
+          "imageUrl": "https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=1200&q=80"
+        },
+        {
+          "id": 16,
+          "hotelId": 5,
+          "name": "Triple Room",
+          "description": "Ideal for small families or friends travelling together.",
+          "capacity": 3,
+          "bedConfiguration": "3 single beds",
+          "pricePerNight": 24500,
+          "imageUrl": "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=1200&q=80"
+        },
+        {
+          "id": 17,
+          "hotelId": 5,
+          "name": "Quad Room",
+          "description": "Popular with groups and families; four single beds.",
+          "capacity": 4,
+          "bedConfiguration": "4 single beds",
+          "pricePerNight": 28500,
+          "imageUrl": "https://images.unsplash.com/photo-1631049552057-403cdb8f0658?auto=format&fit=crop&w=1200&q=80"
+        }
+      ],
+      "createdAt": "2026-11-07T10:44:11.730969+00:00",
+      "updatedAt": "2026-11-07T10:44:11.730969+00:00"
+    }
+  ],
+  "packages": [
+    {
+      "id": 1,
+      "slug": "economy-15-day-umrah",
+      "name": "Economy 15-Day Umrah",
+      "packageType": "Economy",
+      "durationInDays": 15,
+      "makkahDays": 10,
+      "madinahDays": 4,
+      "price": 285000,
+      "currency": "PKR",
+      "shortDescription": "An affordable 15-day Umrah with comfortable value hotels and scheduled transport to both Harams.",
+      "description": "Our economy package is designed for pilgrims who want a complete, well-organised Umrah at an accessible price. You will spend 10 nights in Makkah and 4 nights in Madinah in clean, value-focused hotels with scheduled transport to the Haram. Visa, transfers and intercity transport are included.",
+      "imageUrl": "https://images.unsplash.com/photo-1564769625905-50e93615e769?auto=format&fit=crop&w=1600&q=80",
+      "isFeatured": true,
+      "isActive": true,
+      "isDemoContent": true,
+      "images": [
+        {
+          "id": 1,
+          "url": "https://images.unsplash.com/photo-1564769625905-50e93615e769?auto=format&fit=crop&w=1600&q=80",
+          "caption": null,
+          "sortOrder": 0
+        },
+        {
+          "id": 2,
+          "url": "https://images.unsplash.com/photo-1667454872134-c25973237138?auto=format&fit=crop&w=1600&q=80",
+          "caption": null,
+          "sortOrder": 1
+        }
+      ],
+      "hotels": [
+        {
+          "hotelId": 6,
+          "hotelSlug": "aziziyah-family-hotel",
+          "hotelName": "Aziziyah Family Hotel",
+          "city": "Makkah",
+          "starRating": 3,
+          "imageUrl": "https://images.unsplash.com/photo-1587702068694-a909ef4aa346?auto=format&fit=crop&w=1600&q=80",
+          "distanceFromHolyMosqueMeters": null,
+          "nights": 10
+        },
+        {
+          "hotelId": 12,
+          "hotelSlug": "al-aqiq-budget-stay",
+          "hotelName": "Al Aqiq Budget Stay",
+          "city": "Madinah",
+          "starRating": 3,
+          "imageUrl": "https://images.unsplash.com/photo-1630587148265-761cbd139043?auto=format&fit=crop&w=1600&q=80",
+          "distanceFromHolyMosqueMeters": null,
+          "nights": 4
+        }
+      ],
+      "services": [
+        {
+          "id": 1,
+          "serviceName": "Umrah visa processing",
+          "description": "Visa application handled by our team.",
+          "sortOrder": 0
+        },
+        {
+          "id": 2,
+          "serviceName": "Airport transfers",
+          "description": "Transfers between Jeddah/Madinah airport and your hotel.",
+          "sortOrder": 1
+        },
+        {
+          "id": 3,
+          "serviceName": "Makkah–Madinah transport",
+          "description": "Intercity transport by air-conditioned coach.",
+          "sortOrder": 2
+        },
+        {
+          "id": 4,
+          "serviceName": "Return economy airfare",
+          "description": null,
+          "sortOrder": 3
+        },
+        {
+          "id": 5,
+          "serviceName": "Shared quad-room accommodation",
+          "description": null,
+          "sortOrder": 4
+        }
+      ],
+      "createdAt": "2026-11-07T10:44:11.730969+00:00",
+      "updatedAt": "2026-11-07T10:44:11.730969+00:00"
+    },
+    {
+      "id": 2,
+      "slug": "standard-21-day-umrah",
+      "name": "Standard 21-Day Umrah",
+      "packageType": "Standard",
+      "durationInDays": 21,
+      "makkahDays": 14,
+      "madinahDays": 6,
+      "price": 345000,
+      "currency": "PKR",
+      "shortDescription": "Three weeks for unhurried worship, with comfortable three-star hotels and full ground arrangements.",
+      "description": "Take your time with a 21-day journey: 14 nights in Makkah and 6 nights in Madinah. This package suits pilgrims who want more time for worship and reflection, with comfortable hotels and guided ziyarat in both cities.",
+      "imageUrl": "https://images.unsplash.com/photo-1592326871020-04f58c1a52f3?auto=format&fit=crop&w=1600&q=80",
+      "isFeatured": true,
+      "isActive": true,
+      "isDemoContent": true,
+      "images": [
+        {
+          "id": 3,
+          "url": "https://images.unsplash.com/photo-1592326871020-04f58c1a52f3?auto=format&fit=crop&w=1600&q=80",
+          "caption": null,
+          "sortOrder": 0
+        },
+        {
+          "id": 4,
+          "url": "https://images.unsplash.com/photo-1677835214504-9648944c3e50?auto=format&fit=crop&w=1600&q=80",
+          "caption": null,
+          "sortOrder": 1
+        }
+      ],
+      "hotels": [
+        {
+          "hotelId": 5,
+          "hotelSlug": "misfalah-garden-inn",
+          "hotelName": "Misfalah Garden Inn",
+          "city": "Makkah",
+          "starRating": 3,
+          "imageUrl": "https://images.unsplash.com/photo-1630587148265-761cbd139043?auto=format&fit=crop&w=1600&q=80",
+          "distanceFromHolyMosqueMeters": null,
+          "nights": 14
+        },
+        {
+          "hotelId": 11,
+          "hotelSlug": "green-dome-inn",
+          "hotelName": "Green Dome Inn",
+          "city": "Madinah",
+          "starRating": 3,
+          "imageUrl": "https://images.unsplash.com/photo-1573052905904-34ad8c27f0cc?auto=format&fit=crop&w=1600&q=80",
+          "distanceFromHolyMosqueMeters": null,
+          "nights": 6
+        }
+      ],
+      "services": [
+        {
+          "id": 6,
+          "serviceName": "Umrah visa processing",
+          "description": "Visa application handled by our team.",
+          "sortOrder": 0
+        },
+        {
+          "id": 7,
+          "serviceName": "Airport transfers",
+          "description": "Transfers between Jeddah/Madinah airport and your hotel.",
+          "sortOrder": 1
+        },
+        {
+          "id": 8,
+          "serviceName": "Makkah–Madinah transport",
+          "description": "Intercity transport by air-conditioned coach.",
+          "sortOrder": 2
+        },
+        {
+          "id": 9,
+          "serviceName": "Return economy airfare",
+          "description": null,
+          "sortOrder": 3
+        },
+        {
+          "id": 10,
+          "serviceName": "Ziyarat tours in Makkah & Madinah",
+          "description": null,
+          "sortOrder": 4
+        },
+        {
+          "id": 11,
+          "serviceName": "Daily breakfast",
+          "description": null,
+          "sortOrder": 5
+        }
+      ],
+      "createdAt": "2026-11-07T10:44:11.730969+00:00",
+      "updatedAt": "2026-11-07T10:44:11.730969+00:00"
+    },
+    {
+      "id": 4,
+      "slug": "premium-10-day-umrah",
+      "name": "Premium 10-Day Umrah",
+      "packageType": "Premium",
+      "durationInDays": 10,
+      "makkahDays": 6,
+      "madinahDays": 3,
+      "price": 545000,
+      "currency": "PKR",
+      "shortDescription": "A shorter premium itinerary with four-star hotels within walking distance of both Harams.",
+      "description": "For pilgrims with limited time, this premium itinerary offers 6 nights in Makkah and 3 nights in Madinah in four-star hotels within walking distance of the Harams, with breakfast daily and private airport transfers.",
+      "imageUrl": "https://images.unsplash.com/photo-1693590614566-1d3ea9ef32f7?auto=format&fit=crop&w=1600&q=80",
+      "isFeatured": true,
+      "isActive": true,
+      "isDemoContent": true,
+      "images": [
+        {
+          "id": 7,
+          "url": "https://images.unsplash.com/photo-1693590614566-1d3ea9ef32f7?auto=format&fit=crop&w=1600&q=80",
+          "caption": null,
+          "sortOrder": 0
+        },
+        {
+          "id": 8,
+          "url": "https://images.unsplash.com/photo-1724191078796-8a997b989f43?auto=format&fit=crop&w=1600&q=80",
+          "caption": null,
+          "sortOrder": 1
+        }
+      ],
+      "hotels": [
+        {
+          "hotelId": 3,
+          "hotelSlug": "zamzam-pearl-hotel",
+          "hotelName": "Zamzam Pearl Hotel",
+          "city": "Makkah",
+          "starRating": 4,
+          "imageUrl": "https://images.unsplash.com/photo-1758193783649-13371d7fb8dd?auto=format&fit=crop&w=1600&q=80",
+          "distanceFromHolyMosqueMeters": null,
+          "nights": 6
+        },
+        {
+          "hotelId": 9,
+          "hotelSlug": "quba-light-hotel",
+          "hotelName": "Quba Light Hotel",
+          "city": "Madinah",
+          "starRating": 4,
+          "imageUrl": "https://images.unsplash.com/photo-1621293954908-907159247fc8?auto=format&fit=crop&w=1600&q=80",
+          "distanceFromHolyMosqueMeters": null,
+          "nights": 3
+        }
+      ],
+      "services": [
+        {
+          "id": 18,
+          "serviceName": "Umrah visa processing",
+          "description": "Visa application handled by our team.",
+          "sortOrder": 0
+        },
+        {
+          "id": 19,
+          "serviceName": "Airport transfers",
+          "description": "Transfers between Jeddah/Madinah airport and your hotel.",
+          "sortOrder": 1
+        },
+        {
+          "id": 20,
+          "serviceName": "Makkah–Madinah transport",
+          "description": "Intercity transport by air-conditioned coach.",
+          "sortOrder": 2
+        },
+        {
+          "id": 21,
+          "serviceName": "Return economy airfare",
+          "description": null,
+          "sortOrder": 3
+        },
+        {
+          "id": 22,
+          "serviceName": "Daily breakfast",
+          "description": null,
+          "sortOrder": 4
+        },
+        {
+          "id": 23,
+          "serviceName": "Private airport transfers",
+          "description": null,
+          "sortOrder": 5
+        },
+        {
+          "id": 24,
+          "serviceName": "Ziyarat tours in Makkah & Madinah",
+          "description": null,
+          "sortOrder": 6
+        }
+      ],
+      "createdAt": "2026-11-07T10:44:11.730969+00:00",
+      "updatedAt": "2026-11-07T10:44:11.730969+00:00"
+    },
+    {
+      "id": 6,
+      "slug": "ramadan-last-ten-nights-umrah",
+      "name": "Ramadan Last Ten Nights Umrah",
+      "packageType": "Premium",
+      "durationInDays": 12,
+      "makkahDays": 8,
+      "madinahDays": 3,
+      "price": 725000,
+      "currency": "PKR",
+      "shortDescription": "Spend the blessed last ten nights of Ramadan in Makkah, with suhoor and iftar arrangements.",
+      "description": "Experience the last ten nights of Ramadan in Makkah with 8 nights at a five-star residence near the Haram, followed by 3 nights in Madinah. Suhoor and iftar arrangements are included. Dates follow the Islamic calendar and are confirmed on inquiry.",
+      "imageUrl": "https://images.unsplash.com/photo-1580418827493-f2b22c0a76cb?auto=format&fit=crop&w=1600&q=80",
+      "isFeatured": true,
+      "isActive": true,
+      "isDemoContent": true,
+      "images": [
+        {
+          "id": 12,
+          "url": "https://images.unsplash.com/photo-1580418827493-f2b22c0a76cb?auto=format&fit=crop&w=1600&q=80",
+          "caption": null,
+          "sortOrder": 0
+        },
+        {
+          "id": 13,
+          "url": "https://images.unsplash.com/photo-1646424857576-2a66db82a65c?auto=format&fit=crop&w=1600&q=80",
+          "caption": null,
+          "sortOrder": 1
+        }
+      ],
+      "hotels": [
+        {
+          "hotelId": 2,
+          "hotelSlug": "safa-grand-residence",
+          "hotelName": "Safa Grand Residence",
+          "city": "Makkah",
+          "starRating": 5,
+          "imageUrl": "https://images.unsplash.com/photo-1782890790046-2aefb0b503cb?auto=format&fit=crop&w=1600&q=80",
+          "distanceFromHolyMosqueMeters": null,
+          "nights": 8
+        },
+        {
+          "hotelId": 8,
+          "hotelSlug": "bab-al-salam-residence",
+          "hotelName": "Bab Al Salam Residence",
+          "city": "Madinah",
+          "starRating": 5,
+          "imageUrl": "https://images.unsplash.com/photo-1758448500688-3ababa93fd67?auto=format&fit=crop&w=1600&q=80",
+          "distanceFromHolyMosqueMeters": null,
+          "nights": 3
+        }
+      ],
+      "services": [
+        {
+          "id": 33,
+          "serviceName": "Umrah visa processing",
+          "description": "Visa application handled by our team.",
+          "sortOrder": 0
+        },
+        {
+          "id": 34,
+          "serviceName": "Airport transfers",
+          "description": "Transfers between Jeddah/Madinah airport and your hotel.",
+          "sortOrder": 1
+        },
+        {
+          "id": 35,
+          "serviceName": "Makkah–Madinah transport",
+          "description": "Intercity transport by air-conditioned coach.",
+          "sortOrder": 2
+        },
+        {
+          "id": 36,
+          "serviceName": "Return economy airfare",
+          "description": null,
+          "sortOrder": 3
+        },
+        {
+          "id": 37,
+          "serviceName": "Suhoor & iftar meals",
+          "description": null,
+          "sortOrder": 4
+        },
+        {
+          "id": 38,
+          "serviceName": "Ziyarat tours in Makkah & Madinah",
+          "description": null,
+          "sortOrder": 5
+        }
+      ],
+      "createdAt": "2026-11-07T10:44:11.730969+00:00",
+      "updatedAt": "2026-11-07T10:44:11.730969+00:00"
+    },
+    {
+      "id": 5,
+      "slug": "luxury-12-day-haram-view-umrah",
+      "name": "Luxury 12-Day Haram View Umrah",
+      "packageType": "Luxury",
+      "durationInDays": 12,
+      "makkahDays": 7,
+      "madinahDays": 4,
+      "price": 895000,
+      "currency": "PKR",
+      "shortDescription": "Five-star hotels steps from both Harams, Haram-view rooms in Makkah (subject to availability) and private transfers.",
+      "description": "Our most comfortable itinerary: 7 nights in Makkah and 4 nights in Madinah in five-star hotels moments from the Harams. Enjoy Haram-view rooms in Makkah where available, daily breakfast buffets, private transfers and a dedicated group coordinator.",
+      "imageUrl": "https://images.unsplash.com/photo-1720549973451-018d3623b55a?auto=format&fit=crop&w=1600&q=80",
+      "isFeatured": true,
+      "isActive": true,
+      "isDemoContent": true,
+      "images": [
+        {
+          "id": 9,
+          "url": "https://images.unsplash.com/photo-1720549973451-018d3623b55a?auto=format&fit=crop&w=1600&q=80",
+          "caption": null,
+          "sortOrder": 0
+        },
+        {
+          "id": 10,
+          "url": "https://images.unsplash.com/photo-1591604129939-f1efa4d9f7fa?auto=format&fit=crop&w=1600&q=80",
+          "caption": null,
+          "sortOrder": 1
+        },
+        {
+          "id": 11,
+          "url": "https://images.unsplash.com/photo-1625244724120-1fd1d34d00f6?auto=format&fit=crop&w=1600&q=80",
+          "caption": null,
+          "sortOrder": 2
+        }
+      ],
+      "hotels": [
+        {
+          "hotelId": 1,
+          "hotelSlug": "al-noor-haram-view-hotel",
+          "hotelName": "Al Noor Haram View Hotel",
+          "city": "Makkah",
+          "starRating": 5,
+          "imageUrl": "https://images.unsplash.com/photo-1660557989695-14fac79c086d?auto=format&fit=crop&w=1600&q=80",
+          "distanceFromHolyMosqueMeters": null,
+          "nights": 7
+        },
+        {
+          "hotelId": 7,
+          "hotelSlug": "al-rawdah-crown-hotel",
+          "hotelName": "Al Rawdah Crown Hotel",
+          "city": "Madinah",
+          "starRating": 5,
+          "imageUrl": "https://images.unsplash.com/photo-1625244724120-1fd1d34d00f6?auto=format&fit=crop&w=1600&q=80",
+          "distanceFromHolyMosqueMeters": null,
+          "nights": 4
+        }
+      ],
+      "services": [
+        {
+          "id": 25,
+          "serviceName": "Umrah visa processing",
+          "description": "Visa application handled by our team.",
+          "sortOrder": 0
+        },
+        {
+          "id": 26,
+          "serviceName": "Airport transfers",
+          "description": "Transfers between Jeddah/Madinah airport and your hotel.",
+          "sortOrder": 1
+        },
+        {
+          "id": 27,
+          "serviceName": "Makkah–Madinah transport",
+          "description": "Intercity transport by air-conditioned coach.",
+          "sortOrder": 2
+        },
+        {
+          "id": 28,
+          "serviceName": "Return economy airfare",
+          "description": null,
+          "sortOrder": 3
+        },
+        {
+          "id": 29,
+          "serviceName": "Daily breakfast buffet",
+          "description": null,
+          "sortOrder": 4
+        },
+        {
+          "id": 30,
+          "serviceName": "Private airport & intercity transfers",
+          "description": null,
+          "sortOrder": 5
+        },
+        {
+          "id": 31,
+          "serviceName": "Dedicated group coordinator",
+          "description": null,
+          "sortOrder": 6
+        },
+        {
+          "id": 32,
+          "serviceName": "Ziyarat tours in Makkah & Madinah",
+          "description": null,
+          "sortOrder": 7
+        }
+      ],
+      "createdAt": "2026-11-07T10:44:11.730969+00:00",
+      "updatedAt": "2026-11-07T10:44:11.730969+00:00"
+    },
+    {
+      "id": 7,
+      "slug": "short-7-day-umrah",
+      "name": "Short 7-Day Umrah",
+      "packageType": "Standard",
+      "durationInDays": 7,
+      "makkahDays": 4,
+      "madinahDays": 2,
+      "price": 265000,
+      "currency": "PKR",
+      "shortDescription": "A compact one-week Umrah for working professionals, with all ground arrangements handled.",
+      "description": "Ideal for those who can only take a week off: 4 nights in Makkah and 2 nights in Madinah with visa, transfers and intercity transport included.",
+      "imageUrl": "https://images.unsplash.com/photo-1591004272853-1462c050dca8?auto=format&fit=crop&w=1600&q=80",
+      "isFeatured": false,
+      "isActive": true,
+      "isDemoContent": true,
+      "images": [
+        {
+          "id": 50,
+          "url": "https://images.unsplash.com/photo-1591004272853-1462c050dca8?auto=format&fit=crop&w=1600&q=80",
+          "caption": null,
+          "sortOrder": 0
+        },
+        {
+          "id": 51,
+          "url": "https://images.unsplash.com/photo-1711261817080-8f064416206c?auto=format&fit=crop&w=1600&q=80",
+          "caption": null,
+          "sortOrder": 1
+        }
+      ],
+      "hotels": [
+        {
+          "hotelId": 5,
+          "hotelSlug": "misfalah-garden-inn",
+          "hotelName": "Misfalah Garden Inn",
+          "city": "Makkah",
+          "starRating": 3,
+          "imageUrl": "https://images.unsplash.com/photo-1630587148265-761cbd139043?auto=format&fit=crop&w=1600&q=80",
+          "distanceFromHolyMosqueMeters": null,
+          "nights": 4
+        },
+        {
+          "hotelId": 11,
+          "hotelSlug": "green-dome-inn",
+          "hotelName": "Green Dome Inn",
+          "city": "Madinah",
+          "starRating": 3,
+          "imageUrl": "https://images.unsplash.com/photo-1573052905904-34ad8c27f0cc?auto=format&fit=crop&w=1600&q=80",
+          "distanceFromHolyMosqueMeters": null,
+          "nights": 2
+        }
+      ],
+      "services": [
+        {
+          "id": 111,
+          "serviceName": "Umrah visa processing",
+          "description": "Visa application handled by our team.",
+          "sortOrder": 0
+        },
+        {
+          "id": 112,
+          "serviceName": "Airport transfers",
+          "description": "Transfers between Jeddah/Madinah airport and your hotel.",
+          "sortOrder": 1
+        },
+        {
+          "id": 113,
+          "serviceName": "Makkah–Madinah transport",
+          "description": "Intercity transport by air-conditioned coach.",
+          "sortOrder": 2
+        },
+        {
+          "id": 114,
+          "serviceName": "Return economy airfare",
+          "description": null,
+          "sortOrder": 3
+        }
+      ],
+      "createdAt": "2026-11-07T10:44:11.730969+00:00",
+      "updatedAt": "2026-11-07T15:07:54.340225+00:00"
+    },
+    {
+      "id": 3,
+      "slug": "comfort-14-day-umrah",
+      "name": "Comfort 14-Day Umrah",
+      "packageType": "Standard",
+      "durationInDays": 14,
+      "makkahDays": 9,
+      "madinahDays": 4,
+      "price": 395000,
+      "currency": "PKR",
+      "shortDescription": "Balanced two-week package with four-star hotels and family-friendly room options.",
+      "description": "A balanced two-week package with 9 nights in Makkah and 4 nights in Madinah in four-star hotels. Triple and quad rooms are available for families, and the Makkah hotel offers a shuttle to the Haram at prayer times.",
+      "imageUrl": "https://images.unsplash.com/photo-1713239060784-e6ed820a0715?auto=format&fit=crop&w=1600&q=80",
+      "isFeatured": false,
+      "isActive": true,
+      "isDemoContent": true,
+      "images": [
+        {
+          "id": 5,
+          "url": "https://images.unsplash.com/photo-1713239060784-e6ed820a0715?auto=format&fit=crop&w=1600&q=80",
+          "caption": null,
+          "sortOrder": 0
+        },
+        {
+          "id": 6,
+          "url": "https://images.unsplash.com/photo-1605976528013-638e49b6599f?auto=format&fit=crop&w=1600&q=80",
+          "caption": null,
+          "sortOrder": 1
+        }
+      ],
+      "hotels": [
+        {
+          "hotelId": 4,
+          "hotelSlug": "ajyad-comfort-suites",
+          "hotelName": "Ajyad Comfort Suites",
+          "city": "Makkah",
+          "starRating": 4,
+          "imageUrl": "https://images.unsplash.com/photo-1573052905904-34ad8c27f0cc?auto=format&fit=crop&w=1600&q=80",
+          "distanceFromHolyMosqueMeters": null,
+          "nights": 9
+        },
+        {
+          "hotelId": 10,
+          "hotelSlug": "al-ansar-plaza-hotel",
+          "hotelName": "Al Ansar Plaza Hotel",
+          "city": "Madinah",
+          "starRating": 4,
+          "imageUrl": "https://images.unsplash.com/photo-1776361984994-089a9df800f6?auto=format&fit=crop&w=1600&q=80",
+          "distanceFromHolyMosqueMeters": null,
+          "nights": 4
+        }
+      ],
+      "services": [
+        {
+          "id": 12,
+          "serviceName": "Umrah visa processing",
+          "description": "Visa application handled by our team.",
+          "sortOrder": 0
+        },
+        {
+          "id": 13,
+          "serviceName": "Airport transfers",
+          "description": "Transfers between Jeddah/Madinah airport and your hotel.",
+          "sortOrder": 1
+        },
+        {
+          "id": 14,
+          "serviceName": "Makkah–Madinah transport",
+          "description": "Intercity transport by air-conditioned coach.",
+          "sortOrder": 2
+        },
+        {
+          "id": 15,
+          "serviceName": "Return economy airfare",
+          "description": null,
+          "sortOrder": 3
+        },
+        {
+          "id": 16,
+          "serviceName": "Daily breakfast",
+          "description": null,
+          "sortOrder": 4
+        },
+        {
+          "id": 17,
+          "serviceName": "Ziyarat tours in Makkah & Madinah",
+          "description": null,
+          "sortOrder": 5
+        }
+      ],
+      "createdAt": "2026-11-07T10:44:11.730969+00:00",
+      "updatedAt": "2026-11-07T10:44:11.730969+00:00"
+    }
+  ]
+}

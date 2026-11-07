@@ -1,6 +1,7 @@
 import "server-only";
 import { connection } from "next/server";
-import { getApiBaseUrl } from "./config";
+import { PREVIEW_MODE, getApiBaseUrl } from "./config";
+import { previewGetHotel, previewGetPackage, previewSearchHotels, previewSearchPackages } from "./preview/catalog";
 import type {
   City,
   HotelDetail,
@@ -103,26 +104,34 @@ export function packageFilters(sp: SearchParams) {
   };
 }
 
-export function searchHotels(city: City | undefined, sp: SearchParams, pageSize = 12) {
+// In preview mode (no backend), these read the bundled sample catalogue instead of calling the API.
+
+export async function searchHotels(city: City | undefined, sp: SearchParams, pageSize = 12) {
+  if (PREVIEW_MODE) return previewSearchHotels(city, hotelFilters(sp), pageSize);
   return apiGet<PagedResult<HotelSummary>>(`/api/hotels/search${toQueryString({ city, pageSize, ...hotelFilters(sp) })}`);
 }
 
-export function getFeaturedHotels(city: City, limit = 4) {
+export async function getFeaturedHotels(city: City, limit = 4) {
+  if (PREVIEW_MODE) return previewSearchHotels(city, {}, limit, true).items;
   return apiGet<HotelSummary[]>(`/api/hotels/featured${toQueryString({ city, limit })}`);
 }
 
-export function getHotel(slug: string) {
+export async function getHotel(slug: string) {
+  if (PREVIEW_MODE) return previewGetHotel(slug);
   return orNull(apiGet<HotelDetail>(`/api/hotels/${encodeURIComponent(slug)}`));
 }
 
-export function searchPackages(sp: SearchParams, pageSize = 12) {
+export async function searchPackages(sp: SearchParams, pageSize = 12) {
+  if (PREVIEW_MODE) return previewSearchPackages(packageFilters(sp), pageSize);
   return apiGet<PagedResult<PackageSummary>>(`/api/packages/search${toQueryString({ pageSize, ...packageFilters(sp) })}`);
 }
 
-export function getFeaturedPackages(limit = 6) {
+export async function getFeaturedPackages(limit = 6) {
+  if (PREVIEW_MODE) return previewSearchPackages({}, limit, true).items;
   return apiGet<PackageSummary[]>(`/api/packages/featured${toQueryString({ limit })}`);
 }
 
-export function getPackage(slug: string) {
+export async function getPackage(slug: string) {
+  if (PREVIEW_MODE) return previewGetPackage(slug);
   return orNull(apiGet<PackageDetail>(`/api/packages/${encodeURIComponent(slug)}`));
 }

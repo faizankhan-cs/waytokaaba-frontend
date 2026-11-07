@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar, NavbarFallback } from "@/components/layout/Navbar";
 import { WhatsAppButton } from "@/components/layout/WhatsAppButton";
-import { CONTACT, SITE } from "@/lib/config";
+import { CONTACT, PREVIEW_MODE, SITE } from "@/lib/config";
 
 /** Business details for search engines (schema.org TravelAgency). */
 const STRUCTURED_DATA = {
@@ -31,6 +31,11 @@ export default function SiteLayout({ children }: LayoutProps<"/">) {
       <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-50 focus:rounded focus:bg-white focus:px-3 focus:py-2">
         Skip to content
       </a>
+      {PREVIEW_MODE && (
+        <div className="bg-gold-100 px-4 py-1.5 text-center text-xs font-medium text-gold-700">
+          Preview version — sample listings for review. Prices and availability are confirmed by our team.
+        </div>
+      )}
       <Suspense fallback={<NavbarFallback />}>
         <Navbar />
       </Suspense>

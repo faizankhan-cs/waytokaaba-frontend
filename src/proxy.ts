@@ -8,6 +8,12 @@ const ADMIN_COOKIE = "wtk_admin";
  */
 export function proxy(request: NextRequest) {
   const { pathname, search } = request.nextUrl;
+
+  // Preview mode has no backend, so the admin area is unavailable.
+  if (process.env.NEXT_PUBLIC_PREVIEW_MODE === "true") {
+    return NextResponse.redirect(new URL("/", request.url));
+  }
+
   if (pathname === "/admin/login") return NextResponse.next();
 
   if (!request.cookies.has(ADMIN_COOKIE)) {
