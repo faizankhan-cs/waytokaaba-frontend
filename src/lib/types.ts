@@ -139,3 +139,49 @@ export interface ProblemDetails {
   detail?: string;
   errors?: Record<string, string[]>;
 }
+
+// ---------------- Visas ----------------
+
+export type VisaFormat = "EVisa" | "StickerVisa" | "UmrahVisa";
+export type VisaEntryType = "SingleEntry" | "MultipleEntry";
+
+export const VISA_FORMATS: VisaFormat[] = ["EVisa", "StickerVisa", "UmrahVisa"];
+
+export interface VisaSummary {
+  id: number;
+  slug: string;
+  country: string;
+  countryCode: string;
+  imageUrl: string;
+  visaFormat: VisaFormat;
+  summary: string;
+  processingTime: string;
+  startingPrice: number | null;
+  currency: string;
+  isFeatured: boolean;
+  isActive: boolean;
+  isDemoContent: boolean;
+}
+
+export interface VisaTier {
+  id: number;
+  name: string;
+  description: string | null;
+  price: number;
+  sortOrder: number;
+}
+
+export interface VisaDetail extends VisaSummary {
+  validity: string;
+  allowedStay: string;
+  entryType: VisaEntryType;
+  includesEmbassyFee: boolean;
+  includesInsurance: boolean;
+  includesServiceCharge: boolean;
+  requiredDocuments: string[];
+  disclaimer: string | null;
+  sortOrder: number;
+  tiers: VisaTier[];
+  createdAt: string;
+  updatedAt: string;
+}

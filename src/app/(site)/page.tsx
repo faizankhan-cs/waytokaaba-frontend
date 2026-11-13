@@ -5,8 +5,10 @@ import { BadgeCheck, HandCoins, Headset, Search } from "lucide-react";
 import { HeroSearch } from "@/components/home/HeroSearch";
 import { HotelCard } from "@/components/hotels/HotelCard";
 import { PackageCard } from "@/components/packages/PackageCard";
+import { VisaCarousel } from "@/components/visas/VisaCarousel";
+import { CardCarousel } from "@/components/ui/CardCarousel";
 import { CardGridSkeleton, ErrorState, SectionHeader } from "@/components/ui/primitives";
-import { getFeaturedHotels, getFeaturedPackages } from "@/lib/api";
+import { getFeaturedPackages, getFeaturedVisas, searchHotels } from "@/lib/api";
 import type { City } from "@/lib/types";
 
 const HERO_IMAGE = "https://images.unsplash.com/photo-1580418827493-f2b22c0a76cb?auto=format&fit=crop&q=75";
@@ -28,7 +30,21 @@ export default function HomePage() {
         </Suspense>
       </section>
 
-      <section className="bg-white py-16 sm:py-20">
+      <section className="bg-white py-16 sm:py-20" aria-label="Visa services">
+        <div className="container-page">
+          <SectionHeader
+            eyebrow="Visa Services"
+            title="Visas for Popular Destinations"
+            description="Tourist and Umrah visas with clear prices and processing times. Message us on WhatsApp to get started."
+            action={{ href: "/visas", label: "View All Visas" }}
+          />
+          <Suspense fallback={<CardGridSkeleton count={3} />}>
+            <FeaturedVisas />
+          </Suspense>
+        </div>
+      </section>
+
+      <section className="py-16 sm:py-20">
         <div className="container-page">
           <SectionHeader
             eyebrow="Makkah"
@@ -100,27 +116,23 @@ function Hero() {
 }
 
 async function FeaturedPackages() {
-  const packages = await getFeaturedPackages(3).catch(() => null);
+  const packages = await getFeaturedPackages(9).catch(() => null);
   if (!packages) return <ErrorState />;
-  return (
-    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-      {packages.map((p) => (
-        <PackageCard key={p.id} pkg={p} />
-      ))}
-    </div>
-  );
+  return <CardCarousel label="Umrah packages" items={packages.map((p) => <PackageCard key={p.id} pkg={p} />)} />;
+}
+
+async function FeaturedVisas() {
+  const visas = await getFeaturedVisas(8).catch(() => null);
+  if (!visas) return <ErrorState />;
+  if (visas.length === 0) return null;
+  return <VisaCarousel visas={visas} />;
 }
 
 async function FeaturedHotels({ city }: { city: City }) {
-  const hotels = await getFeaturedHotels(city, 3).catch(() => null);
+  // Search (not "featured only") so the carousel fills up; the default sort lists featured hotels first.
+  const hotels = await searchHotels(city, {}, 9).then((r) => r.items).catch(() => null);
   if (!hotels) return <ErrorState />;
-  return (
-    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-      {hotels.map((h) => (
-        <HotelCard key={h.id} hotel={h} />
-      ))}
-    </div>
-  );
+  return <CardCarousel label={`${city} hotels`} items={hotels.map((h) => <HotelCard key={h.id} hotel={h} />)} />;
 }
 
 const BENEFITS = [

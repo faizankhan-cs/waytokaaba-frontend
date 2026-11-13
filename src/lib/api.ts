@@ -1,7 +1,14 @@
 import "server-only";
 import { connection } from "next/server";
 import { PREVIEW_MODE, getApiBaseUrl } from "./config";
-import { previewGetHotel, previewGetPackage, previewSearchHotels, previewSearchPackages } from "./preview/catalog";
+import {
+  previewGetHotel,
+  previewGetPackage,
+  previewGetVisa,
+  previewSearchHotels,
+  previewSearchPackages,
+  previewSearchVisas,
+} from "./preview/catalog";
 import type {
   City,
   HotelDetail,
@@ -10,6 +17,8 @@ import type {
   PackageSummary,
   PagedResult,
   ProblemDetails,
+  VisaDetail,
+  VisaSummary,
 } from "./types";
 
 export class ApiError extends Error {
@@ -134,4 +143,20 @@ export async function getFeaturedPackages(limit = 6) {
 export async function getPackage(slug: string) {
   if (PREVIEW_MODE) return previewGetPackage(slug);
   return orNull(apiGet<PackageDetail>(`/api/packages/${encodeURIComponent(slug)}`));
+}
+
+export async function getVisas(q?: string) {
+  if (PREVIEW_MODE) return previewSearchVisas(q);
+  const result = await apiGet<PagedResult<VisaSummary>>(`/api/visas${toQueryString({ q, pageSize: 50 })}`);
+  return result.items;
+}
+
+export async function getFeaturedVisas(limit = 8) {
+  if (PREVIEW_MODE) return previewSearchVisas(undefined, limit, true);
+  return apiGet<VisaSummary[]>(`/api/visas/featured${toQueryString({ limit })}`);
+}
+
+export async function getVisa(slug: string) {
+  if (PREVIEW_MODE) return previewGetVisa(slug);
+  return orNull(apiGet<VisaDetail>(`/api/visas/${encodeURIComponent(slug)}`));
 }

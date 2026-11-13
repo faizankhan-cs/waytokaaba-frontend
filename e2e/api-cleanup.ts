@@ -49,3 +49,14 @@ export async function restorePackageDescription(slug: string) {
     }),
   });
 }
+
+/** Deletes every visa whose country starts with the given prefix. */
+export async function deleteVisasNamed(prefix: string) {
+  const h = await headers();
+  const res = await fetch(`${API}/api/admin/visas?pageSize=50`, { headers: h });
+  if (!res.ok) throw new Error(`E2E cleanup: listing visas failed with HTTP ${res.status}`);
+  const list = (await res.json()) as { items: { id: number; country: string }[] };
+  for (const visa of list.items.filter((x) => x.country.startsWith(prefix))) {
+    await fetch(`${API}/api/visas/${visa.id}`, { method: "DELETE", headers: h });
+  }
+}

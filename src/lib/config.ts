@@ -52,3 +52,14 @@ export const CONTACT = {
   mapsUrl: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent("Allay Plaza, Fazal-e-Haq Road, Blue Area, Islamabad")}`,
   mapsEmbedUrl: `https://www.google.com/maps?q=${encodeURIComponent("Allay Plaza, Fazal-e-Haq Road, Blue Area, Islamabad, Pakistan")}&output=embed`,
 } as const;
+
+/** WhatsApp chat with the agency, with the message already typed. Used by the visa buttons. */
+export function whatsappLink(message: string): string {
+  return `https://wa.me/${CONTACT.phoneE164.replace(/\D/g, "")}?text=${encodeURIComponent(message)}`;
+}
+
+/**
+ * Official approvals (for example IATA or DTS) shown beside the visa WhatsApp buttons.
+ * Left empty on purpose: add an entry only once the agency has confirmed the approval and its number.
+ */
+export const APPROVALS: readonly string[] = [];

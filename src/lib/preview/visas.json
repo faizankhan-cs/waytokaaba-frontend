@@ -1,0 +1,260 @@
+{
+  "generatedFrom": "API demo seed (DemoVisas.cs)",
+  "visas": [
+    {
+      "id": 1,
+      "slug": "uae-visa",
+      "country": "United Arab Emirates",
+      "countryCode": "AE",
+      "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/90/Burj_Khalifa_%28worlds_tallest_building%29_and_the_Dubai_skyline_%2825781049892%29.jpg/1280px-Burj_Khalifa_%28worlds_tallest_building%29_and_the_Dubai_skyline_%2825781049892%29.jpg",
+      "visaFormat": "EVisa",
+      "summary": "Dubai and Abu Dhabi tourist e-visa delivered by email, with no embassy visit.",
+      "processingTime": "3–5 Working Days",
+      "validity": "60 days to enter",
+      "allowedStay": "30 or 60 days",
+      "entryType": "SingleEntry",
+      "includesEmbassyFee": true,
+      "includesInsurance": false,
+      "includesServiceCharge": true,
+      "requiredDocuments": [
+        "Scanned passport valid for 6+ months",
+        "CNIC copy (front and back)",
+        "Passport-size photo on a white background",
+        "Bank statement of the last 3 months (if required)"
+      ],
+      "disclaimer": null,
+      "startingPrice": 28000,
+      "currency": "PKR",
+      "sortOrder": 1,
+      "isFeatured": true,
+      "isActive": true,
+      "isDemoContent": true,
+      "tiers": [
+        {
+          "id": 1,
+          "name": "30-Day Tourist Visa",
+          "description": "Single entry, 30 days stay.",
+          "price": 28000,
+          "sortOrder": 0
+        },
+        {
+          "id": 2,
+          "name": "60-Day Tourist Visa",
+          "description": "Single entry, 60 days stay.",
+          "price": 42000,
+          "sortOrder": 1
+        }
+      ],
+      "createdAt": "2026-11-12T07:32:06.832929+00:00",
+      "updatedAt": "2026-11-12T07:32:06.832929+00:00"
+    },
+    {
+      "id": 2,
+      "slug": "turkey-visa",
+      "country": "Turkey",
+      "countryCode": "TR",
+      "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4a/Hagia_Sophia_%28228968325%29.jpeg/1280px-Hagia_Sophia_%28228968325%29.jpeg",
+      "visaFormat": "EVisa",
+      "summary": "Istanbul, Cappadocia and Antalya tourist e-visa for eligible passport holders.",
+      "processingTime": "5–7 Working Days",
+      "validity": "180 days to enter",
+      "allowedStay": "Up to 30 days",
+      "entryType": "SingleEntry",
+      "includesEmbassyFee": true,
+      "includesInsurance": false,
+      "includesServiceCharge": true,
+      "requiredDocuments": [
+        "Scanned passport valid for 6+ months",
+        "CNIC copy (front and back)",
+        "Passport-size photo on a white background",
+        "Bank statement of the last 3 months (if required)",
+        "Confirmed return air ticket",
+        "Hotel booking for the stay"
+      ],
+      "disclaimer": null,
+      "startingPrice": 35000,
+      "currency": "PKR",
+      "sortOrder": 2,
+      "isFeatured": true,
+      "isActive": true,
+      "isDemoContent": true,
+      "tiers": [
+        {
+          "id": 3,
+          "name": "30-Day Tourist E-Visa",
+          "description": "Single entry, up to 30 days stay.",
+          "price": 35000,
+          "sortOrder": 0
+        }
+      ],
+      "createdAt": "2026-11-12T07:32:06.832929+00:00",
+      "updatedAt": "2026-11-12T07:32:06.832929+00:00"
+    },
+    {
+      "id": 3,
+      "slug": "saudi-umrah-visa",
+      "country": "Saudi Arabia (Umrah)",
+      "countryCode": "SA",
+      "imageUrl": "https://images.unsplash.com/photo-1580418827493-f2b22c0a76cb?auto=format&fit=crop&w=1600&q=80",
+      "visaFormat": "UmrahVisa",
+      "summary": "Umrah-only visa for Makkah and Madinah, processed with your package or on its own.",
+      "processingTime": "5–10 Working Days",
+      "validity": "90 days to enter",
+      "allowedStay": "Up to 30 days",
+      "entryType": "SingleEntry",
+      "includesEmbassyFee": true,
+      "includesInsurance": true,
+      "includesServiceCharge": true,
+      "requiredDocuments": [
+        "Scanned passport valid for 6+ months",
+        "CNIC copy (front and back)",
+        "Passport-size photo on a white background",
+        "Meningitis vaccination certificate"
+      ],
+      "disclaimer": null,
+      "startingPrice": 45000,
+      "currency": "PKR",
+      "sortOrder": 3,
+      "isFeatured": true,
+      "isActive": true,
+      "isDemoContent": true,
+      "tiers": [
+        {
+          "id": 4,
+          "name": "Umrah Visa Only",
+          "description": "Visa processing without accommodation or flights.",
+          "price": 45000,
+          "sortOrder": 0
+        }
+      ],
+      "createdAt": "2026-11-12T07:32:06.832929+00:00",
+      "updatedAt": "2026-11-12T07:32:06.832929+00:00"
+    },
+    {
+      "id": 4,
+      "slug": "malaysia-visa",
+      "country": "Malaysia",
+      "countryCode": "MY",
+      "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d2/Petronas_Panorama_II_%284to3%29.jpg/1280px-Petronas_Panorama_II_%284to3%29.jpg",
+      "visaFormat": "EVisa",
+      "summary": "Kuala Lumpur, Langkawi and Penang tourist e-visa.",
+      "processingTime": "7–10 Working Days",
+      "validity": "90 days to enter",
+      "allowedStay": "Up to 30 days",
+      "entryType": "SingleEntry",
+      "includesEmbassyFee": true,
+      "includesInsurance": false,
+      "includesServiceCharge": true,
+      "requiredDocuments": [
+        "Scanned passport valid for 6+ months",
+        "CNIC copy (front and back)",
+        "Passport-size photo on a white background",
+        "Bank statement of the last 3 months (if required)",
+        "Confirmed return air ticket"
+      ],
+      "disclaimer": null,
+      "startingPrice": 32000,
+      "currency": "PKR",
+      "sortOrder": 4,
+      "isFeatured": true,
+      "isActive": true,
+      "isDemoContent": true,
+      "tiers": [
+        {
+          "id": 5,
+          "name": "30-Day Tourist Visa",
+          "description": "Single entry, up to 30 days stay.",
+          "price": 32000,
+          "sortOrder": 0
+        }
+      ],
+      "createdAt": "2026-11-12T07:32:06.832929+00:00",
+      "updatedAt": "2026-11-12T07:32:06.832929+00:00"
+    },
+    {
+      "id": 5,
+      "slug": "thailand-visa",
+      "country": "Thailand",
+      "countryCode": "TH",
+      "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/2a/%E0%B9%80%E0%B8%88%E0%B8%94%E0%B8%B5%E0%B8%A2%E0%B9%8C%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B8%98%E0%B8%B2%E0%B8%99%E0%B8%97%E0%B8%A3%E0%B8%87%E0%B8%9B%E0%B8%A3%E0%B8%B2%E0%B8%87%E0%B8%84%E0%B9%8C%E0%B8%A7%E0%B8%B1%E0%B8%94%E0%B8%AD%E0%B8%A3%E0%B8%B8%E0%B8%932.jpg/1280px-%E0%B9%80%E0%B8%88%E0%B8%94%E0%B8%B5%E0%B8%A2%E0%B9%8C%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B8%98%E0%B8%B2%E0%B8%99%E0%B8%97%E0%B8%A3%E0%B8%87%E0%B8%9B%E0%B8%A3%E0%B8%B2%E0%B8%87%E0%B8%84%E0%B9%8C%E0%B8%A7%E0%B8%B1%E0%B8%94%E0%B8%AD%E0%B8%A3%E0%B8%B8%E0%B8%932.jpg",
+      "visaFormat": "StickerVisa",
+      "summary": "Bangkok, Phuket and Pattaya tourist visa. Passport submitted to the embassy.",
+      "processingTime": "10–14 Working Days",
+      "validity": "90 days to enter",
+      "allowedStay": "Up to 60 days",
+      "entryType": "SingleEntry",
+      "includesEmbassyFee": true,
+      "includesInsurance": false,
+      "includesServiceCharge": true,
+      "requiredDocuments": [
+        "Scanned passport valid for 6+ months",
+        "CNIC copy (front and back)",
+        "Passport-size photo on a white background",
+        "Bank statement of the last 3 months (if required)",
+        "Confirmed return air ticket",
+        "Hotel booking for the stay"
+      ],
+      "disclaimer": null,
+      "startingPrice": 38000,
+      "currency": "PKR",
+      "sortOrder": 5,
+      "isFeatured": false,
+      "isActive": true,
+      "isDemoContent": true,
+      "tiers": [
+        {
+          "id": 6,
+          "name": "Tourist Visa (Single Entry)",
+          "description": "Single entry, up to 60 days stay.",
+          "price": 38000,
+          "sortOrder": 0
+        }
+      ],
+      "createdAt": "2026-11-12T07:32:06.832929+00:00",
+      "updatedAt": "2026-11-12T07:32:06.832929+00:00"
+    },
+    {
+      "id": 6,
+      "slug": "uk-visa",
+      "country": "United Kingdom",
+      "countryCode": "GB",
+      "imageUrl": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/05/Elizabeth_Tower_and_the_north_front_of_the_Palace_of_Westminster%2C_London.jpg/1280px-Elizabeth_Tower_and_the_north_front_of_the_Palace_of_Westminster%2C_London.jpg",
+      "visaFormat": "StickerVisa",
+      "summary": "Standard visitor visa for tourism, family visits and business trips. Biometrics at a visa centre.",
+      "processingTime": "15–20 Working Days",
+      "validity": "6 months",
+      "allowedStay": "Up to 6 months",
+      "entryType": "MultipleEntry",
+      "includesEmbassyFee": false,
+      "includesInsurance": false,
+      "includesServiceCharge": true,
+      "requiredDocuments": [
+        "Scanned passport valid for 6+ months",
+        "CNIC copy (front and back)",
+        "Passport-size photo on a white background",
+        "Bank statement of the last 3 months (if required)",
+        "Employment or business proof",
+        "Travel history and itinerary",
+        "Sponsor letter (if applicable)"
+      ],
+      "disclaimer": null,
+      "startingPrice": 60000,
+      "currency": "PKR",
+      "sortOrder": 6,
+      "isFeatured": false,
+      "isActive": true,
+      "isDemoContent": true,
+      "tiers": [
+        {
+          "id": 7,
+          "name": "6-Month Standard Visitor",
+          "description": "Multiple entry, up to 6 months per visit. Embassy fee paid separately.",
+          "price": 60000,
+          "sortOrder": 0
+        }
+      ],
+      "createdAt": "2026-11-12T07:32:06.832929+00:00",
+      "updatedAt": "2026-11-12T07:32:06.832929+00:00"
+    }
+  ]
+}

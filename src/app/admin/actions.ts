@@ -6,11 +6,13 @@ import { adminSend, toFormError } from "@/lib/admin/api";
 import { clearAdminSession, setAdminSession } from "@/lib/admin/session";
 import { readProblem } from "@/lib/api";
 import { getApiBaseUrl } from "@/lib/config";
-import type { HotelDetail, InquiryStatus, PackageDetail, Room } from "@/lib/types";
+import type { HotelDetail, InquiryStatus, PackageDetail, Room, VisaDetail } from "@/lib/types";
 
 export type FormState = {
   message?: string;
   success?: string;
+  /** True when the API refused an action that isn't allowed (HTTP 409), as opposed to a failure. */
+  warning?: boolean;
   fieldErrors?: Record<string, string>;
 };
 
@@ -193,4 +195,56 @@ export async function deletePackageAction(_prev: FormState, fd: FormData): Promi
   const result = await adminSend("DELETE", `/api/packages/${num(fd, "id")}`);
   if (!result.ok) return toFormError(result);
   redirect("/admin/packages?deleted=1");
+}
+
+// ---------------- visas ----------------
+
+function visaPayload(fd: FormData) {
+  const tierNames = fd.getAll("tierName").map(String);
+  const tierDescriptions = fd.getAll("tierDescription").map(String);
+  const tierPrices = fd.getAll("tierPrice").map(String);
+  return {
+    country: text(fd, "country"),
+    slug: optionalText(fd, "slug"),
+    countryCode: text(fd, "countryCode").toUpperCase(),
+    imageUrl: text(fd, "imageUrl"),
+    visaFormat: text(fd, "visaFormat"),
+    summary: text(fd, "summary"),
+    processingTime: text(fd, "processingTime"),
+    validity: text(fd, "validity"),
+    allowedStay: text(fd, "allowedStay"),
+    entryType: text(fd, "entryType"),
+    includesEmbassyFee: bool(fd, "includesEmbassyFee"),
+    includesInsurance: bool(fd, "includesInsurance"),
+    includesServiceCharge: bool(fd, "includesServiceCharge"),
+    requiredDocuments: lines(fd, "requiredDocuments"),
+    disclaimer: optionalText(fd, "disclaimer"),
+    sortOrder: num(fd, "sortOrder") ?? 0,
+    isFeatured: bool(fd, "isFeatured"),
+    isActive: bool(fd, "isActive"),
+    isDemoContent: bool(fd, "isDemoContent"),
+    // Rows left completely empty are ignored.
+    tiers: tierNames
+      .map((name, i) => ({ name: name.trim(), description: tierDescriptions[i]?.trim() || null, priceText: tierPrices[i]?.trim() ?? "" }))
+      .filter((t) => t.name !== "" || t.priceText !== "")
+      .map((t) => ({ name: t.name, description: t.description, price: Number(t.priceText) })),
+  };
+}
+
+export async function saveVisaAction(_prev: FormState, fd: FormData): Promise<FormState> {
+  const id = num(fd, "id");
+  const result = id
+    ? await adminSend<VisaDetail>("PUT", `/api/visas/${id}`, visaPayload(fd))
+    : await adminSend<VisaDetail>("POST", "/api/visas", visaPayload(fd));
+
+  if (!result.ok) return toFormError(result);
+  if (!id) redirect(`/admin/visas/${result.data!.id}?created=1`);
+  refresh();
+  return { success: "Visa saved." };
+}
+
+export async function deleteVisaAction(_prev: FormState, fd: FormData): Promise<FormState> {
+  const result = await adminSend("DELETE", `/api/visas/${num(fd, "id")}`);
+  if (!result.ok) return toFormError(result);
+  redirect("/admin/visas?deleted=1");
 }

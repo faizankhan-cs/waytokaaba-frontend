@@ -1,5 +1,7 @@
 import { Suspense } from "react";
 import { Footer } from "@/components/layout/Footer";
+import { HideOnVisaDetail } from "@/components/layout/HideOnVisaDetail";
+import { InquiryButton } from "@/components/layout/InquiryButton";
 import { Navbar, NavbarFallback } from "@/components/layout/Navbar";
 import { WhatsAppButton } from "@/components/layout/WhatsAppButton";
 import { CONTACT, PREVIEW_MODE, SITE } from "@/lib/config";
@@ -43,7 +45,12 @@ export default function SiteLayout({ children }: LayoutProps<"/">) {
         {children}
       </main>
       <Footer />
-      <WhatsAppButton />
+      <Suspense fallback={null}>
+        <HideOnVisaDetail>
+          <InquiryButton />
+          <WhatsAppButton />
+        </HideOnVisaDetail>
+      </Suspense>
     </>
   );
 }

@@ -25,17 +25,23 @@ export type MutationResult<T> =
 /** Authenticated POST/PUT/PATCH/DELETE used by server actions. */
 export async function adminSend<T>(method: "POST" | "PUT" | "PATCH" | "DELETE", path: string, body?: unknown): Promise<MutationResult<T>> {
   const token = await requireAdminToken();
-  const res = await fetch(`${getApiBaseUrl()}${path}`, {
-    method,
-    headers: {
-      Accept: "application/json",
-      Authorization: `Bearer ${token}`,
-      ...(body !== undefined ? { "Content-Type": "application/json" } : {}),
-    },
-    body: body !== undefined ? JSON.stringify(body) : undefined,
-    cache: "no-store",
-    signal: AbortSignal.timeout(60_000),
-  });
+  let res: Response;
+  try {
+    res = await fetch(`${getApiBaseUrl()}${path}`, {
+      method,
+      headers: {
+        Accept: "application/json",
+        Authorization: `Bearer ${token}`,
+        ...(body !== undefined ? { "Content-Type": "application/json" } : {}),
+      },
+      body: body !== undefined ? JSON.stringify(body) : undefined,
+      cache: "no-store",
+      signal: AbortSignal.timeout(20_000),
+    });
+  } catch {
+    // Timeout or connection failure: report it to the form instead of crashing the page.
+    return { ok: false, status: 0, problem: null };
+  }
 
   if (res.status === 401) {
     await clearAdminSession();
@@ -50,8 +56,10 @@ export async function adminSend<T>(method: "POST" | "PUT" | "PATCH" | "DELETE", 
 export function toFormError(result: { status: number; problem: ProblemDetails | null }) {
   const fieldErrors = Object.fromEntries(Object.entries(result.problem?.errors ?? {}).map(([k, v]) => [k, v.join(" ")]));
   const message =
-    result.status === 400
+    result.status === 0
+      ? "The server didn't respond. Please try again in a moment."
+      : result.status === 400
       ? "Please fix the highlighted fields."
       : result.problem?.detail ?? result.problem?.title ?? `The request failed (HTTP ${result.status}).`;
-  return { message, fieldErrors };
+  return { message, fieldErrors, warning: result.status === 409 };
 }

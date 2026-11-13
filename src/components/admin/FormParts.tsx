@@ -1,9 +1,10 @@
 "use client";
 
-import { useActionState, type ReactNode } from "react";
+import { useActionState, useRef, useState, type ReactNode } from "react";
 import { useFormStatus } from "react-dom";
 import { CheckCircle2, Loader2, Trash2 } from "lucide-react";
 import type { FormState } from "@/app/admin/actions";
+import { ConfirmDialog, ErrorDialog } from "./Modal";
 
 export function SubmitButton({ children, className = "btn-primary" }: { children: ReactNode; className?: string }) {
   const { pending } = useFormStatus();
@@ -22,22 +23,22 @@ export function FormMessage({ state }: { state: FormState }) {
         <CheckCircle2 className="h-4 w-4" aria-hidden /> {state.success}
       </p>
     );
-  if (state.message)
-    return (
-      <div className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700" role="alert">
-        <p>{state.message}</p>
-        {state.fieldErrors && Object.keys(state.fieldErrors).length > 0 && (
-          <ul className="mt-1 list-disc pl-5 text-xs">
-            {Object.entries(state.fieldErrors).map(([k, v]) => (
-              <li key={k}>
-                <span className="font-semibold">{k}</span>: {v}
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
-    );
-  return null;
+  return <ErrorPopup state={state} />;
+}
+
+/** Opens an error modal each time a new failed result arrives. */
+function ErrorPopup({ state }: { state: FormState }) {
+  const [dismissed, setDismissed] = useState<FormState | null>(null);
+  if (!state.message) return null;
+  return (
+    <ErrorDialog
+      open={dismissed !== state}
+      variant={state.warning ? "warning" : "error"}
+      onClose={() => setDismissed(state)}
+      message={state.message}
+      details={state.fieldErrors}
+    />
+  );
 }
 
 type FieldProps = {
@@ -129,21 +130,31 @@ export function DeleteForm({
   compact?: boolean;
 }) {
   const [state, formAction] = useActionState(action, {});
+  const [confirming, setConfirming] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
   return (
-    <form
-      action={formAction}
-      onSubmit={(e) => {
-        if (!window.confirm(confirmText)) e.preventDefault();
-      }}
-    >
+    <form ref={formRef} action={formAction}>
       {Object.entries(fields).map(([k, v]) => (
         <input key={k} type="hidden" name={k} value={v} />
       ))}
-      <SubmitButton className={compact ? "btn-ghost px-2 text-red-600 hover:bg-red-50" : "btn-danger"}>
+      <button
+        type="button"
+        onClick={() => setConfirming(true)}
+        className={compact ? "btn-ghost px-2 text-red-600 hover:bg-red-50" : "btn-danger"}
+      >
         <Trash2 className="h-4 w-4" aria-hidden />
         <span className={compact ? "sr-only" : ""}>{label}</span>
-      </SubmitButton>
-      {state.message && <p className="mt-2 max-w-sm text-xs text-red-600" role="alert">{state.message}</p>}
+      </button>
+      <ConfirmDialog
+        open={confirming}
+        message={confirmText}
+        onCancel={() => setConfirming(false)}
+        onConfirm={() => {
+          setConfirming(false);
+          formRef.current?.requestSubmit();
+        }}
+      />
+      <ErrorPopup state={state} />
     </form>
   );
 }

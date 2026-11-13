@@ -4,6 +4,7 @@
  * reviewed without a running API. Used only when NEXT_PUBLIC_PREVIEW_MODE=true.
  */
 import data from "./catalog.json";
+import visaData from "./visas.json";
 import type {
   City,
   HotelDetail,
@@ -12,6 +13,8 @@ import type {
   PackageSummary,
   PackageType,
   PagedResult,
+  VisaDetail,
+  VisaSummary,
 } from "@/lib/types";
 
 // JSON imports type enums (e.g. city) as plain strings; the data was exported from the API so the shapes match.
@@ -193,4 +196,40 @@ export function previewSearchPackages(f: PackageFilterParams, pageSize = 12, fea
 export function previewGetPackage(idOrSlug: string): PackageDetail | null {
   const key = idOrSlug.toLowerCase();
   return packages.find((p) => p.isActive && (p.slug === key || String(p.id) === key)) ?? null;
+}
+
+// ---------------- Visas ----------------
+
+const visas = visaData.visas as unknown as VisaDetail[];
+
+function toVisaSummary(v: VisaDetail): VisaSummary {
+  return {
+    id: v.id,
+    slug: v.slug,
+    country: v.country,
+    countryCode: v.countryCode,
+    imageUrl: v.imageUrl,
+    visaFormat: v.visaFormat,
+    summary: v.summary,
+    processingTime: v.processingTime,
+    startingPrice: v.startingPrice,
+    currency: v.currency,
+    isFeatured: v.isFeatured,
+    isActive: v.isActive,
+    isDemoContent: v.isDemoContent,
+  };
+}
+
+export function previewSearchVisas(q?: Param, limit = 50, featuredOnly = false): VisaSummary[] {
+  const term = text(q);
+  return visas
+    .filter((v) => v.isActive && (!featuredOnly || v.isFeatured) && (!term || v.country.toLowerCase().includes(term)))
+    .sort((a, b) => a.sortOrder - b.sortOrder || a.country.localeCompare(b.country))
+    .slice(0, limit)
+    .map(toVisaSummary);
+}
+
+export function previewGetVisa(idOrSlug: string): VisaDetail | null {
+  const key = idOrSlug.toLowerCase();
+  return visas.find((v) => v.isActive && (v.slug === key || String(v.id) === key)) ?? null;
 }

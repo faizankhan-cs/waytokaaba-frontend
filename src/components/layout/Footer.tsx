@@ -7,6 +7,7 @@ import { LogoMark } from "./Logo";
 
 const EXPLORE = [
   { href: "/packages", label: "Umrah Packages" },
+  { href: "/visas", label: "Visas" },
   { href: "/hotels/makkah", label: "Makkah Hotels" },
   { href: "/hotels/madinah", label: "Madinah Hotels" },
   { href: "/hotels", label: "All Hotels" },

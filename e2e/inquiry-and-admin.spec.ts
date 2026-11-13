@@ -101,7 +101,7 @@ test.describe("admin", () => {
     await addRoom.getByLabel("Price per night *").fill("38000");
     await addRoom.getByRole("button", { name: "Add room" }).click();
     await expect(page.getByText("Room added.")).toBeVisible();
-    await expect(page.getByText("Family Quint")).toBeVisible();
+    await expect(page.getByText("Family Quint", { exact: true })).toBeVisible();
 
     // Visible on the public site
     const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, "-");
@@ -112,19 +112,32 @@ test.describe("admin", () => {
     // Delete
     await page.goto("/admin/hotels");
     await page.getByRole("link", { name, exact: true }).click();
-    page.once("dialog", (d) => d.accept());
     await page.getByRole("button", { name: "Delete hotel" }).click();
+    await page.getByRole("dialog").getByRole("button", { name: "Delete", exact: true }).click();
     await expect(page.getByText("Hotel deleted.")).toBeVisible();
     await expect(page.getByRole("link", { name, exact: true })).toHaveCount(0);
   });
 
-  test("deleting a hotel used by a package shows a helpful error", async ({ page }) => {
+  test("deleting a hotel used by a package confirms first, then shows a warning popup", async ({ page }) => {
     await login(page);
     await page.goto("/admin/hotels");
     const row = page.locator("tr", { hasText: "Al Noor Haram View Hotel" });
-    page.once("dialog", (d) => d.accept());
+    const dialog = page.getByRole("dialog");
+
+    // Cancel does nothing.
     await row.getByRole("button", { name: "Delete" }).click();
-    await expect(row.getByText(/included in one or more packages/)).toBeVisible();
+    await expect(dialog.getByText(/This cannot be undone/)).toBeVisible();
+    await dialog.getByRole("button", { name: "Cancel" }).click();
+    await expect(dialog).toBeHidden();
+
+    // Confirming shows a second, friendly popup explaining why it is blocked.
+    await row.getByRole("button", { name: "Delete" }).click();
+    await dialog.getByRole("button", { name: "Delete", exact: true }).click();
+    await expect(dialog.getByRole("heading", { name: "Can't do that yet" })).toBeVisible();
+    await expect(dialog.getByText(/part of a package/)).toBeVisible();
+    await dialog.getByRole("button", { name: "OK" }).click();
+    await expect(dialog).toBeHidden();
+    await expect(row).toBeVisible();
   });
 
   test("admin can edit a package and the change appears publicly", async ({ page }) => {
