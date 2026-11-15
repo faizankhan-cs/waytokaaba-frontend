@@ -14,7 +14,7 @@ async function whatsappMessage(page: Page, click: () => Promise<void>): Promise<
 test.describe("private transport", () => {
   test("header link opens the transport page with vehicles and routes", async ({ page }) => {
     await page.goto("/");
-    await page.getByRole("navigation").getByRole("link", { name: "Transport", exact: true }).first().click();
+    await page.getByRole("banner").getByRole("link", { name: "Private Transport", exact: true }).first().click();
     await expect(page).toHaveURL(/\/transport$/);
     await expect(page.getByRole("heading", { level: 1 })).toContainText("Comfortable Rides");
 
