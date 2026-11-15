@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useRef, useState, type FormEvent } from "react";
 import { CheckCircle2, Loader2, Send } from "lucide-react";
 import { WhatsAppIcon } from "@/components/ui/BrandIcons";
+import { ErrorDialog } from "@/components/ui/Modal";
 import { CONTACT, PREVIEW_MODE, getApiBaseUrl } from "@/lib/config";
 import type { InquiryType, ProblemDetails } from "@/lib/types";
 
@@ -39,6 +40,14 @@ export function InquiryForm({
 }: Props) {
   const [status, setStatus] = useState<Status>({ kind: "idle" });
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const formRef = useRef<HTMLFormElement>(null);
+
+  /** Closing the error popup moves focus to the first field that needs fixing. */
+  function closeErrorPopup() {
+    setStatus({ kind: "idle" });
+    const form = formRef.current;
+    if (form) setTimeout(() => focusFirstError(form, errors), 50);
+  }
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -73,7 +82,6 @@ export function InquiryForm({
     if (Object.keys(clientErrors).length) {
       setErrors(clientErrors);
       setStatus({ kind: "error", message: "Please check the highlighted fields." });
-      focusFirstError(form, clientErrors);
       return;
     }
 
@@ -82,7 +90,6 @@ export function InquiryForm({
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.email)) {
         setErrors({ email: "Please enter a valid email address." });
         setStatus({ kind: "error", message: "Please check the highlighted fields." });
-        focusFirstError(form, { email: "invalid" });
         return;
       }
       const lines = [
@@ -125,7 +132,6 @@ export function InquiryForm({
         const fieldErrors = Object.fromEntries(Object.entries(problem?.errors ?? {}).map(([k, v]) => [k, v[0]]));
         setErrors(fieldErrors);
         setStatus({ kind: "error", message: "Please check the highlighted fields." });
-        focusFirstError(form, fieldErrors);
       } else if (res.status === 429) {
         setStatus({ kind: "error", message: "You've sent several inquiries in a short time. Please wait a minute and try again." });
       } else {
@@ -183,7 +189,7 @@ export function InquiryForm({
   const submitting = status.kind === "submitting";
 
   return (
-    <form onSubmit={onSubmit} noValidate className="card p-5 sm:p-6" aria-labelledby="inquiry-title">
+    <form ref={formRef} onSubmit={onSubmit} noValidate className="card p-5 sm:p-6" aria-labelledby="inquiry-title">
       <h2 id="inquiry-title" className="font-display text-2xl text-brand-900">
         {title}
       </h2>
@@ -234,9 +240,7 @@ export function InquiryForm({
             className="input"
             placeholder="Tell us your preferred dates, number of travellers and any special requirements."
             aria-invalid={errors.message ? true : undefined}
-            aria-describedby={errors.message ? "message-error" : undefined}
           />
-          {errors.message && <p id="message-error" className="field-error">{errors.message}</p>}
         </div>
 
         {/* Honeypot field: hidden from people, often filled by bots. */}
@@ -245,11 +249,13 @@ export function InquiryForm({
           <input id="website" name="website" type="text" tabIndex={-1} autoComplete="off" />
         </div>
 
-        {status.kind === "error" && (
-          <p className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700" role="alert">
-            {status.message}
-          </p>
-        )}
+        <ErrorDialog
+          open={status.kind === "error"}
+          onClose={closeErrorPopup}
+          title={Object.keys(errors).length > 0 ? "Please check these details" : "Your inquiry wasn't sent"}
+          message={status.kind === "error" ? status.message : undefined}
+          details={errors}
+        />
 
         <button type="submit" className="btn-primary w-full py-3 text-base" disabled={submitting}>
           {submitting ? <Loader2 className="h-5 w-5 animate-spin" aria-hidden /> : <Send className="h-4 w-4" aria-hidden />}
@@ -266,8 +272,12 @@ export function InquiryForm({
 }
 
 function focusFirstError(form: HTMLFormElement, errors: Record<string, string>) {
-  const first = FIELD_ORDER.find((f) => errors[f]);
-  if (first) (form.elements.namedItem(first) as HTMLElement | null)?.focus();
+  // The API may send field names in another case (e.g. "Email"), so match case-insensitively.
+  const keys = Object.keys(errors).map((k) => k.toLowerCase());
+  const first = FIELD_ORDER.find((f) => keys.includes(f.toLowerCase()));
+  const field = first ? (form.elements.namedItem(first) as HTMLElement | null) : null;
+  field?.scrollIntoView({ behavior: "smooth", block: "center" });
+  field?.focus({ preventScroll: true });
 }
 
 function Field({
@@ -287,11 +297,9 @@ function Field({
         name={name}
         className="input"
         aria-invalid={error ? true : undefined}
-        aria-describedby={error ? `${name}-error` : undefined}
         aria-required={required || undefined}
         {...input}
       />
-      {error && <p id={`${name}-error`} className="field-error">{error}</p>}
     </div>
   );
 }

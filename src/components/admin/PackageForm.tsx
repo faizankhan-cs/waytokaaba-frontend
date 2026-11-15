@@ -53,7 +53,6 @@ export function PackageForm({ pkg, hotels }: { pkg?: PackageDetail; hotels: Hote
 
       <fieldset>
         <legend className="label">Included hotels</legend>
-        {e.hotels && <p className="field-error mb-2">{e.hotels}</p>}
         <ul className="space-y-2">
           {rows.map((row, i) => (
             <li key={row.key} className="flex gap-2">

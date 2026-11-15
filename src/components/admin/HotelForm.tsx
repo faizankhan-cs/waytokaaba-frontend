@@ -52,7 +52,6 @@ export function HotelForm({ hotel }: { hotel?: HotelDetail }) {
           />
           <div className="mt-2">
             <Checkbox name="isDistanceVerified" label="Distance is verified (show publicly)" defaultChecked={hotel?.isDistanceVerified} />
-            {e.isDistanceVerified && <p className="field-error">{e.isDistanceVerified}</p>}
           </div>
         </div>
         <ImageUpload name="imageUrl" label="Main photo *" defaultValue={hotel?.imageUrl} error={e.imageUrl} required className="md:col-span-2" />

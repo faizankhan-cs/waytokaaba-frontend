@@ -3,6 +3,7 @@
 import { useId, useRef, useState } from "react";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight, ImagePlus, Loader2, X } from "lucide-react";
+import { ErrorDialog } from "@/components/ui/Modal";
 import { PHOTO_ACCEPT, uploadPhoto } from "./ImageUpload";
 
 const MAX_PHOTOS = 20;
@@ -65,6 +66,7 @@ export function GalleryUpload({
         accept={PHOTO_ACCEPT}
         multiple
         className="sr-only"
+        aria-invalid={message ? true : undefined}
         onChange={(e) => onFiles(e.target.files)}
       />
 
@@ -108,7 +110,7 @@ export function GalleryUpload({
         )}
       </ul>
       <p className="mt-1.5 text-xs text-ink-500">You can pick several photos at once. Use the arrows to change the order; the first photos show first.</p>
-      {message && <p className="field-error" role="alert">{message}</p>}
+      <ErrorDialog open={!!uploadError} onClose={() => setUploadError(undefined)} title="Photo couldn't be added" message={uploadError} />
     </div>
   );
 }

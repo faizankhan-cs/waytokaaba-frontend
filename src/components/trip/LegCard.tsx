@@ -11,11 +11,12 @@ import {
   legMinRooms,
   roomGuests,
   legNights,
-  legProblem,
+  legIssue,
   legTotal,
   roomOptions,
   roomShortage,
   type Guests,
+  type LegField,
   type PlannerHotel,
   type TripLeg,
 } from "@/lib/trip";
@@ -39,6 +40,12 @@ interface Props {
   onRoomShortage: () => void;
 }
 
+/** id of a stay control, so the planner can focus the one that needs fixing. */
+export function legFieldId(index: number, field: LegField): string {
+  const suffix: Record<LegField, string> = { hotel: "hotel", room: "room", rooms: "count", checkIn: "in", checkOut: "out" };
+  return `leg-${index}-${suffix[field]}`;
+}
+
 export function LegCard({
   leg,
   index,
@@ -59,8 +66,9 @@ export function LegCard({
   const rooms = hotel ? roomOptions(hotel) : [];
   const nights = legNights(leg);
   const total = legTotal(leg, hotels);
-  // Room shortages are explained in a popup instead of an inline error.
-  const problem = showProblem && !roomShortage(leg, hotels, guests) ? legProblem(leg, hotels, guests) : null;
+  // Problems are explained in a popup (by the planner); here the field that needs fixing just gets a red border.
+  const issue = showProblem ? legIssue(leg, hotels, guests) : null;
+  const invalid = (field: LegField) => (issue?.field === field ? true : undefined);
   const fewestRooms = legMinRooms(leg, hotels, guests);
   const id = `leg-${index}`;
 
@@ -125,7 +133,7 @@ export function LegCard({
 
         <div className="sm:col-span-2">
           <label htmlFor={`${id}-hotel`} className="label">Hotel in {leg.city}</label>
-          <select id={`${id}-hotel`} className="input" value={leg.hotelId ?? ""} onChange={(e) => changeHotel(e.target.value)}>
+          <select id={`${id}-hotel`} className="input" aria-invalid={invalid("hotel")} value={leg.hotelId ?? ""} onChange={(e) => changeHotel(e.target.value)}>
             <option value="">Select a hotel…</option>
             {cityHotels.map((h) => (
               <option key={h.id} value={h.id}>
@@ -141,6 +149,7 @@ export function LegCard({
           <select
             id={`${id}-room`}
             className="input"
+            aria-invalid={invalid("room")}
             value={leg.roomId ?? ""}
             disabled={!hotel}
             onChange={(e) => onPatch({ roomId: Number(e.target.value) })}
@@ -164,6 +173,7 @@ export function LegCard({
             max={MAX_ROOMS}
             aria-describedby={hotel ? `${id}-count-hint` : undefined}
             className="input"
+            aria-invalid={invalid("rooms")}
             value={Number.isFinite(leg.rooms) ? leg.rooms : ""}
             onChange={(e) => onPatch({ rooms: e.target.value === "" ? NaN : Math.floor(Number(e.target.value)) })}
             onBlur={() => {
@@ -179,7 +189,7 @@ export function LegCard({
 
         <div>
           <label htmlFor={`${id}-in`} className="label">Check-in</label>
-          <input id={`${id}-in`} type="date" className="input" value={leg.checkIn} onChange={(e) => onPatch({ checkIn: e.target.value })} />
+          <input id={`${id}-in`} type="date" className="input" aria-invalid={invalid("checkIn")} value={leg.checkIn} onChange={(e) => onPatch({ checkIn: e.target.value })} />
         </div>
         <div>
           <label htmlFor={`${id}-out`} className="label">Check-out</label>
@@ -187,6 +197,7 @@ export function LegCard({
             id={`${id}-out`}
             type="date"
             className="input"
+            aria-invalid={invalid("checkOut")}
             min={leg.checkIn || undefined}
             value={leg.checkOut}
             onChange={(e) => onPatch({ checkOut: e.target.value })}
@@ -201,7 +212,6 @@ export function LegCard({
         </span>
         <span className="font-semibold text-brand-900">Stay total: {total > 0 ? formatPrice(total, hotel?.currency) : "—"}</span>
       </div>
-      {problem && <p role="alert" className="field-error mt-2">{problem}</p>}
     </li>
   );
 }

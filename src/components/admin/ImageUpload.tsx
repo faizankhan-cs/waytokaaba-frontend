@@ -3,6 +3,7 @@
 import { useId, useRef, useState } from "react";
 import Image from "next/image";
 import { ImagePlus, Loader2, X } from "lucide-react";
+import { ErrorDialog } from "@/components/ui/Modal";
 import { uploadImageAction } from "@/app/admin/actions";
 
 export const PHOTO_ACCEPT = "image/jpeg,image/png,image/webp";
@@ -100,7 +101,7 @@ export function ImageUpload({
         </div>
       </div>
       <p id={`${inputId}-hint`} className="mt-1.5 text-xs text-ink-500">JPG, PNG or WebP, up to 10 MB. Large photos are resized automatically.</p>
-      {message && <p className="field-error" role="alert">{message}</p>}
+      <ErrorDialog open={!!uploadError} onClose={() => setUploadError(undefined)} title="Photo couldn't be added" message={uploadError} />
     </div>
   );
 }

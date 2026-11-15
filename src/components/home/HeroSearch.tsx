@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useState, type FormEvent } from "react";
 import { CalendarDays, MapPin, Minus, Plus, Search, Users } from "lucide-react";
+import { ErrorDialog } from "@/components/ui/Modal";
 import type { City } from "@/lib/types";
 
 function todayIso() {
@@ -17,12 +18,13 @@ export function HeroSearch() {
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
   const [guests, setGuests] = useState(2);
-  const [error, setError] = useState<string | null>(null);
+  // The date that needs fixing; explained in a popup, and focused when it closes.
+  const [error, setError] = useState<{ field: "checkIn" | "checkOut"; message: string } | null>(null);
 
   function onSubmit(e: FormEvent) {
     e.preventDefault();
-    if (checkIn && checkIn < todayIso()) return setError("Check-in date can't be in the past.");
-    if (checkIn && checkOut && checkOut <= checkIn) return setError("Check-out must be after check-in.");
+    if (checkIn && checkIn < todayIso()) return setError({ field: "checkIn", message: "Check-in date can't be in the past." });
+    if (checkIn && checkOut && checkOut <= checkIn) return setError({ field: "checkOut", message: "Check-out must be after check-in." });
     setError(null);
 
     const params = new URLSearchParams({ guests: String(guests) });
@@ -106,11 +108,16 @@ export function HeroSearch() {
           <Search className="h-5 w-5" aria-hidden /> Search
         </button>
       </div>
-      {error && (
-        <p className="mt-2 text-sm text-red-600" role="alert">
-          {error}
-        </p>
-      )}
+      <ErrorDialog
+        open={error !== null}
+        title="Please check your dates"
+        message={error?.message}
+        onClose={() => {
+          const field = error?.field;
+          setError(null);
+          if (field) setTimeout(() => document.getElementById(field)?.focus(), 50);
+        }}
+      />
     </form>
   );
 }

@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useRef, type ReactNode } from "react";
+import { useEffect, useId, useRef, type ReactNode } from "react";
 import { AlertTriangle, XCircle } from "lucide-react";
+import { fieldLabel } from "@/lib/field-labels";
 
 type ModalProps = {
   open: boolean;
@@ -16,6 +17,7 @@ type ModalProps = {
 export function Modal({ open, onClose, title, icon, children, actions }: ModalProps) {
   const ref = useRef<HTMLDialogElement>(null);
   const pressedBackdrop = useRef(false);
+  const titleId = useId();
 
   useEffect(() => {
     const dialog = ref.current;
@@ -31,7 +33,7 @@ export function Modal({ open, onClose, title, icon, children, actions }: ModalPr
   return (
     <dialog
       ref={ref}
-      aria-labelledby="modal-title"
+      aria-labelledby={titleId}
       onClose={onClose}
       // Close on a backdrop click only when the press also started on the backdrop. A click that began
       // elsewhere (e.g. the one that opened this dialog by leaving a field) must not close it straight away.
@@ -48,7 +50,7 @@ export function Modal({ open, onClose, title, icon, children, actions }: ModalPr
         <div className="flex items-start gap-4">
           {icon}
           <div className="min-w-0 flex-1">
-            <h2 id="modal-title" className="text-lg font-semibold">{title}</h2>
+            <h2 id={titleId} className="text-lg font-semibold">{title}</h2>
             <div className="mt-2 text-sm text-ink-700">{children}</div>
           </div>
         </div>
@@ -95,6 +97,10 @@ export function ConfirmDialog({
   );
 }
 
+/**
+ * Error / warning popup. `details` lists problems per field ({ fieldName: message }); field names are shown with
+ * friendly labels. `labels` can name fields that aren't in the shared list (e.g. "Stay 2 · Madinah").
+ */
 export function ErrorDialog({
   open,
   onClose,
@@ -102,6 +108,7 @@ export function ErrorDialog({
   title,
   message,
   details,
+  labels,
 }: {
   open: boolean;
   onClose: () => void;
@@ -110,6 +117,7 @@ export function ErrorDialog({
   title?: string;
   message?: string;
   details?: Record<string, string>;
+  labels?: Record<string, string>;
 }) {
   const entries = Object.entries(details ?? {});
   const warning = variant === "warning";
@@ -117,7 +125,7 @@ export function ErrorDialog({
     <Modal
       open={open}
       onClose={onClose}
-      title={title ?? (warning ? "Can't do that yet" : "Something went wrong")}
+      title={title ?? (warning ? "Can't do that yet" : entries.length > 0 ? "Please check these details" : "Something went wrong")}
       icon={
         <span
           className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full ${
@@ -129,11 +137,17 @@ export function ErrorDialog({
       }
       actions={<button type="button" className="btn-primary" onClick={onClose} autoFocus data-autofocus>OK</button>}
     >
-      <p>{message}</p>
+      {message && <p>{message}</p>}
       {entries.length > 0 && (
-        <ul className="mt-2 list-disc pl-5 text-xs text-ink-600">
+        <ul className="mt-3 space-y-2" aria-label="Problems">
           {entries.map(([k, v]) => (
-            <li key={k}><span className="font-semibold">{k}</span>: {v}</li>
+            <li key={k} className="flex gap-2.5 rounded-lg bg-red-50 px-3 py-2">
+              <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-red-500" aria-hidden />
+              <span>
+                <span className="block text-xs font-semibold tracking-wide text-red-700 uppercase">{labels?.[k] ?? fieldLabel(k)}</span>
+                <span className="text-ink-900">{v}</span>
+              </span>
+            </li>
           ))}
         </ul>
       )}

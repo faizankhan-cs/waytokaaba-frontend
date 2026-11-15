@@ -26,18 +26,33 @@ export function FormMessage({ state }: { state: FormState }) {
   return <ErrorPopup state={state} />;
 }
 
-/** Opens an error modal each time a new failed result arrives. */
-function ErrorPopup({ state }: { state: FormState }) {
+/**
+ * Opens an error popup each time a new failed result arrives (errors are never shown inline).
+ * Closing it moves focus to the first field marked invalid, so it's easy to fix.
+ */
+export function ErrorPopup({ state, title }: { state: FormState; title?: string }) {
   const [dismissed, setDismissed] = useState<FormState | null>(null);
+  const anchor = useRef<HTMLSpanElement>(null);
   if (!state.message) return null;
   return (
-    <ErrorDialog
-      open={dismissed !== state}
-      variant={state.warning ? "warning" : "error"}
-      onClose={() => setDismissed(state)}
-      message={state.message}
-      details={state.fieldErrors}
-    />
+    <>
+      <span ref={anchor} hidden />
+      <ErrorDialog
+        open={dismissed !== state}
+        variant={state.warning ? "warning" : "error"}
+        title={title}
+        onClose={() => {
+          setDismissed(state);
+          const field = anchor.current?.closest("form")?.querySelector<HTMLElement>('[aria-invalid="true"]');
+          setTimeout(() => {
+            field?.scrollIntoView({ behavior: "smooth", block: "center" });
+            field?.focus({ preventScroll: true });
+          }, 50);
+        }}
+        message={state.message}
+        details={state.fieldErrors}
+      />
+    </>
   );
 }
 
@@ -55,8 +70,7 @@ export function TextField({ name, label, error, hint, className = "", id, ...res
     <div className={className}>
       <label htmlFor={fieldId} className="label">{label}</label>
       <input id={fieldId} name={name} className="input" aria-invalid={error ? true : undefined} {...rest} />
-      {hint && !error && <p className="mt-1 text-xs text-ink-500">{hint}</p>}
-      {error && <p className="field-error">{error}</p>}
+      {hint && <p className="mt-1 text-xs text-ink-500">{hint}</p>}
     </div>
   );
 }
@@ -73,8 +87,7 @@ export function TextAreaField({
     <div className={className}>
       <label htmlFor={name} className="label">{label}</label>
       <textarea id={name} name={name} className="input" aria-invalid={error ? true : undefined} {...rest} />
-      {hint && !error && <p className="mt-1 text-xs text-ink-500">{hint}</p>}
-      {error && <p className="field-error">{error}</p>}
+      {hint && <p className="mt-1 text-xs text-ink-500">{hint}</p>}
     </div>
   );
 }
@@ -101,7 +114,6 @@ export function SelectField({
           <option key={o.value} value={o.value}>{o.label}</option>
         ))}
       </select>
-      {error && <p className="field-error">{error}</p>}
     </div>
   );
 }

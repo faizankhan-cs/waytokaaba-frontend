@@ -219,20 +219,31 @@ export function legTotal(leg: TripLeg, hotels: PlannerHotel[]): number {
   return room.pricePerNight * legNights(leg) * leg.rooms;
 }
 
-/** Returns the first problem with a leg, or null when it is ready to be quoted. */
-export function legProblem(leg: TripLeg, hotels: PlannerHotel[], guests: Guests): string | null {
+/** Which control of a stay a problem belongs to (used to highlight and focus it). */
+export type LegField = "hotel" | "room" | "checkIn" | "checkOut" | "rooms";
+
+/** The first problem with a leg and the field it belongs to, or null when the leg is ready to be quoted. */
+export function legIssue(leg: TripLeg, hotels: PlannerHotel[], guests: Guests): { field: LegField; message: string } | null {
   const hotel = findHotel(hotels, leg.hotelId);
-  if (!hotel) return "Choose a hotel.";
+  if (!hotel) return { field: "hotel", message: "Choose a hotel." };
   const room = findRoom(hotel, leg.roomId);
-  if (!room) return "Choose a room type.";
-  if (!leg.checkIn || !leg.checkOut) return "Choose check-in and check-out dates.";
-  if (legNights(leg) < 1) return "Check-out must be after check-in.";
-  if (!Number.isInteger(leg.rooms) || leg.rooms < 1 || leg.rooms > MAX_ROOMS) return `Rooms must be between 1 and ${MAX_ROOMS}.`;
+  if (!room) return { field: "room", message: "Choose a room type." };
+  if (!leg.checkIn) return { field: "checkIn", message: "Choose a check-in date." };
+  if (!leg.checkOut) return { field: "checkOut", message: "Choose a check-out date." };
+  if (legNights(leg) < 1) return { field: "checkOut", message: "Check-out must be after check-in." };
+  if (!Number.isInteger(leg.rooms) || leg.rooms < 1 || leg.rooms > MAX_ROOMS)
+    return { field: "rooms", message: `Rooms must be between 1 and ${MAX_ROOMS}.` };
   const needed = minRooms(room, guests);
   const people = pluralize(roomGuests(guests), "guest");
-  if (needed > MAX_ROOMS) return `A ${room.name} sleeps ${room.capacity}; choose a larger room type for ${people}.`;
-  if (leg.rooms < needed) return `At least ${pluralize(needed, "room")} needed for ${people} (a ${room.name} sleeps ${room.capacity}).`;
+  if (needed > MAX_ROOMS) return { field: "room", message: `A ${room.name} sleeps ${room.capacity}; choose a larger room type for ${people}.` };
+  if (leg.rooms < needed)
+    return { field: "rooms", message: `At least ${pluralize(needed, "room")} needed for ${people} (a ${room.name} sleeps ${room.capacity}).` };
   return null;
+}
+
+/** Returns the first problem with a leg, or null when it is ready to be quoted. */
+export function legProblem(leg: TripLeg, hotels: PlannerHotel[], guests: Guests): string | null {
+  return legIssue(leg, hotels, guests)?.message ?? null;
 }
 
 export function tripTotal(legs: TripLeg[], hotels: PlannerHotel[]): number {

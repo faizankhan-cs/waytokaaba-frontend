@@ -44,7 +44,10 @@ test.describe("preview mode", () => {
     await page.getByLabel("Phone / WhatsApp").fill("+92 300 1112233");
     await page.getByLabel(/Message/).fill("I would like more information please.");
     await page.getByRole("button", { name: "Send Inquiry" }).click();
-    await expect(page.getByText("Please enter a valid email address.")).toBeVisible();
+    const popup = page.getByRole("dialog", { name: "Please check these details" });
+    await expect(popup.getByText("Please enter a valid email address.")).toBeVisible();
+    await popup.getByRole("button", { name: "OK" }).click();
+    await expect(page.getByLabel("Email")).toBeFocused();
   });
 
   test("admin area is not available", async ({ page }) => {

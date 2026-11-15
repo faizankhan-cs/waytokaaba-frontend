@@ -91,9 +91,6 @@ body {
 @utility label {
   @apply mb-1.5 block text-sm font-medium text-ink-700;
 }
-@utility field-error {
-  @apply mt-1 text-xs text-red-600;
-}
 
 @utility heading-section {
   @apply font-display text-3xl text-brand-900 sm:text-4xl;

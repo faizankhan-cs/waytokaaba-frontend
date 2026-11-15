@@ -15,6 +15,7 @@ import {
   bedNote,
   guestSummary,
   legNights,
+  legIssue,
   legProblem,
   legTotal,
   roomShortage,
@@ -30,7 +31,8 @@ import {
   type TripCustomer,
 } from "@/lib/trip";
 import { buildSlipPdf } from "@/lib/trip-pdf";
-import { LegCard } from "./LegCard";
+import { ErrorDialog } from "@/components/ui/Modal";
+import { LegCard, legFieldId } from "./LegCard";
 import { RoomShortageDialog } from "./RoomShortageDialog";
 import { useTrip } from "./useTrip";
 
@@ -68,6 +70,12 @@ export function TripPlanner({ hotels, visaTransportRate }: { hotels: PlannerHote
   const slipRef = useRef<HTMLElement>(null);
   // The stay whose rooms can't fit the guests (shown in the "Not enough rooms" popup).
   const [shortageLegId, setShortageLegId] = useState<string | null>(null);
+  // "Finish your stays" popup: what is still missing in each stay.
+  const [stayProblemsOpen, setStayProblemsOpen] = useState(false);
+  const stayIssues = legs.flatMap((leg, i) => {
+    const issue = legIssue(leg, hotels, guests);
+    return issue ? [{ key: `stay-${i}`, index: i, label: `Stay ${i + 1} · ${leg.city}`, ...issue }] : [];
+  });
   const shortageIndex = legs.findIndex((l) => l.id === shortageLegId);
   const shortageLeg = shortageIndex >= 0 ? legs[shortageIndex] : undefined;
   // Computed live, so the popup closes by itself once the rooms are fixed.
@@ -111,6 +119,8 @@ export function TripPlanner({ hotels, visaTransportRate }: { hotels: PlannerHote
       // If the first stay with a problem is short of rooms, explain it in the popup.
       const firstInvalid = legs.find((leg) => legProblem(leg, hotels, guests) !== null);
       if (firstInvalid && roomShortage(firstInvalid, hotels, guests)) setShortageLegId(firstInvalid.id);
+      // Anything else is listed per stay in the "Finish your stays" popup.
+      else setStayProblemsOpen(true);
       return;
     }
     if (!slipOpen) setReference(slipReference());
@@ -186,6 +196,25 @@ export function TripPlanner({ hotels, visaTransportRate }: { hotels: PlannerHote
             />
           ))}
         </ol>
+
+        <ErrorDialog
+          open={stayProblemsOpen && stayIssues.length > 0}
+          title="Finish your stays first"
+          message="A few details are missing before we can make your slip:"
+          details={Object.fromEntries(stayIssues.map((x) => [x.key, x.message]))}
+          labels={Object.fromEntries(stayIssues.map((x) => [x.key, x.label]))}
+          onClose={() => {
+            const first = stayIssues[0];
+            setStayProblemsOpen(false);
+            // Take the customer straight to the first thing to fix.
+            if (first)
+              setTimeout(() => {
+                const el = document.getElementById(legFieldId(first.index, first.field));
+                el?.scrollIntoView({ behavior: "smooth", block: "center" });
+                el?.focus({ preventScroll: true });
+              }, 50);
+          }}
+        />
 
         <RoomShortageDialog
           shortage={shortage}
@@ -415,7 +444,7 @@ export function TripPlanner({ hotels, visaTransportRate }: { hotels: PlannerHote
                 </p>
               </>
             ) : (
-              <p className="mt-3 text-sm text-red-600">Complete every stay above to see your slip.</p>
+              <p className="mt-3 text-sm text-ink-500">Finish the stays above and press <strong>Update slip</strong> to see your slip again.</p>
             )}
           </section>
         )}

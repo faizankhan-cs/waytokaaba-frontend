@@ -23,8 +23,15 @@ test.describe("inquiries", () => {
   test("validation errors are shown for an incomplete inquiry", async ({ page }) => {
     await page.goto("/contact");
     await page.getByRole("button", { name: "Send Inquiry" }).click();
-    await expect(page.getByText("Please check the highlighted fields.")).toBeVisible();
-    await expect(page.getByText("Please enter your full name.")).toBeVisible();
+    // Errors are listed in a popup; OK takes you to the first field to fix.
+    const popup = page.getByRole("dialog", { name: "Please check these details" });
+    await expect(popup.getByText("Please check the highlighted fields.")).toBeVisible();
+    await expect(popup.getByText("Please enter your full name.")).toBeVisible();
+    await expect(popup.getByText("Full name", { exact: true })).toBeVisible();
+    await popup.getByRole("button", { name: "OK" }).click();
+    await expect(popup).toBeHidden();
+    await expect(page.getByLabel("Full name")).toBeFocused();
+    await expect(page.getByLabel("Full name")).toHaveAttribute("aria-invalid", "true");
   });
 
   test("server-side validation errors are mapped to fields", async ({ page }) => {
@@ -34,7 +41,7 @@ test.describe("inquiries", () => {
     await page.getByLabel("Phone / WhatsApp").fill("+92 300 1234567");
     await page.getByLabel(/Message/).fill("I would like more information please.");
     await page.getByRole("button", { name: "Send Inquiry" }).click();
-    await expect(page.getByText("'Email' is not a valid email address.")).toBeVisible();
+    await expect(page.getByRole("dialog").getByText("'Email' is not a valid email address.")).toBeVisible();
   });
 
   test("a hotel inquiry is saved and appears in the admin inquiries list", async ({ page }) => {
@@ -73,7 +80,7 @@ test.describe("admin", () => {
     await page.getByLabel("Email").fill(ADMIN_EMAIL);
     await page.getByLabel("Password").fill("wrong-password");
     await page.getByRole("button", { name: "Sign in" }).click();
-    await expect(page.getByText("Invalid email or password.")).toBeVisible();
+    await expect(page.getByRole("dialog", { name: "Couldn't sign you in" }).getByText("Invalid email or password.")).toBeVisible();
   });
 
   test("admin can create a hotel, add a room, see it on the site, and delete it", async ({ page }) => {

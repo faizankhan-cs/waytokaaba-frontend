@@ -55,7 +55,6 @@ export function VisaForm({ visa }: { visa?: VisaDetail }) {
 
       <fieldset>
         <legend className="label">Visa options and prices (PKR) *</legend>
-        {e.tiers && <p className="field-error mb-2">{e.tiers}</p>}
         <ul className="space-y-2">
           {rows.map((row, i) => (
             <li key={row.key} className="grid gap-2 sm:grid-cols-[1.2fr_1.5fr_8rem_auto]">

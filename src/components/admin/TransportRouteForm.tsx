@@ -26,7 +26,6 @@ export function TransportRouteForm({ route, vehicles }: { route?: TransportRoute
       <fieldset>
         <legend className="label">Price per vehicle, one way (PKR) *</legend>
         <p className="mb-3 text-xs text-ink-500">Leave a box empty if that vehicle is not offered on this route.</p>
-        {e.prices && <p className="field-error mb-2">{e.prices}</p>}
         {vehicles.length === 0 ? (
           <p className="text-sm text-ink-500">Add a vehicle first.</p>
         ) : (

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState, type FormEvent, type ReactNode } from "react";
 import { ArrowUpDown, SlidersHorizontal, X } from "lucide-react";
+import { ErrorDialog } from "@/components/ui/Modal";
 import { useQueryParams } from "./useQueryParams";
 
 /** Wrapper: sidebar on desktop, collapsible panel on mobile. */
@@ -97,12 +98,14 @@ function PriceRangeForm({
   const [min, setMin] = useState(initialMin);
   const [max, setMax] = useState(initialMax);
   const invalid = min !== "" && max !== "" && Number(min) > Number(max);
+  const [showError, setShowError] = useState(false);
 
   return (
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        if (!invalid) onApply({ minPrice: min || null, maxPrice: max || null });
+        if (invalid) return setShowError(true);
+        onApply({ minPrice: min || null, maxPrice: max || null });
       }}
     >
       <div className="grid grid-cols-2 gap-2">
@@ -119,10 +122,18 @@ function PriceRangeForm({
           <input id="maxPrice" type="number" min={0} step={500} inputMode="numeric" className="input" value={max} onChange={(e) => setMax(e.target.value)} placeholder="Any" aria-invalid={invalid || undefined} />
         </div>
       </div>
-      {invalid && <p className="field-error">Max price must be greater than min price.</p>}
-      <button type="submit" className="btn-outline mt-3 w-full py-2" disabled={invalid}>
+      <button type="submit" className="btn-outline mt-3 w-full py-2">
         Apply price
       </button>
+      <ErrorDialog
+        open={showError}
+        title="Please check the price range"
+        message="The max price can't be lower than the min price."
+        onClose={() => {
+          setShowError(false);
+          setTimeout(() => document.getElementById("maxPrice")?.focus(), 50);
+        }}
+      />
     </form>
   );
 }
