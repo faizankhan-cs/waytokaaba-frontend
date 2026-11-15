@@ -14,6 +14,7 @@ import {
   legProblem,
   legTotal,
   roomOptions,
+  roomShortage,
   type Guests,
   type PlannerHotel,
   type TripLeg,
@@ -34,15 +35,32 @@ interface Props {
   onPatch: (patch: Partial<TripLeg>) => void;
   onMove: (dir: -1 | 1) => void;
   onRemove: () => void;
+  /** Too few rooms for the guests: the planner shows the "Not enough rooms" popup. */
+  onRoomShortage: () => void;
 }
 
-export function LegCard({ leg, index, hotels, guests, onGuestsChange, showProblem, isFirst, isLast, canRemove, onPatch, onMove, onRemove }: Props) {
+export function LegCard({
+  leg,
+  index,
+  hotels,
+  guests,
+  onGuestsChange,
+  showProblem,
+  isFirst,
+  isLast,
+  canRemove,
+  onPatch,
+  onMove,
+  onRemove,
+  onRoomShortage,
+}: Props) {
   const cityHotels = hotels.filter((h) => h.city === leg.city);
   const hotel = findHotel(hotels, leg.hotelId);
   const rooms = hotel ? roomOptions(hotel) : [];
   const nights = legNights(leg);
   const total = legTotal(leg, hotels);
-  const problem = showProblem ? legProblem(leg, hotels, guests) : null;
+  // Room shortages are explained in a popup instead of an inline error.
+  const problem = showProblem && !roomShortage(leg, hotels, guests) ? legProblem(leg, hotels, guests) : null;
   const fewestRooms = legMinRooms(leg, hotels, guests);
   const id = `leg-${index}`;
 
@@ -95,7 +113,7 @@ export function LegCard({ leg, index, hotels, guests, onGuestsChange, showProble
               <div className="max-w-sm" aria-labelledby={`${id}-guests`} role="group">
                 <GuestPicker guests={guests} onChange={onGuestsChange} />
               </div>
-              <p className="mt-1.5 text-xs text-ink-500">The same guests apply to every stay. Infants (under 2) don&apos;t need a bed.</p>
+              <p className="mt-1.5 text-xs text-ink-500">The same guests apply to every stay. Infants and children without a bed share with an adult, so they don&apos;t need room space.</p>
             </>
           ) : (
             <p className="rounded-lg bg-sand-50 px-3 py-2 text-sm text-ink-700" data-testid="guests-readonly">
@@ -148,10 +166,13 @@ export function LegCard({ leg, index, hotels, guests, onGuestsChange, showProble
             className="input"
             value={Number.isFinite(leg.rooms) ? leg.rooms : ""}
             onChange={(e) => onPatch({ rooms: e.target.value === "" ? NaN : Math.floor(Number(e.target.value)) })}
+            onBlur={() => {
+              if (roomShortage(leg, hotels, guests)) onRoomShortage();
+            }}
           />
           {hotel && (
             <p id={`${id}-count-hint`} className="mt-1 text-xs text-ink-500">
-              Min. {fewestRooms} for {pluralize(roomGuests(guests), "guest")}. You can add more.
+              Min. {fewestRooms} for {pluralize(roomGuests(guests), "guest")} needing a bed. You can add more.
             </p>
           )}
         </div>

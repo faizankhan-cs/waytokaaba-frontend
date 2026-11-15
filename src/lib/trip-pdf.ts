@@ -1,5 +1,5 @@
 import { CONTACT, SITE } from "./config";
-import { DISCLAIMER, formatStayDate, guestSummary, money, type Slip } from "./trip";
+import { DISCLAIMER, bedNote, formatStayDate, guestSummary, money, type Slip } from "./trip";
 
 // Brand colours (see globals.css): near-black and gold-500.
 const BLACK: [number, number, number] = [13, 13, 13];
@@ -114,6 +114,15 @@ export async function buildSlipPdf(slip: Slip): Promise<Blob> {
     y += rowH;
     doc.setDrawColor(232, 232, 232).line(M, y - 5, W - M, y - 5);
   });
+
+  // Guests sharing a bed (infants, children without a bed) aren't charged for accommodation.
+  const note = bedNote(slip.guests);
+  if (note) {
+    ensureSpace(8);
+    doc.setFont("helvetica", "italic").setFontSize(9).setTextColor(...GOLD_DARK);
+    doc.text(note, M + 4, y);
+    y += 7;
+  }
 
   // Totals
   ensureSpace(vt ? 52 : 30);

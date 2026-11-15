@@ -4,7 +4,7 @@ import { useActionState, useRef, useState, type ReactNode } from "react";
 import { useFormStatus } from "react-dom";
 import { CheckCircle2, Loader2, Trash2 } from "lucide-react";
 import type { FormState } from "@/app/admin/actions";
-import { ConfirmDialog, ErrorDialog } from "./Modal";
+import { ConfirmDialog, ErrorDialog } from "@/components/ui/Modal";
 
 export function SubmitButton({ children, className = "btn-primary" }: { children: ReactNode; className?: string }) {
   const { pending } = useFormStatus();

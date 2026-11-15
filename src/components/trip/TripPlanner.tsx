@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Check, Copy, Download, Plus, RotateCcw, Send, Share2 } from "lucide-react";
+import { BedDouble, Check, Copy, Download, Plus, RotateCcw, Send, Share2 } from "lucide-react";
 import { WhatsAppIcon } from "@/components/ui/BrandIcons";
 import { CONTACT } from "@/lib/config";
 import { formatPrice, pluralize } from "@/lib/format";
@@ -12,23 +12,39 @@ import {
   findHotel,
   findRoom,
   formatStayDate,
+  bedNote,
   guestSummary,
   legNights,
   legProblem,
   legTotal,
+  roomShortage,
   slipReference,
   tripCurrency,
   tripNights,
   tripTotal,
   totalGuests,
   visaTransportFor,
+  type Guests,
   type PlannerHotel,
   type Slip,
   type TripCustomer,
 } from "@/lib/trip";
 import { buildSlipPdf } from "@/lib/trip-pdf";
 import { LegCard } from "./LegCard";
+import { RoomShortageDialog } from "./RoomShortageDialog";
 import { useTrip } from "./useTrip";
+
+/** "Children without a bed and infants share with an adult — no accommodation charge", when it applies. */
+function BedNote({ guests }: { guests: Guests }) {
+  const note = bedNote(guests);
+  if (!note) return null;
+  return (
+    <p className="mt-2 flex items-start gap-2 rounded-lg bg-gold-50 px-3 py-2 text-xs text-gold-700" data-testid="bed-note">
+      <BedDouble className="mt-px h-3.5 w-3.5 shrink-0" aria-hidden />
+      <span>{note}</span>
+    </p>
+  );
+}
 
 function downloadBlob(blob: Blob, filename: string) {
   const url = URL.createObjectURL(blob);
@@ -50,6 +66,12 @@ export function TripPlanner({ hotels, visaTransportRate }: { hotels: PlannerHote
   const [pdf, setPdf] = useState<{ slip: Slip; blob: Blob } | null>(null);
   const [copied, setCopied] = useState(false);
   const slipRef = useRef<HTMLElement>(null);
+  // The stay whose rooms can't fit the guests (shown in the "Not enough rooms" popup).
+  const [shortageLegId, setShortageLegId] = useState<string | null>(null);
+  const shortageIndex = legs.findIndex((l) => l.id === shortageLegId);
+  const shortageLeg = shortageIndex >= 0 ? legs[shortageIndex] : undefined;
+  // Computed live, so the popup closes by itself once the rooms are fixed.
+  const shortage = shortageLeg ? roomShortage(shortageLeg, hotels, guests) : null;
 
   const allValid = legs.every((leg) => legProblem(leg, hotels, guests) === null);
   const accommodation = tripTotal(legs, hotels);
@@ -85,7 +107,12 @@ export function TripPlanner({ hotels, visaTransportRate }: { hotels: PlannerHote
 
   function generateSlip() {
     setShowProblems(true);
-    if (!allValid) return;
+    if (!allValid) {
+      // If the first stay with a problem is short of rooms, explain it in the popup.
+      const firstInvalid = legs.find((leg) => legProblem(leg, hotels, guests) !== null);
+      if (firstInvalid && roomShortage(firstInvalid, hotels, guests)) setShortageLegId(firstInvalid.id);
+      return;
+    }
     if (!slipOpen) setReference(slipReference());
     setSlipOpen(true);
     requestAnimationFrame(() => slipRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }));
@@ -155,9 +182,28 @@ export function TripPlanner({ hotels, visaTransportRate }: { hotels: PlannerHote
               onPatch={(p) => patch(leg.id, p)}
               onMove={(dir) => move(leg.id, dir)}
               onRemove={() => remove(leg.id)}
+              onRoomShortage={() => setShortageLegId(leg.id)}
             />
           ))}
         </ol>
+
+        <RoomShortageDialog
+          shortage={shortage}
+          currentRooms={shortageLeg?.rooms ?? NaN}
+          sharesBed={guests.infants + guests.childrenNoBed > 0}
+          onUseRooms={(rooms) => shortageLeg && patch(shortageLeg.id, { rooms })}
+          onPickRoom={() => {
+            const index = shortageIndex;
+            setShortageLegId(null);
+            // After the dialog has closed and handed focus back, move it to that stay's room type.
+            setTimeout(() => {
+              const select = document.getElementById(`leg-${index}-room`);
+              select?.scrollIntoView({ behavior: "smooth", block: "center" });
+              select?.focus({ preventScroll: true });
+            }, 50);
+          }}
+          onClose={() => setShortageLegId(null)}
+        />
 
         <div className="mt-5 flex flex-wrap gap-3">
           <button type="button" className="btn-outline" onClick={() => add("Makkah")}>
@@ -195,7 +241,7 @@ export function TripPlanner({ hotels, visaTransportRate }: { hotels: PlannerHote
                   <div className="mt-2 flex flex-wrap items-baseline justify-between gap-2 rounded-lg bg-sand-50 px-4 py-3 text-sm">
                     <span className="text-ink-700">
                       {formatPrice(addOn.rate, currency)} × {pluralize(addOn.people, "guest")}{" "}
-                      <span className="text-ink-500">({guestSummary(guests)})</span>
+                      <span className="text-ink-500">· {guestSummary(guests)}</span>
                     </span>
                     <span className="font-semibold text-ink-900" data-testid="visa-transport-total">{formatPrice(addOn.total, currency)}</span>
                   </div>
@@ -226,6 +272,7 @@ export function TripPlanner({ hotels, visaTransportRate }: { hotels: PlannerHote
                       <span className="text-ink-900" data-testid="accommodation-total">{accommodation > 0 ? formatPrice(accommodation, currency) : "—"}</span>
                     </li>
                   </ul>
+                  <BedNote guests={guests} />
                 </div>
 
                 <div>
@@ -331,6 +378,7 @@ export function TripPlanner({ hotels, visaTransportRate }: { hotels: PlannerHote
                     <span className="font-display text-xl text-brand-900">{formatPrice(slip.total, slip.currency)}</span>
                   </li>
                 </ul>
+                <BedNote guests={slip.guests} />
                 <p className="mt-3 text-xs text-ink-500">{DISCLAIMER}</p>
 
                 <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">

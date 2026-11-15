@@ -12,6 +12,8 @@ interface Row {
   one: string;
   min: number;
   max: number;
+  /** A sub-option of the row above (indented, smaller). */
+  sub?: boolean;
 }
 
 /** Guest selection in the style of airline booking forms: one button that opens adults / children / infants steppers. */
@@ -24,6 +26,10 @@ export function GuestPicker({ guests, onChange }: { guests: Guests; onChange: (g
   const rows: Row[] = [
     { key: "adults", label: "Adults", hint: "12 years and up", one: "adult", min: 1, max: MAX_ADULTS },
     { key: "children", label: "Children", hint: "2 to 11 years", one: "child", min: 0, max: MAX_CHILDREN },
+    // Children who share an adult's bed: they don't need room space and aren't charged for accommodation.
+    ...(guests.children > 0
+      ? [{ key: "childrenNoBed" as const, label: "Without a bed", hint: "Shares with an adult · no room charge", one: "child without a bed", min: 0, max: guests.children, sub: true }]
+      : []),
     // One infant per adult, as airlines allow.
     { key: "infants", label: "Infants", hint: "Under 2 · no bed needed", one: "infant", min: 0, max: guests.adults },
   ];
@@ -51,6 +57,8 @@ export function GuestPicker({ guests, onChange }: { guests: Guests; onChange: (g
     const next = { ...guests, [key]: guests[key] + delta };
     // Fewer adults than infants isn't allowed, so infants follow the adults down.
     if (key === "adults") next.infants = Math.min(next.infants, next.adults);
+    // Likewise, children without a bed can't outnumber the children.
+    if (key === "children") next.childrenNoBed = Math.min(next.childrenNoBed, next.children);
     onChange(next);
   }
 
@@ -85,9 +93,12 @@ export function GuestPicker({ guests, onChange }: { guests: Guests; onChange: (g
             {rows.map((r) => {
               const value = guests[r.key];
               return (
-                <li key={r.key} className="flex items-center justify-between gap-4">
+                <li
+                  key={r.key}
+                  className={`flex items-center justify-between gap-4 ${r.sub ? "-mt-1 ml-3 border-l-2 border-gold-500/50 pl-3" : ""}`}
+                >
                   <div>
-                    <p className="font-semibold text-ink-900">{r.label}</p>
+                    <p className={r.sub ? "text-sm font-semibold text-ink-700" : "font-semibold text-ink-900"}>{r.label}</p>
                     <p className="text-xs text-ink-500">{r.hint}</p>
                   </div>
                   <div className="flex items-center gap-1 rounded-full border border-gold-500/60 bg-sand-50 p-1">

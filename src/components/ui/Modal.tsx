@@ -15,11 +15,16 @@ type ModalProps = {
 /** Styled modal on top of the native <dialog> (focus trap, Escape and backdrop-click close). */
 export function Modal({ open, onClose, title, icon, children, actions }: ModalProps) {
   const ref = useRef<HTMLDialogElement>(null);
+  const pressedBackdrop = useRef(false);
 
   useEffect(() => {
     const dialog = ref.current;
     if (!dialog) return;
-    if (open && !dialog.open) dialog.showModal();
+    if (open && !dialog.open) {
+      dialog.showModal();
+      // showModal() focuses the first button; move focus to the main action when one is marked.
+      dialog.querySelector<HTMLElement>("[data-autofocus]")?.focus();
+    }
     if (!open && dialog.open) dialog.close();
   }, [open]);
 
@@ -28,8 +33,14 @@ export function Modal({ open, onClose, title, icon, children, actions }: ModalPr
       ref={ref}
       aria-labelledby="modal-title"
       onClose={onClose}
+      // Close on a backdrop click only when the press also started on the backdrop. A click that began
+      // elsewhere (e.g. the one that opened this dialog by leaving a field) must not close it straight away.
+      onPointerDown={(e) => {
+        pressedBackdrop.current = e.target === ref.current;
+      }}
       onClick={(e) => {
-        if (e.target === ref.current) onClose();
+        if (e.target === ref.current && pressedBackdrop.current) onClose();
+        pressedBackdrop.current = false;
       }}
       className="m-auto w-[calc(100%-2rem)] max-w-md rounded-2xl bg-white p-0 text-ink-900 shadow-2xl backdrop:bg-black/50 backdrop:backdrop-blur-sm"
     >
@@ -75,7 +86,7 @@ export function ConfirmDialog({
       actions={
         <>
           <button type="button" className="btn-ghost" onClick={onCancel}>Cancel</button>
-          <button type="button" className="btn-danger" onClick={onConfirm} autoFocus>{confirmLabel}</button>
+          <button type="button" className="btn-danger" onClick={onConfirm} autoFocus data-autofocus>{confirmLabel}</button>
         </>
       }
     >
@@ -116,7 +127,7 @@ export function ErrorDialog({
           {warning ? <AlertTriangle className="h-5 w-5" aria-hidden /> : <XCircle className="h-5 w-5" aria-hidden />}
         </span>
       }
-      actions={<button type="button" className="btn-primary" onClick={onClose} autoFocus>OK</button>}
+      actions={<button type="button" className="btn-primary" onClick={onClose} autoFocus data-autofocus>OK</button>}
     >
       <p>{message}</p>
       {entries.length > 0 && (

@@ -34,6 +34,8 @@ export interface TripLeg {
 export interface Guests {
   adults: number;
   children: number;
+  /** Children who share a bed with an adult: they don't need room space, so their accommodation isn't charged. */
+  childrenNoBed: number;
   infants: number;
 }
 
@@ -79,7 +81,7 @@ export interface Slip {
 export const MAX_ROOMS = 20;
 export const MAX_ADULTS = 20;
 export const MAX_CHILDREN = 20;
-export const DEFAULT_GUESTS: Guests = { adults: 1, children: 0, infants: 0 };
+export const DEFAULT_GUESTS: Guests = { adults: 1, children: 0, childrenNoBed: 0, infants: 0 };
 export const DISCLAIMER =
   "This is an estimate based on indicative nightly rates, not a confirmed booking. Availability and final prices are confirmed by our team.";
 
@@ -112,12 +114,24 @@ export function clampGuests(g: Partial<Guests>): Guests {
   const whole = (v: unknown, min: number, max: number) =>
     typeof v === "number" && Number.isFinite(v) ? Math.min(max, Math.max(min, Math.floor(v))) : min;
   const adults = whole(g.adults, 1, MAX_ADULTS);
-  return { adults, children: whole(g.children, 0, MAX_CHILDREN), infants: whole(g.infants, 0, adults) };
+  const children = whole(g.children, 0, MAX_CHILDREN);
+  // Trips saved before this option existed have no childrenNoBed: it defaults to 0.
+  return { adults, children, childrenNoBed: whole(g.childrenNoBed, 0, children), infants: whole(g.infants, 0, adults) };
 }
 
-/** Guests who need a bed: adults and children. Infants share a bed. */
+/** Guests who need a bed: adults and children who take one. Infants and children without a bed share. */
 export function roomGuests(g: Guests): number {
-  return g.adults + g.children;
+  return g.adults + g.children - g.childrenNoBed;
+}
+
+/** "1 child without a bed and 1 infant share a bed with an adult — no accommodation charge." (null when nobody shares). */
+export function bedNote(g: Guests): string | null {
+  const parts: string[] = [];
+  if (g.childrenNoBed > 0) parts.push(`${pluralize(g.childrenNoBed, "child", "children")} without a bed`);
+  if (g.infants > 0) parts.push(pluralize(g.infants, "infant"));
+  if (parts.length === 0) return null;
+  const many = g.childrenNoBed + g.infants > 1;
+  return `${parts.join(" and ")} ${many ? "share" : "shares"} a bed with an adult — no accommodation charge.`;
 }
 
 export function totalGuests(g: Guests): number {
@@ -127,7 +141,10 @@ export function totalGuests(g: Guests): number {
 /** "2 adults, 1 child, 1 infant" (zero counts are left out; adults are always shown). */
 export function guestSummary(g: Guests): string {
   const parts = [pluralize(g.adults, "adult")];
-  if (g.children > 0) parts.push(pluralize(g.children, "child", "children"));
+  if (g.children > 0) {
+    const noBed = g.childrenNoBed === 0 ? "" : g.childrenNoBed === g.children ? " (no bed)" : ` (${g.childrenNoBed} without a bed)`;
+    parts.push(pluralize(g.children, "child", "children") + noBed);
+  }
   if (g.infants > 0) parts.push(pluralize(g.infants, "infant"));
   return parts.join(", ");
 }
@@ -157,6 +174,38 @@ export function minRooms(room: PlannerRoom | undefined, guests: Guests): number 
 
 export function legMinRooms(leg: TripLeg, hotels: PlannerHotel[], guests: Guests): number {
   return minRooms(findRoom(findHotel(hotels, leg.hotelId), leg.roomId), guests);
+}
+
+export interface RoomShortage {
+  room: PlannerRoom;
+  /** Fewest rooms of this type that fit everyone. */
+  needed: number;
+  /** Adults + children (infants don't need a bed). */
+  people: number;
+  /** Even the maximum number of rooms isn't enough: a bigger room type is needed. */
+  tooBig: boolean;
+}
+
+/** When a stay has fewer rooms than its guests need, the details for the "Not enough rooms" popup; otherwise null. */
+export function roomShortage(leg: TripLeg, hotels: PlannerHotel[], guests: Guests): RoomShortage | null {
+  const room = findRoom(findHotel(hotels, leg.hotelId), leg.roomId);
+  if (!room) return null;
+  const needed = minRooms(room, guests);
+  const tooBig = needed > MAX_ROOMS;
+  if (!tooBig && (!Number.isInteger(leg.rooms) || leg.rooms >= needed)) return null;
+  return { room, needed, people: roomGuests(guests), tooBig };
+}
+
+/** Splits guests across rooms as evenly as the room size allows, e.g. 7 guests in doubles → [2, 2, 2, 1]. */
+export function guestsPerRoom(people: number, capacity: number, rooms: number): number[] {
+  const out: number[] = [];
+  let left = people;
+  for (let i = 0; i < rooms; i++) {
+    const n = Math.min(capacity, left);
+    out.push(n);
+    left -= n;
+  }
+  return out;
 }
 
 export function legNights(leg: TripLeg): number {
@@ -301,6 +350,8 @@ export function buildWhatsAppText(slip: Slip): string {
       "",
     );
   });
+  const note = bedNote(slip.guests);
+  if (note) lines.push(`_${note}_`, "");
 
   if (v) {
     lines.push(
