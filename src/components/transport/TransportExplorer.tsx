@@ -54,7 +54,7 @@ function VehiclePicker({
     <fieldset className="min-w-0">
       <legend className="heading-section mb-1">Choose Your Vehicle</legend>
       <p className="mb-5 text-sm text-ink-500">Private, air-conditioned vehicles with a professional driver.</p>
-      <div className="-mx-4 flex snap-x snap-mandatory scroll-px-4 gap-4 overflow-x-auto px-4 pb-3 lg:mx-0 lg:grid lg:grid-cols-5 lg:overflow-visible lg:px-0 lg:pb-0">
+      <div className="-mx-4 flex snap-x snap-mandatory scroll-px-4 gap-4 -mt-1.5 overflow-x-auto px-4 pt-1.5 pb-3 lg:mx-0 lg:mt-0 lg:pt-0 lg:grid lg:grid-cols-5 lg:overflow-visible lg:px-0 lg:pb-0">
         {vehicles.map((v) => {
           const active = v.id === selectedId;
           return (
