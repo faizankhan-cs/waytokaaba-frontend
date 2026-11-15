@@ -6,7 +6,7 @@ import { adminSend, adminUpload, toFormError } from "@/lib/admin/api";
 import { clearAdminSession, setAdminSession } from "@/lib/admin/session";
 import { readProblem } from "@/lib/api";
 import { getApiBaseUrl } from "@/lib/config";
-import type { HotelDetail, InquiryStatus, PackageDetail, Room, TransportRoute, TransportVehicle, VisaDetail } from "@/lib/types";
+import type { HotelDetail, InquiryStatus, PackageDetail, Room, TransportRoute, TransportVehicle, TripSettings, VisaDetail } from "@/lib/types";
 
 export type FormState = {
   message?: string;
@@ -334,4 +334,15 @@ export async function uploadImageAction(fd: FormData): Promise<{ url?: string; e
   if (result.status === 0) return { error: "The upload took too long. Please check your connection and try again." };
   const fieldError = result.problem?.errors?.file?.join(" ") ?? result.problem?.errors?.File?.join(" ");
   return { error: fieldError ?? result.problem?.detail ?? "Upload failed. Please try again." };
+}
+
+// ---------------- round trip settings ----------------
+
+export async function saveTripSettingsAction(_prev: FormState, fd: FormData): Promise<FormState> {
+  const result = await adminSend<TripSettings>("PUT", "/api/trip-settings", {
+    visaTransportPricePerPerson: num(fd, "visaTransportPricePerPerson"),
+  });
+  if (!result.ok) return toFormError(result);
+  refresh();
+  return { success: "Settings saved." };
 }

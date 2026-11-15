@@ -11,7 +11,7 @@ const channel = process.env.PW_CHANNEL ?? "msedge";
 const preview = process.env.E2E_PREVIEW === "1";
 
 // Inquiry/admin tests need the backend; preview tests only make sense in preview mode.
-const desktopIgnore = preview ? [/mobile\.spec\.ts/, /inquiry-and-admin\.spec\.ts/, /visas-admin\.spec\.ts/, /transport-admin\.spec\.ts/] : [/mobile\.spec\.ts/, /preview\.spec\.ts/];
+const desktopIgnore = preview ? [/mobile\.spec\.ts/, /inquiry-and-admin\.spec\.ts/, /visas-admin\.spec\.ts/, /transport-admin\.spec\.ts/, /trip-settings-admin\.spec\.ts/] : [/mobile\.spec\.ts/, /preview\.spec\.ts/];
 
 export default defineConfig({
   testDir: "./e2e",

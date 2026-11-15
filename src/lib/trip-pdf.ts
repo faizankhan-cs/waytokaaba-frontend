@@ -1,11 +1,12 @@
 import { CONTACT, SITE } from "./config";
-import { DISCLAIMER, formatStayDate, money, type Slip } from "./trip";
+import { DISCLAIMER, formatStayDate, guestSummary, money, type Slip } from "./trip";
 
 // Brand colours (see globals.css): near-black and gold-500.
 const BLACK: [number, number, number] = [13, 13, 13];
 const GOLD: [number, number, number] = [201, 162, 39];
 const INK: [number, number, number] = [23, 23, 23];
 const MUTED: [number, number, number] = [107, 107, 107];
+const GOLD_DARK: [number, number, number] = [150, 118, 22];
 
 /**
  * Builds the A4 PDF slip. jsPDF is loaded on demand so it never weighs down the rest of the site.
@@ -48,7 +49,29 @@ export async function buildSlipPdf(slip: Slip): Promise<Blob> {
   if (slip.customer.name || slip.customer.phone) {
     doc.setFont("helvetica", "bold").setFontSize(10).text("Prepared for", M, y);
     doc.setFont("helvetica", "normal").text([slip.customer.name, slip.customer.phone].filter(Boolean).join("  ·  "), M + 28, y);
-    y += 9;
+    y += 6;
+  }
+  doc.setFont("helvetica", "bold").setFontSize(10).text("Guests", M, y);
+  doc.setFont("helvetica", "normal").text(guestSummary(slip.guests), M + 28, y);
+  y += 10;
+
+  const sectionTitle = (title: string) => {
+    doc.setFont("helvetica", "bold").setFontSize(11).setTextColor(...GOLD_DARK).text(title, M, y);
+    doc.setTextColor(...INK);
+    y += 7;
+  };
+
+  // 1. Visa & transport (when added) comes first, then the hotels.
+  const vt = slip.visaTransport;
+  if (vt) {
+    sectionTitle("1. Visa & transport");
+    doc.setDrawColor(232, 232, 232).setFillColor(247, 247, 247);
+    doc.roundedRect(M, y - 5, W - 2 * M, 12, 2, 2, "FD");
+    doc.setFont("helvetica", "normal").setFontSize(10).setTextColor(...INK);
+    doc.text(`Umrah visa & transport:  ${money(vt.rate, slip.currency)} x ${vt.people} ${vt.people === 1 ? "guest" : "guests"}`, M + 4, y + 2.5);
+    doc.setFont("helvetica", "bold").text(money(vt.total, slip.currency), W - M - 4, y + 2.5, { align: "right" });
+    y += 17;
+    sectionTitle("2. Accommodation");
   }
 
   // Table
@@ -92,13 +115,26 @@ export async function buildSlipPdf(slip: Slip): Promise<Blob> {
     doc.setDrawColor(232, 232, 232).line(M, y - 5, W - M, y - 5);
   });
 
-  // Total
-  ensureSpace(30);
+  // Totals
+  ensureSpace(vt ? 52 : 30);
   y += 2;
+  if (vt) {
+    doc.setTextColor(...INK).setFont("helvetica", "bold").setFontSize(10);
+    doc.text(`Accommodation total  (${slip.totalNights} ${slip.totalNights === 1 ? "night" : "nights"})`, M + 4, y);
+    doc.text(money(slip.accommodationTotal, slip.currency), W - M - 4, y, { align: "right" });
+    y += 8;
+    doc.setFont("helvetica", "normal").setFontSize(9).setTextColor(...MUTED);
+    doc.text("Visa & transport", M + 4, y);
+    doc.text(money(vt.total, slip.currency), W - M - 4, y, { align: "right" });
+    y += 5;
+    doc.text("Accommodation", M + 4, y);
+    doc.text(money(slip.accommodationTotal, slip.currency), W - M - 4, y, { align: "right" });
+    y += 9;
+  }
   doc.setFillColor(...GOLD);
   doc.roundedRect(M, y - 6, W - 2 * M, 14, 2, 2, "F");
   doc.setTextColor(...INK).setFont("helvetica", "bold").setFontSize(12);
-  doc.text(`Estimated total  (${slip.totalNights} ${slip.totalNights === 1 ? "night" : "nights"})`, M + 4, y + 3);
+  doc.text(vt ? "Grand total" : `Estimated total  (${slip.totalNights} ${slip.totalNights === 1 ? "night" : "nights"})`, M + 4, y + 3);
   doc.setFontSize(14).text(money(slip.total, slip.currency), W - M - 4, y + 3, { align: "right" });
   y += 20;
 

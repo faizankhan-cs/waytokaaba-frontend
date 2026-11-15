@@ -5,6 +5,7 @@
  */
 import data from "./catalog.json";
 import transportData from "./transport.json";
+import tripSettingsData from "./trip-settings.json";
 import visaData from "./visas.json";
 import type {
   City,
@@ -15,6 +16,7 @@ import type {
   PackageType,
   PagedResult,
   TransportCatalog,
+  TripSettings,
   VisaDetail,
   VisaSummary,
 } from "@/lib/types";
@@ -245,4 +247,8 @@ export function previewGetTransport(): TransportCatalog {
     routes: catalog.routes.filter((r) => r.isActive && r.rates.length > 0),
     currency: catalog.currency,
   };
+}
+
+export function previewGetTripSettings(): TripSettings {
+  return tripSettingsData as TripSettings;
 }

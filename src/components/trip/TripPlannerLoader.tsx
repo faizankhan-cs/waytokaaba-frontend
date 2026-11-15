@@ -1,5 +1,5 @@
 import { ErrorState } from "@/components/ui/primitives";
-import { getHotel, searchHotels } from "@/lib/api";
+import { getHotel, getTripSettings, searchHotels } from "@/lib/api";
 import type { PlannerHotel } from "@/lib/trip";
 import type { City } from "@/lib/types";
 import { TripPlanner } from "./TripPlanner";
@@ -24,10 +24,20 @@ async function loadCatalogue(): Promise<PlannerHotel[]> {
     }));
 }
 
+/** The admin-set visa & transport price; if it cannot be loaded the planner still works, just without that option. */
+async function loadVisaTransportRate(): Promise<number | null> {
+  try {
+    return (await getTripSettings()).visaTransportPricePerPerson;
+  } catch {
+    return null;
+  }
+}
+
 export async function TripPlannerLoader() {
   let hotels: PlannerHotel[];
+  let visaTransportRate: number | null;
   try {
-    hotels = await loadCatalogue();
+    [hotels, visaTransportRate] = await Promise.all([loadCatalogue(), loadVisaTransportRate()]);
   } catch {
     return (
       <div className="container-page py-12">
@@ -35,5 +45,5 @@ export async function TripPlannerLoader() {
       </div>
     );
   }
-  return <TripPlanner hotels={hotels} />;
+  return <TripPlanner hotels={hotels} visaTransportRate={visaTransportRate} />;
 }

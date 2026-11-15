@@ -224,3 +224,10 @@ export interface TransportCatalog {
   routes: TransportRoute[];
   currency: string;
 }
+
+/** Prices used by the Round Trip planner. */
+export interface TripSettings {
+  /** Combined visa + transport price charged per guest (infants included). */
+  visaTransportPricePerPerson: number;
+  currency: string;
+}

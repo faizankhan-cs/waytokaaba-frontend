@@ -5,6 +5,7 @@ import {
   previewGetHotel,
   previewGetPackage,
   previewGetTransport,
+  previewGetTripSettings,
   previewGetVisa,
   previewSearchHotels,
   previewSearchPackages,
@@ -19,6 +20,7 @@ import type {
   PagedResult,
   ProblemDetails,
   TransportCatalog,
+  TripSettings,
   VisaDetail,
   VisaSummary,
 } from "./types";
@@ -167,4 +169,10 @@ export async function getVisa(slug: string) {
 export async function getTransport() {
   if (PREVIEW_MODE) return previewGetTransport();
   return apiGet<TransportCatalog>("/api/transport");
+}
+
+/** Round Trip prices set by the admin (visa + transport per guest). */
+export async function getTripSettings() {
+  if (PREVIEW_MODE) return previewGetTripSettings();
+  return apiGet<TripSettings>("/api/trip-settings");
 }

@@ -25,7 +25,7 @@ test.describe("mobile layout", () => {
 
   test("pages do not scroll horizontally", async ({ page }) => {
     test.setTimeout(180_000);
-    for (const path of ["/", "/hotels/makkah", "/packages", "/hotels/makkah/al-noor-haram-view-hotel", "/packages/economy-15-day-umrah", "/contact", "/visas", "/visas/uae-visa", "/transport"]) {
+    for (const path of ["/", "/hotels/makkah", "/packages", "/hotels/makkah/al-noor-haram-view-hotel", "/packages/economy-15-day-umrah", "/contact", "/visas", "/visas/uae-visa", "/transport", "/trip-planner"]) {
       await page.goto(path);
       await page.waitForLoadState("load");
       await page.locator("footer").waitFor();

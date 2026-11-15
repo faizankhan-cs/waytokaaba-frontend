@@ -3,13 +3,18 @@
 import { ArrowDown, ArrowUp, Trash2 } from "lucide-react";
 import { StarRating } from "@/components/ui/primitives";
 import { formatPrice, pluralize } from "@/lib/format";
+import { GuestPicker } from "./GuestPicker";
 import {
   MAX_ROOMS,
   findHotel,
+  guestSummary,
+  legMinRooms,
+  roomGuests,
   legNights,
   legProblem,
   legTotal,
   roomOptions,
+  type Guests,
   type PlannerHotel,
   type TripLeg,
 } from "@/lib/trip";
@@ -19,6 +24,9 @@ interface Props {
   leg: TripLeg;
   index: number;
   hotels: PlannerHotel[];
+  guests: Guests;
+  /** Guests are only edited in the first stay; the others show them read-only. */
+  onGuestsChange: (guests: Guests) => void;
   showProblem: boolean;
   isFirst: boolean;
   isLast: boolean;
@@ -28,13 +36,14 @@ interface Props {
   onRemove: () => void;
 }
 
-export function LegCard({ leg, index, hotels, showProblem, isFirst, isLast, canRemove, onPatch, onMove, onRemove }: Props) {
+export function LegCard({ leg, index, hotels, guests, onGuestsChange, showProblem, isFirst, isLast, canRemove, onPatch, onMove, onRemove }: Props) {
   const cityHotels = hotels.filter((h) => h.city === leg.city);
   const hotel = findHotel(hotels, leg.hotelId);
   const rooms = hotel ? roomOptions(hotel) : [];
   const nights = legNights(leg);
   const total = legTotal(leg, hotels);
-  const problem = showProblem ? legProblem(leg, hotels) : null;
+  const problem = showProblem ? legProblem(leg, hotels, guests) : null;
+  const fewestRooms = legMinRooms(leg, hotels, guests);
   const id = `leg-${index}`;
 
   function changeCity(city: City) {
@@ -80,6 +89,23 @@ export function LegCard({ leg, index, hotels, showProblem, isFirst, isLast, canR
 
       <div className="mt-5 grid gap-4 sm:grid-cols-2">
         <div className="sm:col-span-2">
+          {isFirst ? (
+            <>
+              <p className="label" id={`${id}-guests`}>Guests</p>
+              <div className="max-w-sm" aria-labelledby={`${id}-guests`} role="group">
+                <GuestPicker guests={guests} onChange={onGuestsChange} />
+              </div>
+              <p className="mt-1.5 text-xs text-ink-500">The same guests apply to every stay. Infants (under 2) don&apos;t need a bed.</p>
+            </>
+          ) : (
+            <p className="rounded-lg bg-sand-50 px-3 py-2 text-sm text-ink-700" data-testid="guests-readonly">
+              <span className="font-semibold">Guests:</span> {guestSummary(guests)}
+              <span className="text-ink-500"> · change in stay 1</span>
+            </p>
+          )}
+        </div>
+
+        <div className="sm:col-span-2">
           <label htmlFor={`${id}-hotel`} className="label">Hotel in {leg.city}</label>
           <select id={`${id}-hotel`} className="input" value={leg.hotelId ?? ""} onChange={(e) => changeHotel(e.target.value)}>
             <option value="">Select a hotel…</option>
@@ -116,12 +142,18 @@ export function LegCard({ leg, index, hotels, showProblem, isFirst, isLast, canR
             id={`${id}-count`}
             type="number"
             inputMode="numeric"
-            min={1}
+            min={fewestRooms}
             max={MAX_ROOMS}
+            aria-describedby={hotel ? `${id}-count-hint` : undefined}
             className="input"
             value={Number.isFinite(leg.rooms) ? leg.rooms : ""}
             onChange={(e) => onPatch({ rooms: e.target.value === "" ? NaN : Math.floor(Number(e.target.value)) })}
           />
+          {hotel && (
+            <p id={`${id}-count-hint`} className="mt-1 text-xs text-ink-500">
+              Min. {fewestRooms} for {pluralize(roomGuests(guests), "guest")}. You can add more.
+            </p>
+          )}
         </div>
 
         <div>

@@ -9,12 +9,19 @@ import {
   DISCLAIMER,
   buildSlip,
   buildWhatsAppText,
+  findHotel,
+  findRoom,
   formatStayDate,
+  guestSummary,
+  legNights,
   legProblem,
+  legTotal,
   slipReference,
   tripCurrency,
   tripNights,
   tripTotal,
+  totalGuests,
+  visaTransportFor,
   type PlannerHotel,
   type Slip,
   type TripCustomer,
@@ -34,8 +41,8 @@ function downloadBlob(blob: Blob, filename: string) {
   setTimeout(() => URL.revokeObjectURL(url), 10_000);
 }
 
-export function TripPlanner({ hotels }: { hotels: PlannerHotel[] }) {
-  const { legs, add, remove, move, patch, reset } = useTrip(hotels);
+export function TripPlanner({ hotels, visaTransportRate }: { hotels: PlannerHotel[]; visaTransportRate: number | null }) {
+  const { legs, guests, visaTransport, add, remove, move, patch, setGuests, setVisaTransport, reset } = useTrip(hotels);
   const [showProblems, setShowProblems] = useState(false);
   const [slipOpen, setSlipOpen] = useState(false);
   const [reference, setReference] = useState("");
@@ -44,15 +51,21 @@ export function TripPlanner({ hotels }: { hotels: PlannerHotel[] }) {
   const [copied, setCopied] = useState(false);
   const slipRef = useRef<HTMLElement>(null);
 
-  const allValid = legs.every((leg) => legProblem(leg, hotels) === null);
-  const total = tripTotal(legs, hotels);
+  const allValid = legs.every((leg) => legProblem(leg, hotels, guests) === null);
+  const accommodation = tripTotal(legs, hotels);
+  // Offered only when the admin has set a price.
+  const offerVisaTransport = visaTransportRate !== null && visaTransportRate > 0;
+  // A plain number (not an object) so the slip memo below stays stable between renders.
+  const addOnRate = visaTransport && offerVisaTransport ? visaTransportRate : null;
+  const addOn = visaTransportFor(guests, addOnRate);
+  const total = accommodation + (addOn?.total ?? 0);
   const nights = tripNights(legs);
   const currency = tripCurrency(legs, hotels);
 
   // The slip is derived live, so editing a stay while it is open keeps the slip and PDF in sync.
   const slip = useMemo(
-    () => (slipOpen && allValid ? buildSlip(legs, hotels, customer, reference) : null),
-    [slipOpen, allValid, legs, hotels, customer, reference],
+    () => (slipOpen && allValid ? buildSlip(legs, hotels, guests, addOnRate, customer, reference) : null),
+    [slipOpen, allValid, legs, hotels, guests, addOnRate, customer, reference],
   );
 
   // Build the PDF ahead of the click: browsers only allow sharing/opening WhatsApp straight from a user tap.
@@ -118,8 +131,8 @@ export function TripPlanner({ hotels }: { hotels: PlannerHotel[] }) {
       <div className="container-page py-8 sm:py-10">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <p className="max-w-2xl text-sm text-ink-500">
-            Add each hotel stay in order, for example <strong>Makkah → Madinah → Makkah</strong>. Pick a room type, your dates and the number
-            of rooms, and the total updates as you go.
+            Choose your guests in the first stay, then add each hotel stay in order, for example <strong>Makkah → Madinah → Makkah</strong>.
+            Pick a room type and your dates; rooms are worked out from your guests and the total updates as you go.
           </p>
           <button type="button" className="btn-ghost" onClick={reset}>
             <RotateCcw className="h-4 w-4" /> Start over
@@ -133,6 +146,8 @@ export function TripPlanner({ hotels }: { hotels: PlannerHotel[] }) {
               leg={leg}
               index={i}
               hotels={hotels}
+              guests={guests}
+              onGuestsChange={setGuests}
               showProblem={showProblems}
               isFirst={i === 0}
               isLast={i === legs.length - 1}
@@ -153,13 +168,95 @@ export function TripPlanner({ hotels }: { hotels: PlannerHotel[] }) {
           </button>
         </div>
 
+        {offerVisaTransport && (
+          <section aria-labelledby="extras-heading" className="card mt-8 p-5 sm:p-6">
+            <h2 id="extras-heading" className="font-display text-xl text-brand-900">Visa &amp; transport</h2>
+            <label className="mt-3 flex cursor-pointer items-start gap-3 rounded-xl border border-sand-200 p-4 has-checked:border-gold-500 has-checked:bg-gold-50">
+              <input
+                type="checkbox"
+                className="mt-1 h-5 w-5 shrink-0 accent-brand-900"
+                checked={visaTransport}
+                onChange={(e) => setVisaTransport(e.target.checked)}
+              />
+              <span>
+                <span className="block font-semibold text-ink-900">
+                  Add Visa &amp; transport — {formatPrice(visaTransportRate, currency)} per person
+                </span>
+                <span className="block text-sm text-ink-500">
+                  Umrah visa and transport for every guest, infants included ({pluralize(totalGuests(guests), "guest")}).
+                </span>
+              </span>
+            </label>
+
+            {addOn && (
+              <div className="mt-5 space-y-5">
+                <div>
+                  <h3 className="text-sm font-semibold tracking-wide text-gold-700 uppercase">1. Visa &amp; transport</h3>
+                  <div className="mt-2 flex flex-wrap items-baseline justify-between gap-2 rounded-lg bg-sand-50 px-4 py-3 text-sm">
+                    <span className="text-ink-700">
+                      {formatPrice(addOn.rate, currency)} × {pluralize(addOn.people, "guest")}{" "}
+                      <span className="text-ink-500">({guestSummary(guests)})</span>
+                    </span>
+                    <span className="font-semibold text-ink-900" data-testid="visa-transport-total">{formatPrice(addOn.total, currency)}</span>
+                  </div>
+                </div>
+
+                <div>
+                  <h3 className="text-sm font-semibold tracking-wide text-gold-700 uppercase">2. Accommodation</h3>
+                  <ul className="mt-2 divide-y divide-sand-200 rounded-lg bg-sand-50 text-sm">
+                    {legs.map((leg, i) => {
+                      const hotel = findHotel(hotels, leg.hotelId);
+                      const room = findRoom(hotel, leg.roomId);
+                      const n = legNights(leg);
+                      const sub = legTotal(leg, hotels);
+                      return (
+                        <li key={leg.id} className="flex flex-wrap items-baseline justify-between gap-2 px-4 py-3">
+                          <span className="text-ink-700">
+                            <span className="font-semibold text-ink-900">{i + 1}. {leg.city}</span>
+                            {hotel && room && n > 0 && Number.isFinite(leg.rooms)
+                              ? ` — ${hotel.name}: ${formatPrice(room.pricePerNight, currency)} × ${pluralize(n, "night")} × ${pluralize(leg.rooms, "room")}`
+                              : " — not complete yet"}
+                          </span>
+                          <span className="font-semibold text-ink-900">{sub > 0 ? formatPrice(sub, currency) : "—"}</span>
+                        </li>
+                      );
+                    })}
+                    <li className="flex items-baseline justify-between gap-2 px-4 py-3 font-semibold">
+                      <span className="text-ink-900">Accommodation total · {pluralize(nights, "night")}</span>
+                      <span className="text-ink-900" data-testid="accommodation-total">{accommodation > 0 ? formatPrice(accommodation, currency) : "—"}</span>
+                    </li>
+                  </ul>
+                </div>
+
+                <div>
+                  <h3 className="text-sm font-semibold tracking-wide text-gold-700 uppercase">3. Grand total</h3>
+                  <div className="mt-2 rounded-lg bg-brand-950 px-4 py-3 text-sm text-white">
+                    <p className="flex flex-wrap justify-between gap-2 text-brand-200">
+                      <span>Visa &amp; transport + accommodation</span>
+                      <span>
+                        {formatPrice(addOn.total, currency)} + {accommodation > 0 ? formatPrice(accommodation, currency) : "—"}
+                      </span>
+                    </p>
+                    <p className="mt-1 flex items-baseline justify-between gap-2">
+                      <span className="font-semibold">Grand total</span>
+                      <span className="font-display text-2xl text-gold-400" data-testid="grand-total">{formatPrice(total, currency)}</span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+          </section>
+        )}
+
         {slipOpen && (
           <section ref={slipRef} aria-labelledby="slip-heading" className="card mt-10 scroll-mt-24 p-5 sm:p-8">
             <h2 id="slip-heading" className="font-display text-2xl text-brand-900">Your trip slip</h2>
 
             {slip ? (
               <>
-                <p className="mt-1 text-sm text-ink-500">Reference <strong className="text-ink-900">{slip.reference}</strong></p>
+                <p className="mt-1 text-sm text-ink-500">
+                  Reference <strong className="text-ink-900">{slip.reference}</strong> · {guestSummary(slip.guests)}
+                </p>
 
                 <div className="mt-5 grid gap-4 sm:grid-cols-2">
                   <div>
@@ -189,6 +286,21 @@ export function TripPlanner({ hotels }: { hotels: PlannerHotel[] }) {
                 </div>
 
                 <ul className="mt-6 divide-y divide-sand-200 rounded-xl border border-sand-200">
+                  {slip.visaTransport && (
+                    <>
+                      <li className="bg-sand-50 px-4 py-2 text-xs font-semibold tracking-wide text-gold-700 uppercase">1. Visa &amp; transport</li>
+                      <li className="grid gap-1 p-4 sm:grid-cols-[1fr_auto] sm:items-start">
+                        <div>
+                          <p className="font-semibold text-brand-900">Visa &amp; transport</p>
+                          <p className="text-xs text-ink-500">
+                            {formatPrice(slip.visaTransport.rate, slip.currency)} × {pluralize(slip.visaTransport.people, "guest")}
+                          </p>
+                        </div>
+                        <p className="font-semibold text-ink-900 sm:text-right">{formatPrice(slip.visaTransport.total, slip.currency)}</p>
+                      </li>
+                      <li className="bg-sand-50 px-4 py-2 text-xs font-semibold tracking-wide text-gold-700 uppercase">2. Accommodation</li>
+                    </>
+                  )}
                   {slip.legs.map((leg, i) => (
                     <li key={i} className="grid gap-1 p-4 sm:grid-cols-[1fr_auto] sm:items-start">
                       <div>
@@ -206,8 +318,16 @@ export function TripPlanner({ hotels }: { hotels: PlannerHotel[] }) {
                       <p className="font-semibold text-ink-900 sm:text-right">{formatPrice(leg.subtotal, slip.currency)}</p>
                     </li>
                   ))}
+                  {slip.visaTransport && (
+                    <li className="flex items-center justify-between gap-3 p-4">
+                      <span className="font-semibold text-brand-900">Accommodation total · {pluralize(slip.totalNights, "night")}</span>
+                      <span className="font-semibold text-ink-900">{formatPrice(slip.accommodationTotal, slip.currency)}</span>
+                    </li>
+                  )}
                   <li className="flex items-center justify-between gap-3 bg-gold-100 p-4">
-                    <span className="font-semibold text-brand-900">Estimated total · {pluralize(slip.totalNights, "night")}</span>
+                    <span className="font-semibold text-brand-900">
+                      {slip.visaTransport ? "Grand total" : `Estimated total · ${pluralize(slip.totalNights, "night")}`}
+                    </span>
                     <span className="font-display text-xl text-brand-900">{formatPrice(slip.total, slip.currency)}</span>
                   </li>
                 </ul>
@@ -258,7 +378,8 @@ export function TripPlanner({ hotels }: { hotels: PlannerHotel[] }) {
         <div className="container-page flex items-center justify-between gap-3 py-3 pr-20 sm:pr-64">
           <div>
             <p className="text-xs text-ink-500">
-              {pluralize(legs.length, "stay")} · {pluralize(nights, "night")}
+              {pluralize(legs.length, "stay")} · {pluralize(nights, "night")} · {pluralize(totalGuests(guests), "guest")}
+              {addOn ? " · incl. visa & transport" : ""}
             </p>
             <p className="font-display text-2xl leading-tight text-brand-900" aria-live="polite">
               {total > 0 ? formatPrice(total, currency) : "—"}
