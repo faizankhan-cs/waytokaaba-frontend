@@ -5,6 +5,7 @@ import { Plus, X } from "lucide-react";
 import { saveVisaAction } from "@/app/admin/actions";
 import { VISA_FORMATS, type VisaDetail } from "@/lib/types";
 import { VISA_ENTRY_LABEL, VISA_FORMAT_LABEL } from "@/lib/visa";
+import { ImageUpload } from "./ImageUpload";
 import { Checkbox, FormMessage, SelectField, SubmitButton, TextAreaField, TextField } from "./FormParts";
 
 type TierRow = { key: number; name: string; description: string; price: string };
@@ -47,7 +48,7 @@ export function VisaForm({ visa }: { visa?: VisaDetail }) {
         <TextField name="processingTime" label="Processing time *" defaultValue={visa?.processingTime} error={e.processingTime} hint='e.g. "3–5 Working Days"' required maxLength={80} />
         <TextField name="validity" label="Visa validity *" defaultValue={visa?.validity} error={e.validity} hint='e.g. "60 days to enter"' required maxLength={80} />
         <TextField name="allowedStay" label="Allowed stay *" defaultValue={visa?.allowedStay} error={e.allowedStay} hint='e.g. "30 days"' required maxLength={80} />
-        <TextField name="imageUrl" label="Landmark image URL *" type="url" defaultValue={visa?.imageUrl} error={e.imageUrl} required />
+        <ImageUpload name="imageUrl" label="Landmark photo *" defaultValue={visa?.imageUrl} error={e.imageUrl} required className="md:col-span-2" />
       </div>
 
       <TextAreaField name="summary" label="Short summary *" rows={2} maxLength={500} defaultValue={visa?.summary} error={e.summary} required />

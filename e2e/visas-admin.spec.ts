@@ -26,7 +26,8 @@ test("admin can create a visa, see it on the site, edit it, and delete it", asyn
   await page.getByLabel("Processing time *").fill("3–5 Working Days");
   await page.getByLabel("Visa validity *").fill("60 days to enter");
   await page.getByLabel("Allowed stay *").fill("30 days");
-  await page.getByLabel("Landmark image URL *").fill("https://images.unsplash.com/photo-1621293954908-907159247fc8?auto=format&fit=crop");
+  await page.getByLabel("Landmark photo *").setInputFiles("e2e/fixtures/photo.jpg");
+  await expect(page.getByAltText("Selected photo")).toBeVisible({ timeout: 30_000 });
   await page.getByLabel("Short summary *").fill("A test visa created by the end-to-end tests.");
   await page.getByLabel("Option 1 name").fill("Standard");
   await page.getByLabel("Option 1 price").fill("45000");

@@ -1,6 +1,12 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // Self-contained server bundle for the Docker image (Coolify/Hetzner). Ignored by Vercel.
+  output: "standalone",
+  experimental: {
+    // Admin photo uploads pass through a server action (default limit 1 MB). The API caps photos at 10 MB.
+    serverActions: { bodySizeLimit: "11mb" },
+  },
   cacheComponents: true,
   partialPrefetching: true,
   poweredByHeader: false,

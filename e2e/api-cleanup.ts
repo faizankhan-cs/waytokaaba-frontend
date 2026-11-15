@@ -60,3 +60,17 @@ export async function deleteVisasNamed(prefix: string) {
     await fetch(`${API}/api/visas/${visa.id}`, { method: "DELETE", headers: h });
   }
 }
+
+/** Deletes every transport route and vehicle whose name (route "from") starts with the given prefix. */
+export async function deleteTransportNamed(prefix: string) {
+  const h = await headers();
+  const res = await fetch(`${API}/api/admin/transport`, { headers: h });
+  if (!res.ok) throw new Error(`E2E cleanup: listing transport failed with HTTP ${res.status}`);
+  const catalog = (await res.json()) as { vehicles: { id: number; name: string }[]; routes: { id: number; from: string }[] };
+  for (const route of catalog.routes.filter((r) => r.from.startsWith(prefix))) {
+    await fetch(`${API}/api/transport/routes/${route.id}`, { method: "DELETE", headers: h });
+  }
+  for (const vehicle of catalog.vehicles.filter((v) => v.name.startsWith(prefix))) {
+    await fetch(`${API}/api/transport/vehicles/${vehicle.id}`, { method: "DELETE", headers: h });
+  }
+}

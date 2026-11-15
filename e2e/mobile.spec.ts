@@ -25,7 +25,7 @@ test.describe("mobile layout", () => {
 
   test("pages do not scroll horizontally", async ({ page }) => {
     test.setTimeout(180_000);
-    for (const path of ["/", "/hotels/makkah", "/packages", "/hotels/makkah/al-noor-haram-view-hotel", "/packages/economy-15-day-umrah", "/contact", "/visas", "/visas/uae-visa"]) {
+    for (const path of ["/", "/hotels/makkah", "/packages", "/hotels/makkah/al-noor-haram-view-hotel", "/packages/economy-15-day-umrah", "/contact", "/visas", "/visas/uae-visa", "/transport"]) {
       await page.goto(path);
       await page.waitForLoadState("load");
       await page.locator("footer").waitFor();
@@ -47,11 +47,28 @@ test.describe("mobile layout", () => {
     await expect(bar).toBeInViewport();
 
     await expect(page.getByRole("link", { name: /Chat with us on WhatsApp/ })).toBeHidden();
-    await expect(page.getByRole("link", { name: "Send an inquiry" })).toBeHidden();
+    await expect(page.getByRole("link", { name: "Send an inquiry", exact: true })).toBeHidden();
   });
 
   test("other pages keep the floating WhatsApp button", async ({ page }) => {
     await page.goto("/visas");
     await expect(page.getByRole("link", { name: /Chat with us on WhatsApp/ })).toBeVisible();
+  });
+
+  test("transport page lists the selected vehicle's prices on phones", async ({ page }) => {
+    await page.goto("/transport");
+    await page.locator("label", { hasText: "GMC" }).click();
+    const list = page.getByRole("list", { name: "GMC prices" });
+    await expect(list).toBeVisible();
+    await expect(list.getByRole("listitem")).toHaveCount(12);
+    await expect(list.getByRole("link", { name: "Book GMC for Jeddah → Makkah on WhatsApp" })).toBeVisible();
+    await expect(page.getByRole("table")).toBeHidden();
+  });
+
+  test("floating buttons stay visible at the footer", async ({ page }) => {
+    await page.goto("/");
+    await page.locator("footer").scrollIntoViewIfNeeded();
+    await expect(page.getByRole("link", { name: /Chat with us on WhatsApp/ })).toBeVisible();
+    await expect(page.getByRole("link", { name: "Send an inquiry", exact: true })).toBeVisible();
   });
 });

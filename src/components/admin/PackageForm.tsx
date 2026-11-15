@@ -4,6 +4,8 @@ import { useActionState, useState } from "react";
 import { Plus, X } from "lucide-react";
 import { savePackageAction } from "@/app/admin/actions";
 import { PACKAGE_TYPES, type HotelSummary, type PackageDetail } from "@/lib/types";
+import { GalleryUpload } from "./GalleryUpload";
+import { ImageUpload } from "./ImageUpload";
 import { Checkbox, FormMessage, SelectField, SubmitButton, TextAreaField, TextField } from "./FormParts";
 
 type StayRow = { key: number; hotelId: string; nights: string };
@@ -18,7 +20,6 @@ export function PackageForm({ pkg, hotels }: { pkg?: PackageDetail; hotels: Hote
   );
 
   const services = pkg?.services.map((s) => (s.description ? `${s.serviceName} | ${s.description}` : s.serviceName)).join("\n") ?? "";
-  const images = pkg?.images.map((i) => i.url).join("\n") ?? "";
 
   return (
     <form action={action} className="card space-y-6 p-6">
@@ -44,7 +45,7 @@ export function PackageForm({ pkg, hotels }: { pkg?: PackageDetail; hotels: Hote
           <TextField name="makkahDays" label="Makkah nights *" type="number" min={0} max={90} defaultValue={pkg?.makkahDays} error={e.makkahDays} required />
           <TextField name="madinahDays" label="Madinah nights *" type="number" min={0} max={90} defaultValue={pkg?.madinahDays} error={e.madinahDays} required />
         </div>
-        <TextField name="imageUrl" label="Main image URL *" type="url" defaultValue={pkg?.imageUrl} error={e.imageUrl} required className="md:col-span-2" />
+        <ImageUpload name="imageUrl" label="Main photo *" defaultValue={pkg?.imageUrl} error={e.imageUrl} required className="md:col-span-2" />
       </div>
 
       <TextAreaField name="shortDescription" label="Short description *" rows={2} maxLength={300} defaultValue={pkg?.shortDescription} error={e.shortDescription} required />
@@ -100,7 +101,7 @@ export function PackageForm({ pkg, hotels }: { pkg?: PackageDetail; hotels: Hote
 
       <div className="grid gap-4 md:grid-cols-2">
         <TextAreaField name="services" label="Included services" rows={6} defaultValue={services} hint='One per line. Optional description after a "|", e.g. "Visa processing | Handled by our team".' error={e.services} />
-        <TextAreaField name="images" label="Gallery image URLs" rows={6} defaultValue={images} hint="One image URL per line." error={e.images} />
+        <GalleryUpload label="Gallery photos" defaultUrls={pkg?.images.map((i) => i.url)} error={e.images} />
       </div>
 
       <div className="flex flex-wrap gap-6 border-t border-sand-200 pt-5">

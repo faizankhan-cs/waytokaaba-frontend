@@ -2,20 +2,21 @@
 
 /*
  * Waytokaaba design tokens.
- * Deep green (trust, Islamic heritage), warm white/sand surfaces, restrained gold accents.
+ * Black (matches the Kaaba logo), clean white surfaces, gold accents.
+ * "brand" is the black/charcoal scale: 50-200 are soft greys for tints, 700-950 are near-black.
  */
 @theme {
-  --color-brand-50: #f1f7f4;
-  --color-brand-100: #dfeee7;
-  --color-brand-200: #bfddcf;
-  --color-brand-300: #8fc2ab;
-  --color-brand-400: #58a083;
-  --color-brand-500: #2f8264;
-  --color-brand-600: #1f6a50;
-  --color-brand-700: #175641;
-  --color-brand-800: #114535;
-  --color-brand-900: #0b3328;
-  --color-brand-950: #062019;
+  --color-brand-50: #f7f7f7;
+  --color-brand-100: #ededed;
+  --color-brand-200: #d9d9d9;
+  --color-brand-300: #b3b3b3;
+  --color-brand-400: #808080;
+  --color-brand-500: #4d4d4d;
+  --color-brand-600: #333333;
+  --color-brand-700: #1f1f1f;
+  --color-brand-800: #141414;
+  --color-brand-900: #0d0d0d;
+  --color-brand-950: #050505;
 
   --color-gold-50: #fbf7ea;
   --color-gold-100: #f5ebc9;
@@ -25,21 +26,21 @@
   --color-gold-600: #9f7c20;
   --color-gold-700: #7c5f1a;
 
-  --color-sand-50: #fbfaf6;
-  --color-sand-100: #f5f2ea;
-  --color-sand-200: #e9e3d4;
+  --color-sand-50: #ffffff;
+  --color-sand-100: #f7f7f7;
+  --color-sand-200: #e8e8e8;
 
-  --color-ink-900: #16201c;
-  --color-ink-700: #3a4743;
-  --color-ink-500: #65716d;
-  --color-ink-300: #a7b0ad;
+  --color-ink-900: #171717;
+  --color-ink-700: #404040;
+  --color-ink-500: #6b6b6b;
+  --color-ink-300: #a8a8a8;
 
   --font-sans: var(--font-body), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-heading), ui-serif, Georgia, serif;
 
-  --shadow-card: 0 1px 2px rgb(11 51 40 / 0.06), 0 4px 16px -4px rgb(11 51 40 / 0.08);
-  --shadow-card-hover: 0 2px 4px rgb(11 51 40 / 0.06), 0 12px 28px -8px rgb(11 51 40 / 0.18);
-  --shadow-search: 0 18px 48px -12px rgb(6 32 25 / 0.45);
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.06), 0 4px 16px -4px rgb(0 0 0 / 0.08);
+  --shadow-card-hover: 0 2px 4px rgb(0 0 0 / 0.06), 0 12px 28px -8px rgb(0 0 0 / 0.18);
+  --shadow-search: 0 18px 48px -12px rgb(0 0 0 / 0.45);
 }
 
 :root {

@@ -2,11 +2,11 @@
 
 import { refresh } from "next/cache";
 import { redirect } from "next/navigation";
-import { adminSend, toFormError } from "@/lib/admin/api";
+import { adminSend, adminUpload, toFormError } from "@/lib/admin/api";
 import { clearAdminSession, setAdminSession } from "@/lib/admin/session";
 import { readProblem } from "@/lib/api";
 import { getApiBaseUrl } from "@/lib/config";
-import type { HotelDetail, InquiryStatus, PackageDetail, Room, VisaDetail } from "@/lib/types";
+import type { HotelDetail, InquiryStatus, PackageDetail, Room, TransportRoute, TransportVehicle, VisaDetail } from "@/lib/types";
 
 export type FormState = {
   message?: string;
@@ -247,4 +247,91 @@ export async function deleteVisaAction(_prev: FormState, fd: FormData): Promise<
   const result = await adminSend("DELETE", `/api/visas/${num(fd, "id")}`);
   if (!result.ok) return toFormError(result);
   redirect("/admin/visas?deleted=1");
+}
+
+// ---------------- transport ----------------
+
+function vehiclePayload(fd: FormData) {
+  return {
+    name: text(fd, "name"),
+    imageUrl: text(fd, "imageUrl"),
+    seats: num(fd, "seats") ?? 0,
+    bags: num(fd, "bags") ?? 0,
+    description: optionalText(fd, "description"),
+    sortOrder: num(fd, "sortOrder") ?? 0,
+    isActive: bool(fd, "isActive"),
+    isDemoContent: bool(fd, "isDemoContent"),
+  };
+}
+
+/** Route prices come from one input per vehicle named "price_<vehicleId>"; an empty input means "not offered". */
+function routePayload(fd: FormData) {
+  const prices = [...fd.keys()]
+    .filter((k) => k.startsWith("price_"))
+    .map((k) => ({ vehicleId: Number(k.slice("price_".length)), price: num(fd, k) }))
+    .filter((p): p is { vehicleId: number; price: number } => p.price !== null);
+  return {
+    from: text(fd, "from"),
+    to: optionalText(fd, "to"),
+    note: optionalText(fd, "note"),
+    sortOrder: num(fd, "sortOrder") ?? 0,
+    isActive: bool(fd, "isActive"),
+    isDemoContent: bool(fd, "isDemoContent"),
+    prices,
+  };
+}
+
+export async function saveTransportVehicleAction(_prev: FormState, fd: FormData): Promise<FormState> {
+  const id = num(fd, "id");
+  const result = id
+    ? await adminSend<TransportVehicle>("PUT", `/api/transport/vehicles/${id}`, vehiclePayload(fd))
+    : await adminSend<TransportVehicle>("POST", "/api/transport/vehicles", vehiclePayload(fd));
+
+  if (!result.ok) return toFormError(result);
+  if (!id) redirect(`/admin/transport/vehicles/${result.data!.id}?created=1`);
+  refresh();
+  return { success: "Vehicle saved." };
+}
+
+export async function deleteTransportVehicleAction(_prev: FormState, fd: FormData): Promise<FormState> {
+  const result = await adminSend("DELETE", `/api/transport/vehicles/${num(fd, "id")}`);
+  if (!result.ok) return toFormError(result);
+  redirect("/admin/transport?deleted=vehicle");
+}
+
+export async function saveTransportRouteAction(_prev: FormState, fd: FormData): Promise<FormState> {
+  const id = num(fd, "id");
+  const result = id
+    ? await adminSend<TransportRoute>("PUT", `/api/transport/routes/${id}`, routePayload(fd))
+    : await adminSend<TransportRoute>("POST", "/api/transport/routes", routePayload(fd));
+
+  if (!result.ok) return toFormError(result);
+  if (!id) redirect(`/admin/transport/routes/${result.data!.id}?created=1`);
+  refresh();
+  return { success: "Route saved." };
+}
+
+export async function deleteTransportRouteAction(_prev: FormState, fd: FormData): Promise<FormState> {
+  const result = await adminSend("DELETE", `/api/transport/routes/${num(fd, "id")}`);
+  if (!result.ok) return toFormError(result);
+  redirect("/admin/transport?deleted=route");
+}
+
+// ---------------- photo upload ----------------
+
+const UPLOAD_TYPES = ["image/jpeg", "image/png", "image/webp"];
+const UPLOAD_MAX_BYTES = 10 * 1024 * 1024;
+
+/** Uploads one photo for an admin image field and returns its URL (or a short error to show next to the field). */
+export async function uploadImageAction(fd: FormData): Promise<{ url?: string; error?: string }> {
+  const file = fd.get("file");
+  if (!(file instanceof File) || file.size === 0) return { error: "Please choose a photo." };
+  if (file.type && !UPLOAD_TYPES.includes(file.type)) return { error: "Please choose a JPG, PNG or WebP photo." };
+  if (file.size > UPLOAD_MAX_BYTES) return { error: "This photo is larger than 10 MB. Please choose a smaller one." };
+
+  const result = await adminUpload(file);
+  if (result.ok) return { url: result.data!.url };
+  if (result.status === 0) return { error: "The upload took too long. Please check your connection and try again." };
+  const fieldError = result.problem?.errors?.file?.join(" ") ?? result.problem?.errors?.File?.join(" ");
+  return { error: fieldError ?? result.problem?.detail ?? "Upload failed. Please try again." };
 }

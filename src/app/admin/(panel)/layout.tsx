@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ExternalLink, Hotel, Inbox, LogOut, Package, Stamp } from "lucide-react";
+import { Bus, ExternalLink, Hotel, Inbox, LogOut, Package, Stamp } from "lucide-react";
 import { LogoMark } from "@/components/layout/Logo";
 import { logoutAction } from "../actions";
 
@@ -8,6 +8,7 @@ const NAV = [
   { href: "/admin/hotels", label: "Hotels & rooms", icon: Hotel },
   { href: "/admin/packages", label: "Packages", icon: Package },
   { href: "/admin/visas", label: "Visas", icon: Stamp },
+  { href: "/admin/transport", label: "Transport", icon: Bus },
 ];
 
 export default function AdminPanelLayout({ children }: LayoutProps<"/admin">) {

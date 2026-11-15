@@ -185,3 +185,42 @@ export interface VisaDetail extends VisaSummary {
   createdAt: string;
   updatedAt: string;
 }
+
+// ---------------- Private transport ----------------
+
+export interface TransportVehicle {
+  id: number;
+  name: string;
+  imageUrl: string;
+  seats: number;
+  bags: number;
+  description: string | null;
+  sortOrder: number;
+  isActive: boolean;
+  isDemoContent: boolean;
+  /** Lowest listed price of this vehicle across the routes, or null when it has none. */
+  startingPrice: number | null;
+}
+
+export interface TransportRate {
+  vehicleId: number;
+  price: number;
+}
+
+export interface TransportRoute {
+  id: number;
+  from: string;
+  /** Empty for a round tour such as "Madinah Ziyarat". */
+  to: string | null;
+  note: string | null;
+  sortOrder: number;
+  isActive: boolean;
+  isDemoContent: boolean;
+  rates: TransportRate[];
+}
+
+export interface TransportCatalog {
+  vehicles: TransportVehicle[];
+  routes: TransportRoute[];
+  currency: string;
+}

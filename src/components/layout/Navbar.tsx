@@ -30,6 +30,7 @@ export const NAV_LINKS = [
   { href: "/", label: "Home" },
   { href: "/packages", label: "Umrah Packages" },
   { href: "/visas", label: "Visas" },
+  { href: "/transport", label: "Transport" },
   { href: "/hotels/makkah", label: "Makkah Hotels" },
   { href: "/hotels/madinah", label: "Madinah Hotels" },
   { href: "/about", label: "About Us" },

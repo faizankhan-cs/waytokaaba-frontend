@@ -4,6 +4,7 @@ import { PREVIEW_MODE, getApiBaseUrl } from "./config";
 import {
   previewGetHotel,
   previewGetPackage,
+  previewGetTransport,
   previewGetVisa,
   previewSearchHotels,
   previewSearchPackages,
@@ -17,6 +18,7 @@ import type {
   PackageSummary,
   PagedResult,
   ProblemDetails,
+  TransportCatalog,
   VisaDetail,
   VisaSummary,
 } from "./types";
@@ -159,4 +161,10 @@ export async function getFeaturedVisas(limit = 8) {
 export async function getVisa(slug: string) {
   if (PREVIEW_MODE) return previewGetVisa(slug);
   return orNull(apiGet<VisaDetail>(`/api/visas/${encodeURIComponent(slug)}`));
+}
+
+/** Private transport vehicles, routes and prices (public view). */
+export async function getTransport() {
+  if (PREVIEW_MODE) return previewGetTransport();
+  return apiGet<TransportCatalog>("/api/transport");
 }

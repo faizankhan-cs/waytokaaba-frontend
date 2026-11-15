@@ -3,12 +3,13 @@
 import { useActionState } from "react";
 import { saveHotelAction } from "@/app/admin/actions";
 import type { HotelDetail } from "@/lib/types";
+import { GalleryUpload } from "./GalleryUpload";
+import { ImageUpload } from "./ImageUpload";
 import { Checkbox, FormMessage, SelectField, SubmitButton, TextAreaField, TextField } from "./FormParts";
 
 export function HotelForm({ hotel }: { hotel?: HotelDetail }) {
   const [state, action] = useActionState(saveHotelAction, {});
   const e = state.fieldErrors ?? {};
-  const gallery = hotel?.images.map((i) => i.url).join("\n") ?? "";
 
   return (
     <form action={action} className="card space-y-6 p-6">
@@ -54,7 +55,7 @@ export function HotelForm({ hotel }: { hotel?: HotelDetail }) {
             {e.isDistanceVerified && <p className="field-error">{e.isDistanceVerified}</p>}
           </div>
         </div>
-        <TextField name="imageUrl" label="Main image URL *" type="url" defaultValue={hotel?.imageUrl} error={e.imageUrl} required />
+        <ImageUpload name="imageUrl" label="Main photo *" defaultValue={hotel?.imageUrl} error={e.imageUrl} required className="md:col-span-2" />
       </div>
 
       <TextAreaField name="shortDescription" label="Short description *" rows={2} maxLength={300} defaultValue={hotel?.shortDescription} error={e.shortDescription} required />
@@ -62,7 +63,7 @@ export function HotelForm({ hotel }: { hotel?: HotelDetail }) {
 
       <div className="grid gap-4 md:grid-cols-2">
         <TextAreaField name="amenities" label="Facilities" rows={6} defaultValue={hotel?.amenities.join("\n")} hint="One facility per line." error={e.amenities} />
-        <TextAreaField name="images" label="Gallery image URLs" rows={6} defaultValue={gallery} hint="One image URL per line, in display order." error={e.images} />
+        <GalleryUpload label="Gallery photos" defaultUrls={hotel?.images.map((i) => i.url)} error={e.images} />
       </div>
 
       <div className="flex flex-wrap gap-6 border-t border-sand-200 pt-5">

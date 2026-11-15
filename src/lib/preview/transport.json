@@ -1,0 +1,440 @@
+{
+  "generatedFrom": "API demo seed (DemoTransport.cs)",
+  "vehicles": [
+    {
+      "id": 1,
+      "name": "Sedan",
+      "imageUrl": "https://images.unsplash.com/photo-1780263274133-74580def6296?auto=format&fit=crop",
+      "seats": 4,
+      "bags": 2,
+      "description": "Comfortable sedan for small families and couples.",
+      "sortOrder": 1,
+      "isActive": true,
+      "isDemoContent": true,
+      "startingPrice": 11100
+    },
+    {
+      "id": 2,
+      "name": "H1-Staria",
+      "imageUrl": "https://images.unsplash.com/photo-1776774853502-11e7a46252d8?auto=format&fit=crop",
+      "seats": 7,
+      "bags": 5,
+      "description": "Spacious family van with room for luggage.",
+      "sortOrder": 2,
+      "isActive": true,
+      "isDemoContent": true,
+      "startingPrice": 11800
+    },
+    {
+      "id": 3,
+      "name": "Hi-Ace",
+      "imageUrl": "https://images.unsplash.com/photo-1776521906834-45551a2004ac?auto=format&fit=crop",
+      "seats": 10,
+      "bags": 8,
+      "description": "Ideal for larger families and small groups.",
+      "sortOrder": 3,
+      "isActive": true,
+      "isDemoContent": true,
+      "startingPrice": 16200
+    },
+    {
+      "id": 4,
+      "name": "GMC",
+      "imageUrl": "https://images.unsplash.com/photo-1767749995474-cfb164d4d9ef?auto=format&fit=crop",
+      "seats": 7,
+      "bags": 5,
+      "description": "Premium SUV for a luxurious, private ride.",
+      "sortOrder": 4,
+      "isActive": true,
+      "isDemoContent": true,
+      "startingPrice": 22100
+    },
+    {
+      "id": 5,
+      "name": "Coaster",
+      "imageUrl": "https://images.unsplash.com/photo-1534011056808-50c1c6082fe7?auto=format&fit=crop",
+      "seats": 25,
+      "bags": 20,
+      "description": "Mini coach for groups travelling together.",
+      "sortOrder": 5,
+      "isActive": true,
+      "isDemoContent": true,
+      "startingPrice": 21400
+    }
+  ],
+  "routes": [
+    {
+      "id": 1,
+      "from": "Jeddah",
+      "to": "Makkah",
+      "note": null,
+      "sortOrder": 1,
+      "isActive": true,
+      "isDemoContent": true,
+      "rates": [
+        {
+          "vehicleId": 1,
+          "price": 19200
+        },
+        {
+          "vehicleId": 2,
+          "price": 21400
+        },
+        {
+          "vehicleId": 3,
+          "price": 25100
+        },
+        {
+          "vehicleId": 4,
+          "price": 29500
+        },
+        {
+          "vehicleId": 5,
+          "price": 36900
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "from": "Makkah",
+      "to": "Madinah",
+      "note": null,
+      "sortOrder": 2,
+      "isActive": true,
+      "isDemoContent": true,
+      "rates": [
+        {
+          "vehicleId": 1,
+          "price": 28800
+        },
+        {
+          "vehicleId": 2,
+          "price": 32500
+        },
+        {
+          "vehicleId": 3,
+          "price": 40600
+        },
+        {
+          "vehicleId": 4,
+          "price": 59000
+        },
+        {
+          "vehicleId": 5,
+          "price": 62700
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "from": "Madinah",
+      "to": "Makkah",
+      "note": null,
+      "sortOrder": 3,
+      "isActive": true,
+      "isDemoContent": true,
+      "rates": [
+        {
+          "vehicleId": 1,
+          "price": 28800
+        },
+        {
+          "vehicleId": 2,
+          "price": 32500
+        },
+        {
+          "vehicleId": 3,
+          "price": 40600
+        },
+        {
+          "vehicleId": 4,
+          "price": 59000
+        },
+        {
+          "vehicleId": 5,
+          "price": 62700
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "from": "Makkah",
+      "to": "Jeddah",
+      "note": null,
+      "sortOrder": 4,
+      "isActive": true,
+      "isDemoContent": true,
+      "rates": [
+        {
+          "vehicleId": 1,
+          "price": 16200
+        },
+        {
+          "vehicleId": 2,
+          "price": 18400
+        },
+        {
+          "vehicleId": 3,
+          "price": 23600
+        },
+        {
+          "vehicleId": 4,
+          "price": 25800
+        },
+        {
+          "vehicleId": 5,
+          "price": 36900
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "from": "Jeddah",
+      "to": "Madinah",
+      "note": null,
+      "sortOrder": 5,
+      "isActive": true,
+      "isDemoContent": true,
+      "rates": [
+        {
+          "vehicleId": 1,
+          "price": 29500
+        },
+        {
+          "vehicleId": 2,
+          "price": 36900
+        },
+        {
+          "vehicleId": 3,
+          "price": 44300
+        },
+        {
+          "vehicleId": 4,
+          "price": 62700
+        },
+        {
+          "vehicleId": 5,
+          "price": 66400
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "from": "Madinah",
+      "to": "Jeddah",
+      "note": null,
+      "sortOrder": 6,
+      "isActive": true,
+      "isDemoContent": true,
+      "rates": [
+        {
+          "vehicleId": 1,
+          "price": 29500
+        },
+        {
+          "vehicleId": 2,
+          "price": 36900
+        },
+        {
+          "vehicleId": 3,
+          "price": 44300
+        },
+        {
+          "vehicleId": 4,
+          "price": 59000
+        },
+        {
+          "vehicleId": 5,
+          "price": 66400
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "from": "Madinah Ziyarat",
+      "to": null,
+      "note": "Visit the holy sites around Madinah.",
+      "sortOrder": 7,
+      "isActive": true,
+      "isDemoContent": true,
+      "rates": [
+        {
+          "vehicleId": 1,
+          "price": 14800
+        },
+        {
+          "vehicleId": 2,
+          "price": 18400
+        },
+        {
+          "vehicleId": 3,
+          "price": 22100
+        },
+        {
+          "vehicleId": 4,
+          "price": 29500
+        },
+        {
+          "vehicleId": 5,
+          "price": 25800
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "from": "Makkah Ziyarat",
+      "to": null,
+      "note": "Visit the holy sites around Makkah.",
+      "sortOrder": 8,
+      "isActive": true,
+      "isDemoContent": true,
+      "rates": [
+        {
+          "vehicleId": 1,
+          "price": 14800
+        },
+        {
+          "vehicleId": 2,
+          "price": 18400
+        },
+        {
+          "vehicleId": 3,
+          "price": 23600
+        },
+        {
+          "vehicleId": 4,
+          "price": 29500
+        },
+        {
+          "vehicleId": 5,
+          "price": 25800
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "from": "Madinah Airport",
+      "to": "Madinah Hotel",
+      "note": null,
+      "sortOrder": 9,
+      "isActive": true,
+      "isDemoContent": true,
+      "rates": [
+        {
+          "vehicleId": 1,
+          "price": 14000
+        },
+        {
+          "vehicleId": 2,
+          "price": 14800
+        },
+        {
+          "vehicleId": 3,
+          "price": 22100
+        },
+        {
+          "vehicleId": 4,
+          "price": 24300
+        },
+        {
+          "vehicleId": 5,
+          "price": 24300
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "from": "Madinah Hotel",
+      "to": "Madinah Airport",
+      "note": null,
+      "sortOrder": 10,
+      "isActive": true,
+      "isDemoContent": true,
+      "rates": [
+        {
+          "vehicleId": 1,
+          "price": 11800
+        },
+        {
+          "vehicleId": 2,
+          "price": 12500
+        },
+        {
+          "vehicleId": 3,
+          "price": 16200
+        },
+        {
+          "vehicleId": 4,
+          "price": 22100
+        },
+        {
+          "vehicleId": 5,
+          "price": 24300
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "from": "Train Station",
+      "to": "Hotel",
+      "note": "Haramain train station pick-up.",
+      "sortOrder": 11,
+      "isActive": true,
+      "isDemoContent": true,
+      "rates": [
+        {
+          "vehicleId": 1,
+          "price": 11100
+        },
+        {
+          "vehicleId": 2,
+          "price": 11800
+        },
+        {
+          "vehicleId": 3,
+          "price": 17000
+        },
+        {
+          "vehicleId": 4,
+          "price": 22100
+        },
+        {
+          "vehicleId": 5,
+          "price": 21400
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "from": "Hotel",
+      "to": "Train Station",
+      "note": "Drop-off at the Haramain train station.",
+      "sortOrder": 12,
+      "isActive": true,
+      "isDemoContent": true,
+      "rates": [
+        {
+          "vehicleId": 1,
+          "price": 11100
+        },
+        {
+          "vehicleId": 2,
+          "price": 11800
+        },
+        {
+          "vehicleId": 3,
+          "price": 17000
+        },
+        {
+          "vehicleId": 4,
+          "price": 22100
+        },
+        {
+          "vehicleId": 5,
+          "price": 21400
+        }
+      ]
+    }
+  ],
+  "currency": "PKR"
+}

@@ -8,6 +8,7 @@ import { LogoMark } from "./Logo";
 const EXPLORE = [
   { href: "/packages", label: "Umrah Packages" },
   { href: "/visas", label: "Visas" },
+  { href: "/transport", label: "Transport" },
   { href: "/hotels/makkah", label: "Makkah Hotels" },
   { href: "/hotels/madinah", label: "Madinah Hotels" },
   { href: "/hotels", label: "All Hotels" },
@@ -95,9 +96,10 @@ export function Footer() {
       </div>
 
       <div className="border-t border-brand-900">
-        <div className="container-page flex flex-col gap-2 py-5 text-xs text-brand-300 sm:flex-row sm:items-center sm:justify-between">
+        {/* Extra bottom space on phones and right space on desktop keep this text clear of the floating buttons. */}
+        <div className="container-page flex flex-col gap-2 pt-5 pb-24 text-xs text-brand-300 sm:flex-row sm:items-center sm:justify-between sm:pb-5">
           <p>© <CopyrightYear /> Way To Kaaba Travel &amp; Tours. All rights reserved.</p>
-          <p>Listings and prices shown are indicative. Availability and final pricing are confirmed by our team.</p>
+          <p className="sm:pr-20">Listings and prices shown are indicative. Availability and final pricing are confirmed by our team.</p>
         </div>
       </div>
     </footer>

@@ -4,6 +4,7 @@ import { useActionState } from "react";
 import { deleteRoomAction, saveRoomAction } from "@/app/admin/actions";
 import { formatPrice } from "@/lib/format";
 import type { Room } from "@/lib/types";
+import { ImageUpload } from "./ImageUpload";
 import { DeleteForm, FormMessage, SubmitButton, TextField } from "./FormParts";
 
 export function RoomManager({ hotelId, currency, rooms }: { hotelId: number; currency: string; rooms: Room[] }) {
@@ -58,7 +59,7 @@ function RoomForm({ hotelId, room }: { hotelId: number; room?: Room }) {
         <TextField id={`${prefix}-price`} name="pricePerNight" label="Price per night *" type="number" min={1} step="0.01" defaultValue={room?.pricePerNight} error={e.pricePerNight} required />
         <TextField id={`${prefix}-beds`} name="bedConfiguration" label="Beds" defaultValue={room?.bedConfiguration ?? ""} error={e.bedConfiguration} maxLength={120} />
         <TextField id={`${prefix}-desc`} name="description" label="Description" defaultValue={room?.description ?? ""} error={e.description} className="sm:col-span-2" maxLength={2000} />
-        <TextField id={`${prefix}-img`} name="imageUrl" label="Image URL" type="url" defaultValue={room?.imageUrl ?? ""} error={e.imageUrl} className="sm:col-span-2" />
+        <ImageUpload id={`${prefix}-img`} name="imageUrl" label="Room photo" defaultValue={room?.imageUrl} error={e.imageUrl} className="sm:col-span-2 lg:col-span-4" />
       </div>
       <SubmitButton className="btn-outline">{room ? "Save room" : "Add room"}</SubmitButton>
     </form>

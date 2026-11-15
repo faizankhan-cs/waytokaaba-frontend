@@ -4,6 +4,7 @@
  * reviewed without a running API. Used only when NEXT_PUBLIC_PREVIEW_MODE=true.
  */
 import data from "./catalog.json";
+import transportData from "./transport.json";
 import visaData from "./visas.json";
 import type {
   City,
@@ -13,6 +14,7 @@ import type {
   PackageSummary,
   PackageType,
   PagedResult,
+  TransportCatalog,
   VisaDetail,
   VisaSummary,
 } from "@/lib/types";
@@ -232,4 +234,15 @@ export function previewSearchVisas(q?: Param, limit = 50, featuredOnly = false):
 export function previewGetVisa(idOrSlug: string): VisaDetail | null {
   const key = idOrSlug.toLowerCase();
   return visas.find((v) => v.isActive && (v.slug === key || String(v.id) === key)) ?? null;
+}
+
+// ---------------- Private transport ----------------
+
+export function previewGetTransport(): TransportCatalog {
+  const catalog = transportData as unknown as TransportCatalog;
+  return {
+    vehicles: catalog.vehicles.filter((v) => v.isActive),
+    routes: catalog.routes.filter((r) => r.isActive && r.rates.length > 0),
+    currency: catalog.currency,
+  };
 }

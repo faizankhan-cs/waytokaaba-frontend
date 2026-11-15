@@ -86,7 +86,13 @@ test.describe("admin", () => {
     await page.getByLabel("City *").selectOption("Madinah");
     await page.getByLabel("Address *").fill("Test Street, Madinah");
     await page.getByLabel("From price per night *").fill("21000");
-    await page.getByLabel("Main image URL *").fill("https://images.unsplash.com/photo-1621293954908-907159247fc8?auto=format&fit=crop");
+    await page.getByLabel("Main photo *").setInputFiles("e2e/fixtures/photo.jpg");
+    await expect(page.getByAltText("Selected photo")).toBeVisible({ timeout: 30_000 });
+    // Gallery: add two photos at once, then remove the first; one remains.
+    await page.getByLabel("Gallery photos", { exact: true }).setInputFiles(["e2e/fixtures/photo.jpg", "e2e/fixtures/photo-2.jpg"]);
+    await expect(page.getByAltText(/^Gallery photo \d+$/)).toHaveCount(2, { timeout: 30_000 });
+    await page.getByRole("button", { name: "Remove photo 1" }).click();
+    await expect(page.getByAltText(/^Gallery photo \d+$/)).toHaveCount(1);
     await page.getByLabel("Short description *").fill("A test hotel created by the end-to-end tests.");
     await page.getByLabel("Full description *").fill("A test hotel created by the end-to-end tests. It will be deleted.");
     await page.getByLabel("Facilities").fill("Free Wi-Fi\nBreakfast");

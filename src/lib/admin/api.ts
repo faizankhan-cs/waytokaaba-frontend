@@ -63,3 +63,32 @@ export function toFormError(result: { status: number; problem: ProblemDetails | 
       : result.problem?.detail ?? result.problem?.title ?? `The request failed (HTTP ${result.status}).`;
   return { message, fieldErrors, warning: result.status === 409 };
 }
+
+export type UploadedImage = { url: string; width: number; height: number };
+
+/** Authenticated photo upload (multipart). The API resizes it and returns its public URL. */
+export async function adminUpload(file: File): Promise<MutationResult<UploadedImage>> {
+  const token = await requireAdminToken();
+  const body = new FormData();
+  body.append("file", file, file.name);
+  let res: Response;
+  try {
+    // No Content-Type header: fetch sets the multipart boundary itself.
+    res = await fetch(`${getApiBaseUrl()}/api/uploads`, {
+      method: "POST",
+      headers: { Accept: "application/json", Authorization: `Bearer ${token}` },
+      body,
+      cache: "no-store",
+      signal: AbortSignal.timeout(60_000),
+    });
+  } catch {
+    return { ok: false, status: 0, problem: null };
+  }
+
+  if (res.status === 401) {
+    await clearAdminSession();
+    redirect("/admin/login?expired=1");
+  }
+  if (!res.ok) return { ok: false, status: res.status, problem: await readProblem(res) };
+  return { ok: true, data: (await res.json()) as UploadedImage };
+}

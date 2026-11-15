@@ -1,11 +1,11 @@
 import { CONTACT, SITE } from "./config";
 import { DISCLAIMER, formatStayDate, money, type Slip } from "./trip";
 
-// Brand colours (see globals.css): brand-800 green and gold-500.
-const GREEN: [number, number, number] = [11, 77, 60];
+// Brand colours (see globals.css): near-black and gold-500.
+const BLACK: [number, number, number] = [13, 13, 13];
 const GOLD: [number, number, number] = [201, 162, 39];
-const INK: [number, number, number] = [22, 32, 28];
-const MUTED: [number, number, number] = [101, 113, 109];
+const INK: [number, number, number] = [23, 23, 23];
+const MUTED: [number, number, number] = [107, 107, 107];
 
 /**
  * Builds the A4 PDF slip. jsPDF is loaded on demand so it never weighs down the rest of the site.
@@ -27,7 +27,7 @@ export async function buildSlipPdf(slip: Slip): Promise<Blob> {
   };
 
   // Header band
-  doc.setFillColor(...GREEN);
+  doc.setFillColor(...BLACK);
   doc.rect(0, 0, W, 34, "F");
   doc.setFillColor(...GOLD);
   doc.rect(0, 34, W, 1.5, "F");
@@ -54,7 +54,7 @@ export async function buildSlipPdf(slip: Slip): Promise<Blob> {
   // Table
   const cols = { n: M, hotel: M + 8, dates: M + 78, nights: M + 122, rooms: M + 136, sub: W - M };
   const header = () => {
-    doc.setFillColor(...GREEN);
+    doc.setFillColor(...BLACK);
     doc.rect(M, y - 5, W - 2 * M, 8, "F");
     doc.setTextColor(255, 255, 255).setFont("helvetica", "bold").setFontSize(9);
     doc.text("#", cols.n + 1, y);
@@ -89,7 +89,7 @@ export async function buildSlipPdf(slip: Slip): Promise<Blob> {
     doc.setFont("helvetica", "bold").text(money(leg.subtotal, slip.currency), cols.sub - 1, y, { align: "right" });
 
     y += rowH;
-    doc.setDrawColor(226, 221, 208).line(M, y - 5, W - M, y - 5);
+    doc.setDrawColor(232, 232, 232).line(M, y - 5, W - M, y - 5);
   });
 
   // Total
